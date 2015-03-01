@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class MainActivity extends SherlockFragmentActivity {
+public class MainMenuActivity extends SherlockFragmentActivity {
 
     private static int currentMenuPosition = -1;
     private SlidingMenu menu;
@@ -22,7 +22,6 @@ public class MainActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //lalala
             SlidingMenu menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
             menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
