@@ -20,7 +20,7 @@ public class MainMenuActivity extends SherlockFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.menu);
 
             SlidingMenu menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
