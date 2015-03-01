@@ -1,39 +1,125 @@
 package com.example.yasina.llapp;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends SherlockFragmentActivity {
+
+    private static int currentMenuPosition = -1;
+    private SlidingMenu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+            SlidingMenu menu = new SlidingMenu(this);
+            menu.setMode(SlidingMenu.LEFT);
+            menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+            menu.setFadeDegree(0.35f);
+            menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+            menu.setMenu(R.layout.sidemenu);
+            menu.setBackgroundColor(0xFF333333);
+            //menu.setBackgroundColor(EBAA5B);
+            menu.setBehindWidthRes(R.dimen.slidingmenu_behind_width);
+            menu.setSelectorDrawable(R.drawable.sidemenu_items_background);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+            ((ListView) findViewById(R.id.sidemenu)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    menuToggle();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+                    if (currentMenuPosition != position)
+                        changeFragment(position);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                    currentMenuPosition = position;
+                }
+            });
+
+            if (currentMenuPosition != -1) {
+                ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
+            }
+
+            String[] items = {getString(R.string.add_words_fragment),getString(R.string.learn_words_fragment), getString(R.string.add_languages_fragmnet),
+                    getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
+                    getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)};
+
+            ((ListView) findViewById(R.id.sidemenu)).setAdapter(
+                    new ArrayAdapter<Object>(
+                            this,
+                            R.layout.sidemenu_item,
+                            R.id.text,
+                            items
+                    )
+            );
+
+            this.menu = menu;
+
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent event) {
+            if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
+                if(menu.isMenuShowing()){
+                    menu.toggle(true);
+                    return false;
+                }
+            }
+            return super.onKeyDown(keyCode, event);
+        }
+
+    private void changeFragment(int position) {
+        switch (position) {
+            case 0:
+                showFragment(new FirstFragment());
+                break;
+            case 1:
+                showFragment(new SecondFragment());
+                break;
+        }
+    }
+
+    private void showFragment(Fragment currentFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, currentFragment)
+                .commit();
+    }
+
+    public SlidingMenu getMenu() {
+        return menu;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                menuToggle();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    public void menuToggle(){
+        if(menu.isMenuShowing())
+            menu.showContent();
+        else
+            menu.showMenu();
+    }
+
 }
+

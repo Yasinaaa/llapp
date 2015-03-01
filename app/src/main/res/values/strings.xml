@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">llapp</string>
+    <string name="app_name">SlidingApplication</string>
+    <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="add_words_fragment">Add Words</string>
+    <string name="learn_words_fragment">Learn Words</string>
+    <string name="add_languages_fragmnet">Add Languages</string>
+    <string name="new_words_theme_fragment">New words Theme</string>
+    <string name="create_new_lang_connection_fragment">New lang-es connection</string>
+    <string name="add_teacher_fragment">Add Teacher </string>
+    <string name="all_words_fragment">All Words</string>
+    <string name="create_test_fragment">Create Test</string>
+    <string name="settings_fragment">Settings</string>
+
+    <string name="large_text"> Hi </string>
+    <string name="callmenu"> Menu </string>
 
 </resources>
