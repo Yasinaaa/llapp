@@ -13,9 +13,11 @@ public class UserTable {
 
     private long userID;
     private String login, password, email;
-    private boolean teacher, student, selfEducated;
+    private byte[] teacher = {0,1};
+    private byte[] student = {0,1};
+    private byte[] selfEducated = {0,1};
 
-    public UserTable(String login, String password, String email, boolean teacher, boolean student, boolean selfEducated) {
+    public UserTable(String login, String password, String email,byte[] teacher, byte[] student, byte[] selfEducated) {
         this.login = login;
         this.password = password;
         this.email = email;
@@ -42,15 +44,15 @@ public class UserTable {
         return email;
     }
 
-    public boolean isTeacher() {
+    public byte[] isTeacher() {
         return teacher;
     }
 
-    public boolean isStudent() {
+    public byte[] isStudent() {
         return student;
     }
 
-    public boolean isSelfEducated() {
+    public byte[] isSelfEducated() {
         return selfEducated;
     }
 
@@ -70,15 +72,15 @@ public class UserTable {
         this.email = email;
     }
 
-    public void setTeacher(boolean teacher) {
+    public void setTeacher(byte[] teacher) {
         this.teacher = teacher;
     }
 
-    public void setStudent(boolean student) {
+    public void setStudent(byte[] student) {
         this.student = student;
     }
 
-    public void setSelfEducated(boolean selfEducated) {
+    public void setSelfEducated(byte[] selfEducated) {
         this.selfEducated = selfEducated;
     }
 }
