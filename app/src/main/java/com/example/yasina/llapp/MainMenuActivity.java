@@ -38,7 +38,7 @@ public class MainMenuActivity extends SherlockFragmentActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     menuToggle();
 
-                    if (currentMenuPosition != position)
+                   if (currentMenuPosition != position)
                         changeFragment(position);
 
                     currentMenuPosition = position;
@@ -49,7 +49,7 @@ public class MainMenuActivity extends SherlockFragmentActivity {
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {getString(R.string.add_words_fragment),getString(R.string.learn_words_fragment), getString(R.string.add_languages_fragmnet),
+            String[] items = {getString(R.string.learn_words_fragment),getString(R.string.add_words_fragment), getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)};
 
@@ -83,18 +83,18 @@ public class MainMenuActivity extends SherlockFragmentActivity {
     private void changeFragment(int position) {
         switch (position) {
             case 0:
-                showFragment(new FirstFragment());
+                showFragment(new LearnWordsFragment());
                 break;
             case 1:
-                showFragment(new SecondFragment());
+                showFragment(new AddWordsFragment());
                 break;
         }
     }
 
     private void showFragment(Fragment currentFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, currentFragment)
+        fragmentManager.beginTransaction()//.show(currentFragment)
+               .replace(R.id.container, currentFragment)
                 .commit();
     }
 
