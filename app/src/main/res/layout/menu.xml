@@ -3,8 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pro.vylgin.app.MainActivity"
-    tools:ignore="MergeRootFrame">
+    >
 
     <LinearLayout
         android:id="@+id/ll1"
@@ -17,13 +16,12 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="140dp"
+            android:layout_marginLeft="160dp"
             />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_below="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1">
@@ -45,7 +43,6 @@
         android:id="@+id/ll2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll1"
         android:orientation="horizontal"
         android:paddingLeft="30dp">
 
@@ -53,21 +50,12 @@
             android:id="@+id/etLang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="180dp"
             android:layout_marginLeft="0dp"
             android:padding="7dp"
             android:ems="9"
-            android:hint="Languages"
-            android:textSize="13dp"
-            />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerLeanLang"
-            android:layout_marginTop="160dp"
-            android:padding="1dp"
-            android:textSize="1dp"
-            android:layout_marginLeft="0dp"
+            android:hint="Dictionaries"
+            android:textSize="15dp"
             />
     </LinearLayout>
 
@@ -75,60 +63,26 @@
         android:id="@+id/ll3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll2"
         android:orientation="horizontal"
-        android:paddingLeft="30dp">
-
-        <TextView
-            android:id="@+id/etSelfEducated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="210dp"
-            android:layout_marginLeft="0dp"
-            android:padding="7dp"
-            android:ems="9"
-            android:hint="Words Theme"
-            android:textSize="13dp"
-            />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinnerWordsTheme"
-            android:layout_marginTop="210dp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/ll4"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btnSingIn"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="260dp"
-            android:layout_marginLeft="30dp"
-            android:padding="9dp"
-            android:text="Train"
-            android:background="#ebaa5b"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll4"
-
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="30dp"
         >
-        <ListView
-            android:id="@+id/messagesLL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="310dp"
-            android:layout_marginLeft="20dp"
-            >
-            </ListView>
-        </LinearLayout>
 
+        <Spinner
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:id="@+id/spinnerOfDictionaries"
+            />
+        <ImageButton
+            android:id="@+id/ibAddDictionary"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/add"
+            android:onClick="onClick"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="4" />
+
+    </LinearLayout>
 
 </FrameLayout>

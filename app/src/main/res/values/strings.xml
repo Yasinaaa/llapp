@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Learn Lang</string>
+    <string name="app_name">App</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -15,6 +15,7 @@
     <string name="all_words_fragment">All Words</string>
     <string name="create_test_fragment">Create Test</string>
     <string name="settings_fragment">Settings</string>
+    <string name="select_types">Types Of Dictionaries</string>
 
     <string name="large_text"> Hi </string>
     <string name="callmenu"> Menu </string>

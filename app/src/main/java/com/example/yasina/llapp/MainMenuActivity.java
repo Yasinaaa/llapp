@@ -1,26 +1,51 @@
 package com.example.yasina.llapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.example.yasina.llapp.Activities.ListDictionariesActivity;
+import com.example.yasina.llapp.Adapter.DictionariesSpinner;
+import com.example.yasina.llapp.DAO.DictionaryDAO;
+import com.example.yasina.llapp.Model.Dictionary;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class MainMenuActivity extends SherlockFragmentActivity {
+import java.util.List;
+
+public class MainMenuActivity extends SherlockFragmentActivity implements AdapterView.OnItemSelectedListener {
 
     private static int currentMenuPosition = -1;
+    public static final String TAG = "MainMenuActivity";
+    public static int idDictionary;
     private SlidingMenu menu;
+    private Spinner dictionariesSpinner;
+    private DictionaryDAO dictionaryDAO;
+    private DictionariesSpinner mAdapter;
+    public static String clickedDictionary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
+
+        dictionaryDAO = new DictionaryDAO(this);
+		List<Dictionary> listDictionaries = dictionaryDAO.getAllDictionaries();
+		if(listDictionaries != null) {
+			mAdapter = new DictionariesSpinner(this, listDictionaries);
+			dictionariesSpinner.setAdapter(mAdapter);
+			dictionariesSpinner.setOnItemSelectedListener(this);
+		}
 
             SlidingMenu menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
@@ -119,5 +144,33 @@ public class MainMenuActivity extends SherlockFragmentActivity {
             menu.showMenu();
     }
 
+
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.ibAddDictionary:
+                startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        clickedDictionary = dictionariesSpinner.getSelectedItem().toString();
+        Log.d(TAG, "clickedItem : " + clickedDictionary);
+
+         //Intent intent = new Intent(this, AddWordsFragment.class);
+         //intent.putExtra(ListEmployeesActivity.EXTRA_SELECTED_COMPANY_ID, clickedCompany.getId());
+         //startActivity(intent);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 

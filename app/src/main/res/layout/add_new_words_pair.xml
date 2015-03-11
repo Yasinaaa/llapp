@@ -1,0 +1,50 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txt_firstLanguage_add_new_wp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="First Language"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/txt_secondLanguage_add_new_wp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Second Language"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@android:color/black" />
+
+
+        <Button
+            android:id="@+id/btn_addNewWordsPairTable_add_new_wp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_dictionaryType_add_new_d"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="2dp"
+            android:text="Add"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+</ScrollView>
