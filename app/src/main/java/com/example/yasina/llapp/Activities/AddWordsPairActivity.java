@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.yasina.llapp.DAO.WordsPairDAO;
-import com.example.yasina.llapp.Model.WordsPair;
+import com.example.yasina.llapp.DAO.WordsDAO;
+import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 /**
@@ -26,7 +26,7 @@ public class AddWordsPairActivity extends Activity implements View.OnClickListen
     private Button mBtnAdd;
     private  Editable firstLang, secondLang;
 
-    private WordsPairDAO mWordsPairDAO;
+    private WordsDAO mWordsPairDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class AddWordsPairActivity extends Activity implements View.OnClickListen
 
         initViews();
         String sql = mTxtFirstLang.getText().toString() + mTxtSecondLang.getText().toString();
-        this.mWordsPairDAO = new WordsPairDAO(this, sql);
+        this.mWordsPairDAO = new WordsDAO(this, sql);
     }
 
     private void initViews() {
@@ -51,7 +51,7 @@ public class AddWordsPairActivity extends Activity implements View.OnClickListen
             case R.id.btn_addNewWordsPairTable_add_new_wp:
 
                 if (!TextUtils.isEmpty(firstLang) && !TextUtils.isEmpty(secondLang)) {
-                    WordsPair createdWordsPair = mWordsPairDAO.createWordsPair(
+                    Words createdWordsPair = mWordsPairDAO.createWordsPair(
                             firstLang.toString(), secondLang.toString());
 
                     Log.d(TAG, "added word pair : " + createdWordsPair.getmId());

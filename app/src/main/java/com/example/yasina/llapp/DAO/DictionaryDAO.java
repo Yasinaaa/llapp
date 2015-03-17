@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.yasina.llapp.Model.Dictionary;
-import com.example.yasina.llapp.Model.WordsPair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +89,7 @@ public class DictionaryDAO {
 
 
     public Dictionary getDicitonaryById(long id) {
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_DICTIONARY, mAllColumns,
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_DICTIONARY,mAllColumns,
                 DBHelper.COLUMN_NAME_ID + " = ?",
                 new String[] { String.valueOf(id) }, null, null, null);
         if (cursor != null) {

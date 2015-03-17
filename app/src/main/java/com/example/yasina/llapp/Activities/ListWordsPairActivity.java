@@ -11,12 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yasina.llapp.Adapter.ListDictionariesAdapter;
-import com.example.yasina.llapp.Adapter.ListWordsPairAdapter;
-import com.example.yasina.llapp.DAO.DictionaryDAO;
-import com.example.yasina.llapp.DAO.WordsPairDAO;
-import com.example.yasina.llapp.Model.Dictionary;
-import com.example.yasina.llapp.Model.WordsPair;
+import com.example.yasina.llapp.Adapter.ListWordsAdapter;
+import com.example.yasina.llapp.DAO.WordsDAO;
+import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 import java.util.ArrayList;
@@ -25,7 +22,8 @@ import java.util.List;
 /**
  * Created by yasina on 11.03.15.
  */
-public class ListWordsPairActivity extends Activity
+public class ListWordsPairActivity {
+        /*extends Activity
         implements View.OnClickListener {
     //AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
 
@@ -38,9 +36,9 @@ public class ListWordsPairActivity extends Activity
     private TextView mTxtEmptyWP;
     private ImageButton mBtnAddWP;
 
-    private ListWordsPairAdapter mAdapter;
-    private List<WordsPair> mListWP;
-    private WordsPairDAO mWordsPairDao;
+    private ListWordsAdapter mAdapter;
+    private List<Words> mListWP;
+    private WordsDAO mWordsPairDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +47,10 @@ public class ListWordsPairActivity extends Activity
 
         initViews();
 
-        mWordsPairDao = new WordsPairDAO(this);
+        mWordsPairDao = new WordsDAO(this);
         mListWP = mWordsPairDao.getAllDictionaries();
         if(mListWP != null && !mListWP.isEmpty()) {
-            mAdapter = new ListWordsPairAdapter(this, mListWP);
+            mAdapter = new ListWordsAdapter(this, mListWP);
             mListviewWP.setAdapter(mAdapter);
         }
         else {
@@ -86,10 +84,10 @@ public class ListWordsPairActivity extends Activity
         if(requestCode == REQUEST_CODE_ADD_WORDS_PAIR) {
             if(resultCode == RESULT_OK) {
                 if(data != null) {
-                    WordsPair createdDictionary = (WordsPair) data.getSerializableExtra(EXTRA_ADDED_WORDS_PAIR);
+                    Words createdDictionary = (Words) data.getSerializableExtra(EXTRA_ADDED_WORDS_PAIR);
                     if(createdDictionary != null) {
                         if(mListWP == null)
-                            mListWP = new ArrayList<WordsPair>();
+                            mListWP = new ArrayList<Words>();
                         mListWP.add(createdDictionary);
 
                         if(mListviewWP.getVisibility() != View.VISIBLE) {
@@ -98,7 +96,7 @@ public class ListWordsPairActivity extends Activity
                         }
 
                         if(mAdapter == null) {
-                            mAdapter = new ListWordsPairAdapter(this, mListWP);
+                            mAdapter = new ListWordsAdapter(this, mListWP);
                             mListviewWP.setAdapter(mAdapter);
                         }
                         else {
@@ -120,7 +118,7 @@ public class ListWordsPairActivity extends Activity
     }
 
 
-    private void showDeleteDialogConfirmation(final WordsPair clickedDicitonary) {
+    private void showDeleteDialogConfirmation(final Words clickedDicitonary) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         alertDialogBuilder.setTitle("Delete");
@@ -157,5 +155,6 @@ public class ListWordsPairActivity extends Activity
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+    */
 }
 

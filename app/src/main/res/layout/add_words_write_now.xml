@@ -1,17 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/edittext_default_bg"
+    >
 
-    <Button
-        android:id="@+id/writeAddButton"
+    <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/DocumentAddButton"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="100dp"
-        android:padding="25dp"
-        android:text="Write"
-        android:onClick="onClick"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:background="@drawable/edittext_default_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="120dp"
+            android:padding="1dp"
+            android:ems="9"
+            android:hint="Word"
+            android:textSize="30dp"
+            android:typeface="sans"
+            android:textStyle="bold|normal"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll1"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        >
+
+        <TextView
+            android:id="@+id/tvFirstLangAddWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:textSize="17dp"
+            />
+
+        <EditText
+            android:id="@+id/etNewWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="    Write here your word"
+            android:ems="10"
+            android:textSize="17dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll1"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        >
+
+        <TextView
+            android:id="@+id/tvSecondLangAddWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:textSize="17dp"
+            />
+
+        <EditText
+            android:id="@+id/etNewWordTranslate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="    Write here your word"
+            android:ems="10"
+            android:textSize="17dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivPictureOfWord"
+            android:src="@drawable/paint"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="120dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll2"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp">
+
+        <EditText
+            android:id="@+id/etNewWordAssociation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="       Your association"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:textSize="17dp"
+            android:layout_marginLeft="70dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll4"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp">
+        <Button
+            android:id="@+id/btnSingIn"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:ems="7"
+            android:text="Go"
+            android:background="#ebaa5b"
+            />
+    </LinearLayout>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerWordsTheme"
         />
 
 </LinearLayout>
+
+

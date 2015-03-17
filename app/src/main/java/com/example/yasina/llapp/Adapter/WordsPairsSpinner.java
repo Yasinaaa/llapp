@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.yasina.llapp.Model.Dictionary;
-import com.example.yasina.llapp.Model.WordsPair;
+import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 import java.util.List;
@@ -20,10 +19,10 @@ public class WordsPairsSpinner extends BaseAdapter {
 
         public static final String TAG = "WordsPairsSpinner";
 
-        private List<WordsPair> mItems;
+        private List<Words> mItems;
         private LayoutInflater mInflater;
 
-        public WordsPairsSpinner(Context context, List<WordsPair> listWordsPairs) {
+        public WordsPairsSpinner(Context context, List<Words> listWordsPairs) {
             this.setItems(listWordsPairs);
             this.mInflater = LayoutInflater.from(context);
         }
@@ -34,7 +33,7 @@ public class WordsPairsSpinner extends BaseAdapter {
         }
 
         @Override
-        public WordsPair getItem(int position) {
+        public Words getItem(int position) {
             return (getItems() != null && !getItems().isEmpty()) ? getItems().get(position) : null ;
         }
 
@@ -58,7 +57,7 @@ public class WordsPairsSpinner extends BaseAdapter {
                 holder = (ViewHolder) v.getTag();
             }
 
-            WordsPair currentItem = getItem(position);
+            Words currentItem = getItem(position);
             if(currentItem != null) {
                 holder.txtFirstLang.setText(currentItem.getFirstLang());
                 holder.txtSecondLang.setText(currentItem.getSecondLang());
@@ -67,11 +66,11 @@ public class WordsPairsSpinner extends BaseAdapter {
             return v;
         }
 
-        public List<WordsPair> getItems() {
+        public List<Words> getItems() {
             return mItems;
         }
 
-        public void setItems(List<WordsPair> mItems) {
+        public void setItems(List<Words> mItems) {
             this.mItems = mItems;
         }
 

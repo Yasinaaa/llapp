@@ -18,6 +18,7 @@
         <activity android:name=".DictionaryActivity"></activity>
         <activity android:name=".Activities.ListDictionariesActivity"></activity>
         <activity android:name=".Activities.AddDictionaryActivity"></activity>
+        <activity android:name=".AddWordsActivity"></activity>
 
     </application>
 

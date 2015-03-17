@@ -30,7 +30,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     private Spinner dictionariesSpinner;
     private DictionaryDAO dictionaryDAO;
     private DictionariesSpinner mAdapter;
-    public static String clickedDictionary;
+    public static long clickedDictionary;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +75,11 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {getString(R.string.learn_words_fragment),getString(R.string.add_words_fragment), getString(R.string.add_languages_fragmnet),
+            String[] items = {getString(R.string.learn_words_fragment),getString(R.string.add_words_fragment)
+                    /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
-                    getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)};
+                    getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
+                    };
 
             ((ListView) findViewById(R.id.sidemenu)).setAdapter(
                     new ArrayAdapter<Object>(
@@ -111,7 +114,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 showFragment(new LearnWordsFragment());
                 break;
             case 1:
-                showFragment(new AddWordsFragment());
+               // showFragment(new AddWordsFragment());
+                startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
                 break;
         }
     }
@@ -160,7 +164,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        clickedDictionary = dictionariesSpinner.getSelectedItem().toString();
+        clickedDictionary = dictionariesSpinner.getSelectedItemId();
+
         Log.d(TAG, "clickedItem : " + clickedDictionary);
 
          //Intent intent = new Intent(this, AddWordsFragment.class);

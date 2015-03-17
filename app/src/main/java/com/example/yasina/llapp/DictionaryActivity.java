@@ -1,14 +1,6 @@
 package com.example.yasina.llapp;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.example.yasina.llapp.DAO.DBHelper;
-import com.example.yasina.llapp.DAO.WordsPairDAO;
-
-import java.util.ArrayList;
 
 /**
  * Created by yasina on 10.03.15.

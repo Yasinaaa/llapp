@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.yasina.llapp.Model.WordsPair;
+import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 import java.util.List;
@@ -14,14 +15,15 @@ import java.util.List;
 /**
  * Created by yasina on 11.03.15.
  */
-public class ListWordsPairAdapter extends BaseAdapter {
+public class ListWordsAdapter {
+        //extends BaseAdapter {
 
-    public static final String TAG = "ListWordsPairAdapter";
+  /*  public static final String TAG = "ListWordsPairAdapter";
 
-    private List<WordsPair> mItems;
+    private List<Words> mItems;
     private LayoutInflater mInflater;
 
-    public ListWordsPairAdapter(Context context, List<WordsPair> listDictionaries) {
+    public ListWordsAdapter(Context context, List<Words> listDictionaries) {
         this.setItems(listDictionaries);
         this.mInflater = LayoutInflater.from(context);
     }
@@ -32,7 +34,7 @@ public class ListWordsPairAdapter extends BaseAdapter {
     }
 
     @Override
-    public WordsPair getItem(int position) {
+    public Words getItem(int position) {
         return (getItems() != null && !getItems().isEmpty()) ? getItems().get(position) : null ;
     }
 
@@ -50,33 +52,39 @@ public class ListWordsPairAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.txtFirstLang = (TextView) v.findViewById(R.id.txt_firstLanguage_list_item_wp);
             holder.txtSecondLang = (TextView) v.findViewById(R.id.txt_secondLanguage_list_item_wp);
+            holder.ivPicture = (ImageView) v.findViewById(R.id.ivPicture_list_item_wp);
+            holder.txtExplanation = (TextView) v.findViewById(R.id.txt_explanation_item_wp);
             v.setTag(holder);
         }
         else {
             holder = (ViewHolder) v.getTag();
         }
 
-        WordsPair currentItem = getItem(position);
+        Words currentItem = getItem(position);
         if(currentItem != null) {
             holder.txtFirstLang.setText(currentItem.getFirstLang());
             holder.txtSecondLang.setText(currentItem.getSecondLang());
+            holder.ivPicture.setByte(String.valueOf(currentItem.getImage()));
+
         }
 
         return v;
     }
 
-    public List<WordsPair> getItems() {
+    public List<Words> getItems() {
         return mItems;
     }
 
-    public void setItems(List<WordsPair> mItems) {
+    public void setItems(List<Words> mItems) {
         this.mItems = mItems;
     }
 
     class ViewHolder {
         TextView txtFirstLang;
         TextView txtSecondLang;
-    }
+        ImageView ivPicture;
+        TextView txtExplanation;
+    }*/
 
 }
 
