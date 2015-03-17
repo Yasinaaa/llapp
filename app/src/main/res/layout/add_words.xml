@@ -21,7 +21,7 @@
             android:padding="1dp"
             android:ems="9"
             android:hint="Word"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:typeface="sans"
             android:textStyle="bold|normal"
             />
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="3"
-            android:textSize="17dp"
+            android:textSize="15dp"
             />
 
         <EditText
@@ -54,8 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="    Write here your word"
-            android:ems="10"
-            android:textSize="17dp"
+            android:ems="13"
+            android:textSize="15dp"
             />
 
     </LinearLayout>
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="3"
-            android:textSize="17dp"
+            android:textSize="15dp"
             />
 
         <EditText
@@ -85,8 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="    Write here your word"
-            android:ems="10"
-            android:textSize="17dp"
+            android:ems="13"
+            android:textSize="15dp"
             />
 
 
@@ -100,9 +100,10 @@
             android:id="@+id/ivPictureOfWord"
             android:src="@drawable/paint"
             android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="120dp"
+            android:onClick="onClick"
             />
     </LinearLayout>
 
@@ -122,7 +123,7 @@
             android:padding="10dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginLeft="70dp"
             />
 
