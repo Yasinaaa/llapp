@@ -1,6 +1,8 @@
 package com.example.yasina.llapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +12,15 @@ import android.widget.TextView;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 /**
  * Created by yasina on 11.03.15.
  */
-public class ListWordsAdapter {
-        //extends BaseAdapter {
+public class ListWordsAdapter extends BaseAdapter {
 
-  /*  public static final String TAG = "ListWordsPairAdapter";
+    public static final String TAG = "ListWordsPairAdapter";
 
     private List<Words> mItems;
     private LayoutInflater mInflater;
@@ -64,7 +66,11 @@ public class ListWordsAdapter {
         if(currentItem != null) {
             holder.txtFirstLang.setText(currentItem.getFirstLang());
             holder.txtSecondLang.setText(currentItem.getSecondLang());
-            holder.ivPicture.setByte(String.valueOf(currentItem.getImage()));
+
+            byte[] outImage = currentItem.getImage();
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
+            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+            holder.ivPicture.setImageBitmap(theImage);
 
         }
 
@@ -84,7 +90,7 @@ public class ListWordsAdapter {
         TextView txtSecondLang;
         ImageView ivPicture;
         TextView txtExplanation;
-    }*/
+    }
 
 }
 
