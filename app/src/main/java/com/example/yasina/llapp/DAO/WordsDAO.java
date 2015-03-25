@@ -23,7 +23,7 @@ public class WordsDAO {
         private SQLiteDatabase mDatabase;
         private DBHelper mDbHelper;
         private String[] mAllColumns = {"id","firstLanguage","secondLanguage","picture","explanation"};
-        private String TABLE_NAME = "";
+        private String TABLE_NAME = "rus_eng_wordsTable";
 
         public WordsDAO(Context context, String TABLE_NAME) {
             mDbHelper = new DBHelper(context, TABLE_NAME);
@@ -42,7 +42,8 @@ public class WordsDAO {
         mDbHelper = new DBHelper(context, TABLE_NAME);
         this.mContext = context;
         try {
-            mDatabase = mDbHelper.getWritableDatabase();
+            //mDatabase = mDbHelper.getWritableDatabase();
+            open();
         }
         catch(SQLException e) {
             Log.e(TAG, "SQLException on openning database " + e.getMessage());

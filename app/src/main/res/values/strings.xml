@@ -20,4 +20,13 @@
     <string name="large_text"> Hi </string>
     <string name="callmenu"> Menu </string>
 
+    <string name="start_new">New</string>
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="paint">Paint</string>
+    <string name="sml">Small</string>
+    <string name="med">Medium</string>
+    <string name="lrg">Large</string>
+
 </resources>

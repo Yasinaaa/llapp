@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * Created by yasina on 11.03.15.
  */
-public class ListWordsPairActivity {
-        /*extends Activity
+public class ListWordsPairActivity
+        extends Activity
         implements View.OnClickListener {
     //AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
 
@@ -155,6 +155,6 @@ public class ListWordsPairActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-    */
+
 }
 
