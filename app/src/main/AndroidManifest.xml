@@ -20,6 +20,9 @@
         <activity android:name=".Activities.AddDictionaryActivity"></activity>
         <activity android:name=".AddWordsActivity"></activity>
         <activity android:name=".forPainting.MainPaint"></activity>
+        <activity android:name=".LearnWordsFragment"></activity>
+
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     </application>
 

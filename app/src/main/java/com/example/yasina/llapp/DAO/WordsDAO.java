@@ -42,8 +42,8 @@ public class WordsDAO {
         mDbHelper = new DBHelper(context, TABLE_NAME);
         this.mContext = context;
         try {
-            //mDatabase = mDbHelper.getWritableDatabase();
-            open();
+            mDatabase = mDbHelper.getWritableDatabase();
+           // open();
         }
         catch(SQLException e) {
             Log.e(TAG, "SQLException on openning database " + e.getMessage());

@@ -111,7 +111,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     private void changeFragment(int position) {
         switch (position) {
             case 0:
-                showFragment(new LearnWordsFragment());
+                //showFragment(new LearnWordsFragment());
+                startActivity(new Intent(getApplicationContext(),LearnWordsFragment.class));
                 break;
             case 1:
                // showFragment(new AddWordsFragment());

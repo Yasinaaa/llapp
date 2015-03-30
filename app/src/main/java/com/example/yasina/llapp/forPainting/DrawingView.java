@@ -9,9 +9,11 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.yasina.llapp.R;
 
@@ -62,8 +64,12 @@ public class DrawingView extends View {
         @Override
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
-            canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            drawCanvas = new Canvas(canvasBitmap);
+            if(w>0 && h>0) {
+                canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                drawCanvas = new Canvas(canvasBitmap);
+            }else {
+                Log.e("Drawing saved to Gallery!", "Mistake");
+            }
         }
 
         //draw the view - will be called after touch event
@@ -135,4 +141,8 @@ public class DrawingView extends View {
             drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
             invalidate();
         }
+
+       public Paint getPicture(){
+           return drawPaint;
+       }
     }
