@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/red_bg_header"
         android:gravity="center"
-        android:text="All Words Pair"
+        android:text="All Words"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white" />
 

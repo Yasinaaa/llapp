@@ -20,7 +20,8 @@
         <activity android:name=".Activities.AddDictionaryActivity"></activity>
         <activity android:name=".AddWordsActivity"></activity>
         <activity android:name=".forPainting.MainPaint"></activity>
-        <activity android:name=".LearnWordsFragment"></activity>
+        <activity android:name=".LearnWordsActivity"></activity>
+        <activity android:name=".Activities.ListWordsPairActivity"></activity>
 
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

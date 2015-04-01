@@ -70,7 +70,7 @@ public class ListWordsAdapter extends BaseAdapter {
             byte[] outImage = currentItem.getImage();
             ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-            holder.ivPicture.setImageBitmap(theImage);
+            holder.ivPicture.setImageBitmap(Bitmap.createScaledBitmap(theImage, 200, 120, false));
 
         }
 

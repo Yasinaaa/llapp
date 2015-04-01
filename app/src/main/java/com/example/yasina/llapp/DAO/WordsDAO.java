@@ -43,7 +43,7 @@ public class WordsDAO {
         this.mContext = context;
         try {
             mDatabase = mDbHelper.getWritableDatabase();
-           // open();
+            open();
         }
         catch(SQLException e) {
             Log.e(TAG, "SQLException on openning database " + e.getMessage());
@@ -53,7 +53,7 @@ public class WordsDAO {
 
         public void open() throws SQLException {
             mDatabase = mDbHelper.getWritableDatabase();
-            mDatabase.execSQL("CREATE TABLE " + TABLE_NAME + "("
+            mDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "firstLanguage TEXT NOT NULL, " +
                     "secondLanguage TEXT NOT NULL, " +
