@@ -18,6 +18,7 @@ import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
+import com.example.yasina.llapp.train.MenuTrainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
@@ -121,6 +122,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
               //  startActivity(new Intent(getApplicationContext(),ListCompaniesActivity.class));
                 break;
+            case 2:
+                startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
         }
     }
 
