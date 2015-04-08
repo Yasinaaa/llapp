@@ -137,7 +137,7 @@ public class ListWordsPairActivity
 		                  .setNegativeButton("OK",
                                   new DialogInterface.OnClickListener() {
                                       public void onClick(DialogInterface dialog, int id) {
-                                          name = input.getText().toString();
+                                          name = input.getText().toString() + "_theme";
                                           wordsDAO_new = new WordsDAO(getApplicationContext(),name);
                                           Log.d(TAG,"" + wordsDAO_new.getAllDictionaries().size());
                                           wordsDAO_new.addListOfWords(forTest);
@@ -157,7 +157,7 @@ public class ListWordsPairActivity
                         .setNegativeButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        name = input2.getText().toString();
+                                        name = input2.getText().toString() + "_theme";
                                         wordsDAO_new = new WordsDAO(getApplicationContext(),name);
 
                                         wordsDAO_new.addListOfWords(forTest);

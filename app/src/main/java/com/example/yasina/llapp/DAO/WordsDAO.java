@@ -142,5 +142,24 @@ public class WordsDAO {
             return wordPair;
         }
 
+    public ArrayList<String> allThemesTablesNames() {
+
+        ArrayList<String> dirArray = new ArrayList<String>();
+        Cursor c = mDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        while (c.moveToNext()) {
+            Log.d(TAG, "c.moveToNext");
+            String s = c.getString(0);
+            if (s.equals("android_metadata")) {
+                Log.d(TAG, "id equals");
+                //System.out.println("Get Metadata");
+                continue;
+            } else {
+                if(s.contains("_theme")){
+                dirArray.add(s);
+                Log.d(TAG, "dir add " + s);}
+            }
+        }
+        return dirArray;
+    }
     }
 

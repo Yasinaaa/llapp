@@ -1,40 +1,87 @@
 package com.example.yasina.llapp.train;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.yasina.llapp.Activities.ListDictionariesActivity;
+import com.example.yasina.llapp.Activities.ListWordsPairActivity;
+import com.example.yasina.llapp.Adapter.DictionariesSpinner;
+import com.example.yasina.llapp.Adapter.WordsPairsSpinner;
+import com.example.yasina.llapp.DAO.DBHelper;
+import com.example.yasina.llapp.DAO.DictionaryDAO;
+import com.example.yasina.llapp.DAO.WordsDAO;
+import com.example.yasina.llapp.Model.Dictionary;
+import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
-public class MenuTrainActivity extends Activity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MenuTrainActivity extends Activity implements View.OnClickListener {
+
+    private Spinner themesSpinner;
+    private WordsDAO wordsDAO;
+    private WordsPairsSpinner mAdapter;
+    private Words words;
+    private String tableName = "";
+    public static final String TAG = "MenuTrainActivity";
+    private  ArrayList<String> listOfTableThemeNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_train);
-    }
 
+        wordsDAO = new WordsDAO(this);
+        Log.d(TAG, " wordsDAO = new WordsDAO(this)");
+        final ArrayList<String> listOfTableThemeNames = wordsDAO.allThemesTablesNames();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listOfTableThemeNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        themesSpinner = (Spinner) findViewById(R.id.spinnerOfThemes);
+        Log.d(TAG, "size" + listOfTableThemeNames.size());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        themesSpinner.setAdapter(adapter);
+        themesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+        long name = themesSpinner.getSelectedItemId();
+        tableName = listOfTableThemeNames.get((int)name);
+        Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+      }
+      @Override
+              public void onNothingSelected(AdapterView<?> arg0) {
+              }
+            });
+
+     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_menu_train, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibAdd_newTheme:
+                startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
+                break;
+            case R.id.ibNext:
+                Intent intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
+                intent.putExtra("table name",tableName);
+                startActivity(intent);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
+
 }
