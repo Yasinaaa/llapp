@@ -76,7 +76,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {"All Words",getString(R.string.add_words_fragment)
+            String[] items = {"All Words",getString(R.string.add_words_fragment),"Train Words Theme"
                     /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
@@ -119,6 +119,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             case 1:
                // showFragment(new AddWordsFragment());
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
+              //  startActivity(new Intent(getApplicationContext(),ListCompaniesActivity.class));
                 break;
         }
     }
@@ -157,7 +158,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         switch (v.getId())
         {
             case R.id.ibAddDictionary:
-                startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+                //startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+                 startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
                 break;
 
             default:
@@ -168,6 +170,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         clickedDictionary = dictionariesSpinner.getSelectedItemId();
+        if(clickedDictionary == 0) clickedDictionary = 1;
 
         Log.d(TAG, "clickedItem : " + clickedDictionary);
 

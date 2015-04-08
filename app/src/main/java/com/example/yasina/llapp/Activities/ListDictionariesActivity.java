@@ -25,8 +25,8 @@ import java.util.List;
  * Created by yasina on 11.03.15.
  */
 public class ListDictionariesActivity extends Activity
-        implements View.OnClickListener {
-        //AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
+        implements View.OnClickListener,
+        AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
 
     public static final String TAG = "ListDicitonariesActivity";
 
@@ -50,22 +50,22 @@ public class ListDictionariesActivity extends Activity
 
         mDictionaryDao = new DictionaryDAO(this);
         mListDictionaries = mDictionaryDao.getAllDictionaries();
-        if(mListDictionaries != null && !mListDictionaries.isEmpty()) {
+       // if(mListDictionaries != null && !mListDictionaries.isEmpty()) {
             mAdapter = new ListDictionariesAdapter(this, mListDictionaries);
             mListviewDicitonaries.setAdapter(mAdapter);
-        }
-        else {
-            mTxtEmptyListDicitonaries.setVisibility(View.VISIBLE);
-            mListviewDicitonaries.setVisibility(View.GONE);
-        }
+       // }
+        //else {
+          //  mTxtEmptyListDicitonaries.setVisibility(View.VISIBLE);
+           // mListviewDicitonaries.setVisibility(View.GONE);
+        //}
     }
 
     private void initViews() {
         this.mListviewDicitonaries = (ListView) findViewById(R.id.list_dictionaries);
         this.mTxtEmptyListDicitonaries = (TextView) findViewById(R.id.txt_empty_list_dictionaries);
         this.mBtnAddDictionary = (ImageButton) findViewById(R.id.btn_addNewDictionary_activity_list_dict);
-       // this.mListviewDicitonaries.setOnItemClickListener(this);
-       // this.mListviewDicitonaries.setOnItemLongClickListener(this);
+        this.mListviewDicitonaries.setOnItemClickListener(this);
+        this.mListviewDicitonaries.setOnItemLongClickListener(this);
         this.mBtnAddDictionary.setOnClickListener(this);
     }
 
@@ -173,5 +173,15 @@ public class ListDictionariesActivity extends Activity
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return false;
     }
 }

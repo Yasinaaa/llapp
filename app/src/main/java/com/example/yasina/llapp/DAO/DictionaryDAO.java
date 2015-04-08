@@ -23,10 +23,15 @@ public class DictionaryDAO {
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
     private String[] mAllColumns = {DBHelper.COLUMN_NAME_ID, DBHelper.COLUMN_NAME, DBHelper.COLUMN_TYPE};
-    private String sql = "";
+    private String sql = "rus_eng_wordsTable";
+    private String SQL_CREATE_TABLE_DICTIONARY = "CREATE TABLE IF NOT EXISTS " + sql + " ("
+            + DBHelper.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + DBHelper.COLUMN_NAME + " TEXT NOT NULL, "
+            + DBHelper.COLUMN_TYPE + " TEXT NOT NULL)";
 
-    public DictionaryDAO(Context context) {
+    public DictionaryDAO(Context context,String name) {
         mDbHelper = new DBHelper(context);
+        sql = name;
         this.mContext = context;
         try {
             open();
@@ -37,8 +42,15 @@ public class DictionaryDAO {
         }
     }
 
+    public DictionaryDAO(Context context) {
+        mDbHelper = new DBHelper(context);
+        this.mContext = context;
+        mDatabase = mDbHelper.getWritableDatabase();
+    }
+
     public void open() throws SQLException {
         mDatabase = mDbHelper.getWritableDatabase();
+        createTable();
 
        // mDatabase.execSQL("DROP DATABASE dictionaries" );
     }
@@ -48,7 +60,7 @@ public class DictionaryDAO {
     }
 
     public void createTable(){
-        mDatabase.execSQL(sql);
+        mDatabase.execSQL(SQL_CREATE_TABLE_DICTIONARY);
     }
 
     public Dictionary createDictionary(String dictionaryName, String type) {

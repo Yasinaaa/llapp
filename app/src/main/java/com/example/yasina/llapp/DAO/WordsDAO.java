@@ -23,14 +23,14 @@ public class WordsDAO {
         private SQLiteDatabase mDatabase;
         private DBHelper mDbHelper;
         private String[] mAllColumns = {"id","firstLanguage","secondLanguage","picture","explanation"};
-        private String TABLE_NAME = "rus_eng_wordsTable";
+        private String TABLE_NAME = "";
 
         public WordsDAO(Context context, String TABLE_NAME) {
             mDbHelper = new DBHelper(context, TABLE_NAME);
             this.mContext = context;
             try {
-                open();
                 this.TABLE_NAME = TABLE_NAME;
+                open();
             }
             catch(SQLException e) {
                 Log.e(TAG, "SQLException on openning database " + e.getMessage());
@@ -38,18 +38,18 @@ public class WordsDAO {
             }
         }
 
-        public WordsDAO(Context context) {
+    public WordsDAO(Context context) {
         mDbHelper = new DBHelper(context, TABLE_NAME);
         this.mContext = context;
         try {
             mDatabase = mDbHelper.getWritableDatabase();
-            open();
         }
         catch(SQLException e) {
             Log.e(TAG, "SQLException on openning database " + e.getMessage());
             e.printStackTrace();
         }
-        }
+    }
+
 
         public void open() throws SQLException {
             mDatabase = mDbHelper.getWritableDatabase();
@@ -81,18 +81,33 @@ public class WordsDAO {
             return newWordPair;
         }
 
+       public void add(Words words){
+           ContentValues values = new ContentValues();
+           values.put("firstLanguage", words.getFirstLang());
+           values.put("secondLanguage", words.getSecondLang());
+           values.put("picture", words.getImage());
+           values.put("explanation", words.getExplanation());
+           long insertId = mDatabase.insert(TABLE_NAME, null, values);
+       }
+
+      public void addListOfWords(ArrayList<Words> forTest){
+          for(int i=0;i<forTest.size();i++){
+              add(forTest.get(i));
+          }
+      }
+
         public void deleteDictionary(Words wordPair) {
             long id = wordPair.getmId();
             System.out.println("the deleted dictionary has the id: " + id);
             mDatabase.delete(TABLE_NAME, "id" + " = " + id, null);
         }
 
-        public List<Words> getAllDictionaries() {
-            List<Words> listDictionaries = new ArrayList<Words>();
+        public ArrayList<Words> getAllDictionaries() {
+            ArrayList<Words> listDictionaries = new ArrayList<Words>();
 
             Cursor cursor = mDatabase.query(TABLE_NAME,
                     mAllColumns, null, null, null, null, null);
-
+        if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Words wordPair = cursorToDictionary(cursor);
@@ -100,6 +115,7 @@ public class WordsDAO {
                 cursor.moveToNext();
             }
             cursor.close();
+        }
             return listDictionaries;
         }
 

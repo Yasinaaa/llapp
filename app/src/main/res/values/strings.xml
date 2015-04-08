@@ -28,5 +28,7 @@
     <string name="sml">Small</string>
     <string name="med">Medium</string>
     <string name="lrg">Large</string>
+    <string name="title_activity_train_words">TrainWordsActivity</string>
+    <string name="title_activity_menu_train">MenuTrainActivity</string>
 
 </resources>

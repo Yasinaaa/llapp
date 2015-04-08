@@ -67,6 +67,7 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
                 Editable secondLang = mTxtSecondLang.getText();
                 clicked = spinner.getSelectedItem().toString();
                 if (!TextUtils.isEmpty(firstLang) && !TextUtils.isEmpty(secondLang)) {
+                   // mDictionaryDao = new DictionaryDAO(this,firstLang.toString() + "-" + secondLang.toString());
                     Dictionary createdDictionary = mDictionaryDao.createDictionary(
                             firstLang.toString() + "-" + secondLang.toString(),clicked);
 

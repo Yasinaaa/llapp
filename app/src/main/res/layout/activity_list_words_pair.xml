@@ -4,28 +4,85 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
+  <!--  <LinearLayout
+        android:id="@+id/layoutFirst"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:background="@drawable/sidemenu_items_background"
+        android:layout_height="wrap_content">
+        -->
+    <!-- android:layout_width="250dp" -->
     <TextView
         android:id="@+id/txt_header_list_wp"
         android:layout_width="match_parent"
+        android:background="@drawable/sidemenu_items_background"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-        android:background="@color/red_bg_header"
         android:gravity="center"
         android:text="All Words"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white" />
 
+
     <ImageButton
+        android:id="@+id/btn_train_words_list_to_theme"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="8dp"
+        android:onClick="onClick"
+        android:background="@drawable/train_words_pair"/>
+
+    <ImageButton
+        android:id="@+id/btn_save_words_list_to_theme"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:onClick="onClick"
+        android:layout_toRightOf= "@+id/btn_train_words_list_to_theme"
+        android:layout_margin="8dp"
+        android:background="@drawable/save_words_pair"
+        />
+
+   <!-- <ImageButton
         android:id="@+id/btn_addNewDWP_activity_list_wp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@null"
-        android:src="@android:drawable/ic_menu_add" />
+        android:background="@drawable/plus_words"
+
+        android:src="@android:drawable/ic_menu_add"
+        android:contentDescription="@null"/>
+        -->
+
+  <!--  <ImageButton
+        android:id="@+id/btn_saveTheme_activity_list_wp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="6dp"
+        android:onClick="onClick"
+        android:background="@drawable/save_words_pair"
+ />
+        <ImageButton
+            android:id="@+id/btn_trainWords_activity_list_wp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/train_words_pair"
+            />
+
+    </LinearLayout> -->
+
 
     <TextView
         android:id="@+id/txt_empty_list_wp"
@@ -47,6 +104,6 @@
         android:layout_margin="4dp"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="0.5dp"
-        android:listSelector="@android:drawable/list_selector_background" />
+        android:listSelector="@color/red_bg_header" />
 
 </RelativeLayout>

@@ -12,19 +12,28 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DictionaryActivity"></activity>
-        <activity android:name=".Activities.ListDictionariesActivity"></activity>
-        <activity android:name=".Activities.AddDictionaryActivity"></activity>
-        <activity android:name=".AddWordsActivity"></activity>
-        <activity android:name=".forPainting.MainPaint"></activity>
-        <activity android:name=".LearnWordsActivity"></activity>
-        <activity android:name=".Activities.ListWordsPairActivity"></activity>
+        <activity android:name=".DictionaryActivity" />
+        <activity android:name=".Activities.ListDictionariesActivity" />
+        <activity android:name=".Activities.AddDictionaryActivity" />
+        <activity android:name=".AddWordsActivity" />
+        <activity android:name=".forPainting.MainPaint" />
+        <activity android:name=".LearnWordsActivity" />
+        <activity android:name=".Activities.ListWordsPairActivity" />
 
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+        <activity
+            android:name=".train.TrainWordsActivity"
+            android:label="@string/title_activity_train_words" >
+        </activity>
+        <activity
+            android:name=".train.MenuTrainActivity"
+            android:label="@string/title_activity_menu_train" >
+        </activity>
     </application>
 
 </manifest>
