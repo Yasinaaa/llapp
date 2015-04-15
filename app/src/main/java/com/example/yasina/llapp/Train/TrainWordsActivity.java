@@ -1,4 +1,4 @@
-package com.example.yasina.llapp.train;
+package com.example.yasina.llapp.Train;
 
 import android.os.Bundle;
 
@@ -37,9 +37,11 @@ public class TrainWordsActivity extends FragmentActivity {
             setContentView(R.layout.activity_train_words);
 
             name = getIntent().getExtras().getString("table name");
+            Log.d(" Name",name+"");
             themeWordsDAO = new WordsDAO(getApplicationContext(),name);
             words = new ArrayList<Words>();
             words =  themeWordsDAO.getAllDictionaries();
+            Log.d("Train",words.size()+"");
 
             pager = (ViewPager) findViewById(R.id.pager);
             pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -70,8 +72,10 @@ public class TrainWordsActivity extends FragmentActivity {
                 super(fm);
             }
 
+
             @Override
             public Fragment getItem(int position) {
+                Log.d("words.get(position)"," " + words.get(position));
                 return FragmentOfWord.newInstance(position,words.get(position));
             }
 

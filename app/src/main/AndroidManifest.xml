@@ -27,12 +27,20 @@
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
         <activity
-            android:name=".train.TrainWordsActivity"
+            android:name=".Train.TrainWordsActivity"
             android:label="@string/title_activity_train_words" >
         </activity>
         <activity
-            android:name=".train.MenuTrainActivity"
+            android:name=".Train.MenuTrainActivity"
             android:label="@string/title_activity_menu_train" >
+        </activity>
+        <activity
+            android:name=".Notification.NotificationWordActivity"
+            android:label="@string/title_activity_notification_word" >
+        </activity>
+        <activity
+            android:name=".Notification.NotificationView"
+            android:label="@string/title_activity_notification_view" >
         </activity>
     </application>
 

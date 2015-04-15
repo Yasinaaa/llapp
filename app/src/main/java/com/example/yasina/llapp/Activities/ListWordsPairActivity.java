@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.yasina.llapp.Adapter.ListWordsAdapter;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.DAO.WordsDAO;
@@ -20,7 +20,7 @@ import com.example.yasina.llapp.MainMenuActivity;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
-import com.example.yasina.llapp.train.TrainWordsActivity;
+import com.example.yasina.llapp.Train.TrainWordsActivity;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -67,7 +67,8 @@ public class ListWordsPairActivity
 
         initViews();
 
-        mWordsPairDao = new WordsDAO(this,name2);
+       mWordsPairDao = new WordsDAO(this,name2);
+
         mListWP = mWordsPairDao.getAllDictionaries();
         if(mListWP != null && !mListWP.isEmpty()) {
 

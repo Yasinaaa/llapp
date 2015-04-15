@@ -1,11 +1,7 @@
-package com.example.yasina.llapp.train;
+package com.example.yasina.llapp.Train;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,19 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
-import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.Adapter.WordsPairsSpinner;
-import com.example.yasina.llapp.DAO.DBHelper;
-import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.DAO.WordsDAO;
-import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuTrainActivity extends Activity implements View.OnClickListener {
 
@@ -76,6 +66,8 @@ public class MenuTrainActivity extends Activity implements View.OnClickListener 
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case R.id.ibNext:
+
+                Toast.makeText(getBaseContext(), "TableName = " + tableName, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);

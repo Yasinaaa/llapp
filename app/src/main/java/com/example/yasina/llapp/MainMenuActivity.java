@@ -18,7 +18,8 @@ import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
-import com.example.yasina.llapp.train.MenuTrainActivity;
+import com.example.yasina.llapp.Notification.NotificationWordActivity;
+import com.example.yasina.llapp.Train.MenuTrainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
@@ -77,7 +78,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {"All Words",getString(R.string.add_words_fragment),"Train Words Theme"
+            String[] items = {"All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification"
                     /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
@@ -124,6 +125,12 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 break;
             case 2:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+                break;
+            case 3:
+                Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
+               intent.putExtra("table name","hi_theme");
+                startActivity(intent);
+                break;
         }
     }
 

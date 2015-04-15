@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.example.yasina.llapp.Model.Words;
@@ -104,7 +105,7 @@ public class WordsDAO {
 
         public ArrayList<Words> getAllDictionaries() {
             ArrayList<Words> listDictionaries = new ArrayList<Words>();
-
+            Log.d("allDic","" + TABLE_NAME);
             Cursor cursor = mDatabase.query(TABLE_NAME,
                     mAllColumns, null, null, null, null, null);
         if (cursor != null) {
@@ -112,11 +113,15 @@ public class WordsDAO {
             while (!cursor.isAfterLast()) {
                 Words wordPair = cursorToDictionary(cursor);
                 listDictionaries.add(wordPair);
+                Log.d("Add","" + wordPair.getFirstLang());
                 cursor.moveToNext();
             }
             cursor.close();
         }
+
+            Log.d("size","" + listDictionaries.size());
             return listDictionaries;
+
         }
 
 
@@ -147,16 +152,14 @@ public class WordsDAO {
         ArrayList<String> dirArray = new ArrayList<String>();
         Cursor c = mDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
         while (c.moveToNext()) {
-            Log.d(TAG, "c.moveToNext");
             String s = c.getString(0);
-            if (s.equals("android_metadata")) {
-                Log.d(TAG, "id equals");
+            if (s.equals("android_metadata")) {;
                 //System.out.println("Get Metadata");
                 continue;
             } else {
-                if(s.contains("_theme")){
-                dirArray.add(s);
-                Log.d(TAG, "dir add " + s);}
+                if(s.contains("_theme")) {
+                    dirArray.add(s);
+                }
             }
         }
         return dirArray;
