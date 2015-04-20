@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class TrainWordsActivity extends FragmentActivity {
 
         static final String TAG = "myLogs";
-        static final int PAGE_COUNT = 10;
 
         ViewPager pager;
         PagerAdapter pagerAdapter;
@@ -72,7 +71,6 @@ public class TrainWordsActivity extends FragmentActivity {
                 super(fm);
             }
 
-
             @Override
             public Fragment getItem(int position) {
                 Log.d("words.get(position)"," " + words.get(position));
@@ -81,7 +79,7 @@ public class TrainWordsActivity extends FragmentActivity {
 
             @Override
             public int getCount() {
-                return PAGE_COUNT;
+                return words.size();
             }
 
         }

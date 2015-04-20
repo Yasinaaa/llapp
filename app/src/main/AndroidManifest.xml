@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yasina.llapp" >
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -42,6 +45,25 @@
             android:name=".Notification.NotificationView"
             android:label="@string/title_activity_notification_view" >
         </activity>
+        <activity
+            android:name=".Alarm.AlarmListActivity"
+            android:label="@string/title_activity_alarm_list" >
+        </activity>
+
+        <activity
+            android:name=".Alarm.AlarmDetailsActivity">
+        </activity>
+        <activity
+            android:name=".Alarm.AlarmScreen">
+        </activity>
+        <service android:name=".Alarm.AlarmService"
+            android:enabled="true"/>
+        <receiver android:name=".Alarm.AlarmManagerHelper" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

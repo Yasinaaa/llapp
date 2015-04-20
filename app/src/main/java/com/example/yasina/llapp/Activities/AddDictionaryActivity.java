@@ -91,10 +91,6 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         clicked = spinner.getSelectedItem().toString();
         Log.d(TAG, "clickedItem : "+clicked);
-
-       // Intent intent = new Intent(this, ListEmployeesActivity.class);
-       // intent.putExtra(ListEmployeesActivity.EXTRA_SELECTED_COMPANY_ID, clickedCompany.getId());
-       // startActivity(intent);
     }
 
     @Override
