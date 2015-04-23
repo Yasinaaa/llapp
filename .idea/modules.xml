@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SlidingMenu/SlidingMenu.iml" filepath="$PROJECT_DIR$/SlidingMenu/SlidingMenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appAlarm/appAlarm.iml" filepath="$PROJECT_DIR$/appAlarm/appAlarm.iml" />
       <module fileurl="file://$PROJECT_DIR$/llapp.iml" filepath="$PROJECT_DIR$/llapp.iml" />
     </modules>
   </component>
