@@ -129,7 +129,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 break;
             case 3:
                 Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
-                intent.putExtra("table name","hi_theme");
+                intent.putExtra("table name","first_theme");
                 startActivity(intent);
                 break;
             case 4:

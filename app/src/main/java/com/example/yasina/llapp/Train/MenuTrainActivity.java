@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.WordsPairsSpinner;
+import com.example.yasina.llapp.Alarm.AlarmListActivity;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
@@ -72,6 +73,12 @@ public class MenuTrainActivity extends Activity implements View.OnClickListener 
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
                 break;
+            case R.id.alarmSet:
+               // startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
+                Intent intent2 = new Intent(getApplicationContext(), AlarmListActivity.class);
+
+                intent2.putExtra("table name",tableName);
+                startActivity(intent2);
         }
     }
 
