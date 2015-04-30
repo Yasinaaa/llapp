@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     >
 
     <LinearLayout
@@ -44,14 +45,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="30dp">
+        >
 
         <TextView
             android:id="@+id/etLang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="10dp"
             android:padding="7dp"
             android:ems="9"
             android:hint="Dictionaries"
@@ -64,13 +65,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/ll2"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="10dp"
         >
 
         <Spinner
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:ems="9"
+            android:textSize="15dp"
             android:id="@+id/spinnerOfDictionaries"
             />
         <ImageButton
@@ -79,10 +84,116 @@
             android:layout_height="20dp"
             android:src="@drawable/add"
             android:onClick="onClick"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="0dp"
             android:layout_weight="4" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="10dp"
+        >
+    <TextView
+        android:id="@+id/etTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:ems="9"
+        android:hint="Theme"
+        android:textSize="15dp"
+        android:layout_weight="1"
+        />
+        <TextView
+            android:id="@+id/tv_theme_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="first"
+            android:ems="9"
+            android:padding="7dp"
+            android:textSize="15dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="10dp"
+        >
+        <TextView
+            android:id="@+id/etAlarm_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:ems="9"
+            android:hint="Alarm"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tv_AlarmThemeFrom_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From Monday 12:30"
+            android:ems="9"
+            android:padding="7dp"
+            android:textSize="15dp"
+            android:layout_weight="5"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="265dp"
+        android:layout_marginLeft="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:ems="9"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tv_AlarmThemeTo_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Wendesday 12:30"
+            android:ems="9"
+            android:padding="7dp"
+            android:textSize="15dp"
+            android:layout_weight="5"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:ems="9"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tv_AlarmThemeRepeat_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Every 20 min"
+            android:ems="9"
+            android:padding="7dp"
+            android:textSize="15dp"
+            android:layout_weight="5"/>
+    </LinearLayout>
+
 
 </FrameLayout>

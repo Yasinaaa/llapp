@@ -95,7 +95,12 @@ public class AlarmScreen extends Activity {
             byte[] outImage = alarmWord.getImage();
             ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-            im1.setImageBitmap(theImage);
+
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(outImage, 0, outImage.length);
+            im1.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 200, 120, false));
+
+            //im1.setImageBitmap(theImage);
 
             text3.setText(alarmWord.getExplanation());
 
@@ -108,12 +113,16 @@ public class AlarmScreen extends Activity {
                finish();
             }
         });
+            cu = cu + 1;
 
-            intent.putExtra("current", cu + 1);
-            PendingIntent   pendingIntent =   PendingIntent.getActivity(this,
-                    12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
-                    1000 * 15, pendingIntent);
+            if(amount != cu) {
+                intent.putExtra("current", cu);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                        12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
+                        1000 * 15, pendingIntent);
+            }
+
         }
 
 

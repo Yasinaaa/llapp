@@ -37,7 +37,7 @@ public class FragmentTabColor extends SherlockFragment {
               word = savedInstanceState.getInt(WORD);
 
        // View view = inflater.inflate(R.layout.fragment_second_color, container, false);
-        View view = inflater.inflate(R.layout.add_words, container, false);;
+        View view = inflater.inflate(R.layout.add_words, container, false);
         //if(word == 0)
               //  view = inflater.inflate(R.layout.add_words_document, container, false);
         //else

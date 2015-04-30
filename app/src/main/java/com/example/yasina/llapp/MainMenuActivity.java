@@ -3,6 +3,7 @@ package com.example.yasina.llapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -79,7 +80,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {"All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification","Alarm"
+            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification","Alarm"
                     /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
@@ -115,26 +116,33 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     private void changeFragment(int position) {
         switch (position) {
             case 0:
+                startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
+                break;
+            case 1:
                 //showFragment(new LearnWordsFragment());
                // startActivity(new Intent(getApplicationContext(),LearnWordsActivity.class));
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
-            case 1:
-               // showFragment(new AddWordsFragment());
-                startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
-              //  startActivity(new Intent(getApplicationContext(),ListCompaniesActivity.class));
-                break;
             case 2:
-                startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+//                showFragment(new AddWordsActivity());
+                startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
+
                 break;
             case 3:
+                startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+                break;
+            case 4:
                 Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
                 intent.putExtra("table name","first_theme");
                 startActivity(intent);
                 break;
-            case 4:
-                startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
+            case 5:
+               Intent i = new Intent(getApplicationContext(), AlarmListActivity.class);
+                i.putExtra("table name","first_theme");
+                startActivity(i);
                 break;
+
+
         }
     }
 
@@ -142,6 +150,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()//.show(currentFragment)
                .replace(R.id.container, currentFragment)
+
                 .commit();
     }
 

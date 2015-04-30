@@ -52,7 +52,7 @@ public class AlarmDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        cur = 0;
+        cur = 1;
         setContentView(R.layout.activity_details);
 
         getActionBar().setTitle("Create New Alarm");
@@ -169,12 +169,34 @@ public class AlarmDetailsActivity extends Activity {
                 final int nowDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
                 final int nowHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                 final int nowMinute = Calendar.getInstance().get(Calendar.MINUTE);
+                boolean alarmSet = false;
 
-               // name = getIntent().getExtras().getString("table name");
-               // Log.d(" Name",name+"");
+                for(int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
+                    if (alarmDetails.getRepeatingDay(dayOfWeek - 1) && dayOfWeek >= nowDay &&
+                            !(dayOfWeek == nowDay && alarmDetails.timeHour < nowHour) &&
+                            !(dayOfWeek == nowDay && alarmDetails.timeHour == nowHour && alarmDetails.timeMinute <= nowMinute)) {
+                        calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
 
+                        a.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        //setAlarm(context, calendar, pIntent);
+                        alarmSet = true;
+                        break;
+                    }
+                }
 
-
+                //Else check if it's earlier in the week
+                if (!alarmSet) {
+                    for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
+                        if (alarmDetails.getRepeatingDay(dayOfWeek - 1) && dayOfWeek <= nowDay && alarmDetails.repeatWeekly) {
+                            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+                            calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                            a.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                            // setAlarm(context, calendar, pIntent);
+                            alarmSet = true;
+                            break;
+                        }
+                    }
+                }
 
                 Log.d("now time", SystemClock.elapsedRealtime() + "");
                 a.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
