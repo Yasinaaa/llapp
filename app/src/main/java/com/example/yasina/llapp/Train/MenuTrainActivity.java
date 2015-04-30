@@ -119,6 +119,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.ibAdd_newTheme:
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
@@ -126,16 +127,23 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
             case R.id.ibNext:
 
                 Toast.makeText(getBaseContext(), "TableName = " + tableName, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
+                intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
                 break;
             case R.id.alarmSet:
                // startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                Intent intent2 = new Intent(getApplicationContext(), AlarmListActivity.class);
+                 intent = new Intent(getApplicationContext(), AlarmDetailsActivity.class);
 
-                intent2.putExtra("table name",tableName);
-                startActivity(intent2);
+               // intent2.putExtra("table name",tableName);
+                startActivity(intent);
+                break;
+
+            case R.id.ibTestTrain:
+                intent = new Intent(getApplicationContext(), TestTrain.class);
+                intent.putExtra("table name",tableName);
+                startActivity(intent);
+                break;
         }
     }
 

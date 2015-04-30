@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -30,57 +31,87 @@ import java.util.GregorianCalendar;
 
 public class AlarmDetailsActivity extends Activity {
 
-    private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
+  //  private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
 
     private AlarmModel alarmDetails;
 
-    private TimePicker timePicker;
-    private EditText edtName;
-    private CustomSwitch chkWeekly;
+   // private TimePicker timePicker;
+   // private EditText edtName;
+   /* private CustomSwitch chkWeekly;
     private CustomSwitch chkSunday;
     private CustomSwitch chkMonday;
     private CustomSwitch chkTuesday;
     private CustomSwitch chkWednesday;
     private CustomSwitch chkThursday;
     private CustomSwitch chkFriday;
-    private CustomSwitch chkSaturday;
+    private CustomSwitch chkSaturday;*/
     private TextView txtToneSelection;
-    public static int cur;
+
+    private EditText et_fromHours, et_fromMinutes, et_toHours, et_toMinutes, et_repeatTime,
+    et_fromDay, et_fromYear, et_toDay, et_toYear;
+
+    private Spinner timeSize, timeMonth_from, timeMonth_to;
+    private TextView theme_name;
+    public  int cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        cur = 1;
-        setContentView(R.layout.activity_details);
+        cur = 0;
+        setContentView(R.layout.activity_details2);
 
         getActionBar().setTitle("Create New Alarm");
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        timePicker = (TimePicker) findViewById(R.id.alarm_details_time_picker);
-        edtName = (EditText) findViewById(R.id.alarm_details_name);
-        chkWeekly = (CustomSwitch) findViewById(R.id.alarm_details_repeat_weekly);
+       // timePicker = (TimePicker) findViewById(R.id.alarm_details_time_picker);
+        et_fromHours = (EditText) findViewById(R.id.editText_hours);
+        et_fromMinutes = (EditText) findViewById(R.id.editText_minutes);
+        et_toHours = (EditText) findViewById(R.id.editText_hours_TO);
+        et_toMinutes = (EditText) findViewById(R.id.editText_minutes_TO);
+        et_repeatTime = (EditText) findViewById(R.id.editText_repeat);
+        et_fromDay = (EditText) findViewById(R.id.editText_fromDay);
+        timeMonth_from = (Spinner) findViewById(R.id.spinner_fromMonth);
+        et_fromYear  = (EditText) findViewById(R.id.editText_fromYear);
+        et_toDay  = (EditText) findViewById(R.id.editText_ToDay);
+        timeMonth_to = (Spinner) findViewById(R.id.spinner_ToMonth);
+        et_toYear  = (EditText) findViewById(R.id.editText_ToYear);
+
+        timeSize = (Spinner) findViewById(R.id.spinnerAlarmTime);
+
+       // edtName = (EditText) findViewById(R.id.alarm_details_name);
+       /* chkWeekly = (CustomSwitch) findViewById(R.id.alarm_details_repeat_weekly);
         chkSunday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_sunday);
         chkMonday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_monday);
         chkTuesday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_tuesday);
         chkWednesday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_wednesday);
         chkThursday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_thursday);
         chkFriday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_friday);
-        chkSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
+        chkSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);*/
         txtToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 
-        long id = getIntent().getExtras().getLong("id");
+       // long id = getIntent().getExtras().getLong("id");
 
-        if (id == -1) {
+      /*  if (id == -1) {
             alarmDetails = new AlarmModel();
         } else {
-            alarmDetails = dbHelper.getAlarm(id);
+            alarmDetails = dbHelper.getAlarm(id);*/
 
-            timePicker.setCurrentMinute(alarmDetails.timeMinute);
-            timePicker.setCurrentHour(alarmDetails.timeHour);
+            //timePicker.setCurrentMinute(alarmDetails.timeMinute);
+            //timePicker.setCurrentHour(alarmDetails.timeHour);
+            alarmDetails = new AlarmModel();
 
-            edtName.setText(alarmDetails.name);
+           Calendar currentTime = new GregorianCalendar();
+           et_fromHours.setText(currentTime.getTime().getHours()+"");
+           et_fromMinutes.setText(currentTime.getTime().getMinutes()+"");
+           et_fromDay.setText(currentTime.getTime().getDay()+"");
+           et_fromYear.setText(currentTime.getTime().getYear()+"");
+
+          /*  et_fromHours.setText(alarmDetails.timeHour);
+            et_fromMinutes.setText(alarmDetails.timeHour);
+
+            //edtName.setText(alarmDetails.name);
 
             chkWeekly.setChecked(alarmDetails.repeatWeekly);
             chkSunday.setChecked(alarmDetails.getRepeatingDay(AlarmModel.SUNDAY));
@@ -91,8 +122,8 @@ public class AlarmDetailsActivity extends Activity {
             chkFriday.setChecked(alarmDetails.getRepeatingDay(AlarmModel.FRDIAY));
             chkSaturday.setChecked(alarmDetails.getRepeatingDay(AlarmModel.SATURDAY));
 
-            txtToneSelection.setText(RingtoneManager.getRingtone(this, alarmDetails.alarmTone).getTitle(this));
-        }
+            txtToneSelection.setText(RingtoneManager.getRingtone(this, alarmDetails.alarmTone).getTitle(this));*/
+
 
         final LinearLayout ringToneContainer = (LinearLayout) findViewById(R.id.alarm_ringtone_container);
         ringToneContainer.setOnClickListener(new View.OnClickListener() {
@@ -154,11 +185,11 @@ public class AlarmDetailsActivity extends Activity {
                 a.cancel(pendingIntent);
 
 
-                if (alarmDetails.id < 0) {
+              /*  if (alarmDetails.id < 0) {
                     dbHelper.createAlarm(alarmDetails);
                 } else {
                     dbHelper.updateAlarm(alarmDetails);
-                }
+                }*/
 
                 Calendar calendar = new GregorianCalendar();
                 calendar.set(Calendar.HOUR_OF_DAY, alarmDetails.timeHour);
@@ -171,7 +202,7 @@ public class AlarmDetailsActivity extends Activity {
                 final int nowMinute = Calendar.getInstance().get(Calendar.MINUTE);
                 boolean alarmSet = false;
 
-                for(int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
+              /*  for(int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
                     if (alarmDetails.getRepeatingDay(dayOfWeek - 1) && dayOfWeek >= nowDay &&
                             !(dayOfWeek == nowDay && alarmDetails.timeHour < nowHour) &&
                             !(dayOfWeek == nowDay && alarmDetails.timeHour == nowHour && alarmDetails.timeMinute <= nowMinute)) {
@@ -190,13 +221,13 @@ public class AlarmDetailsActivity extends Activity {
                         if (alarmDetails.getRepeatingDay(dayOfWeek - 1) && dayOfWeek <= nowDay && alarmDetails.repeatWeekly) {
                             calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
                             calendar.add(Calendar.WEEK_OF_YEAR, 1);
-                            a.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
                             // setAlarm(context, calendar, pIntent);
                             alarmSet = true;
                             break;
                         }
                     }
-                }
+                }*/
 
                 Log.d("now time", SystemClock.elapsedRealtime() + "");
                 a.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
@@ -211,17 +242,19 @@ public class AlarmDetailsActivity extends Activity {
     }
 
     private void updateModelFromLayout() {
-        alarmDetails.timeMinute = timePicker.getCurrentMinute().intValue();
-        alarmDetails.timeHour = timePicker.getCurrentHour().intValue();
-        alarmDetails.name = edtName.getText().toString();
-        alarmDetails.repeatWeekly = chkWeekly.isChecked();
+        alarmDetails.timeMinute = Integer.parseInt(et_fromMinutes.getText().toString());
+                //timePicker.getCurrentMinute().intValue();
+        alarmDetails.timeHour = Integer.parseInt(et_fromHours.getText().toString());
+       // //timePicker.getCurrentHour().intValue();
+        //alarmDetails.name = edtName.getText().toString();
+      /*  alarmDetails.repeatWeekly = chkWeekly.isChecked();
         alarmDetails.setRepeatingDay(AlarmModel.SUNDAY, chkSunday.isChecked());
         alarmDetails.setRepeatingDay(AlarmModel.MONDAY, chkMonday.isChecked());
         alarmDetails.setRepeatingDay(AlarmModel.TUESDAY, chkTuesday.isChecked());
         alarmDetails.setRepeatingDay(AlarmModel.WEDNESDAY, chkWednesday.isChecked());
         alarmDetails.setRepeatingDay(AlarmModel.THURSDAY, chkThursday.isChecked());
         alarmDetails.setRepeatingDay(AlarmModel.FRDIAY, chkFriday.isChecked());
-        alarmDetails.setRepeatingDay(AlarmModel.SATURDAY, chkSaturday.isChecked());
+        alarmDetails.setRepeatingDay(AlarmModel.SATURDAY, chkSaturday.isChecked());*/
         alarmDetails.isEnabled = true;
     }
 

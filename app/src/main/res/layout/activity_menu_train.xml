@@ -64,6 +64,16 @@
         android:background="#ebaa5b"
   />
 
+    <Button
+        android:id="@+id/ibTestTrain"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:onClick="onClick"
+        android:background="#ebaa5b"
+        />
+
 
 
 </LinearLayout>

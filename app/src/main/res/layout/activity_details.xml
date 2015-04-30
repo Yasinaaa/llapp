@@ -31,21 +31,49 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:id="@+id/alarm_details_name"
+        <TextView
+            android:id="@+id/textView_repeat"
+            android:text="Repeat every "
+            android:layout_below="@+id/alarm_details_time_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/alarm_details_time_picker"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:ems="10"
-            android:hint="@string/details_alarm_name" />
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_repeat"
+
+           >
+
+            <EditText
+                android:id="@+id/alarm_details_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:ems="10"
+                android:hint="@string/details_alarm_name" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTimeRepeat"
+                android:id="@+id/spinnerAlarmTime">
+                </Spinner>
+            </LinearLayout>
+
 
         <View
             android:id="@+id/divider2"
             style="@style/Divider"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/alarm_details_name" />
+            android:layout_below="@+id/layout1" />
 
          <com.example.yasina.llapp.Alarm.CustomSwitch
              android:id="@+id/alarm_details_repeat_weekly"

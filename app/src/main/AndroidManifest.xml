@@ -49,21 +49,25 @@
             android:name=".Alarm.AlarmListActivity"
             android:label="@string/title_activity_alarm_list" >
         </activity>
+        <activity android:name=".Alarm.AlarmDetailsActivity" >
+        </activity>
+        <activity android:name=".Alarm.AlarmScreen" >
+        </activity>
 
-        <activity
-            android:name=".Alarm.AlarmDetailsActivity">
-        </activity>
-        <activity
-            android:name=".Alarm.AlarmScreen">
-        </activity>
-        <service android:name=".Alarm.AlarmService"
-            android:enabled="true"/>
-        <receiver android:name=".Alarm.AlarmManagerHelper" >
+        <service
+            android:name=".Alarm.AlarmService"
+            android:enabled="true" />
+
+       <!-- <receiver android:name=".Alarm.AlarmManagerHelper" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
 
+        <activity
+            android:name=".Train.TestTrain"
+            android:label="@string/title_activity_test_train" >
+        </activity>
     </application>
 
 </manifest>

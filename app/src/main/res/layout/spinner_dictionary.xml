@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:layout_margin="8dp" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ll1">
+
         <TextView
             android:id="@+id/txt_dictionaryName_of_spinnerd"
             android:layout_width="match_parent"
@@ -16,26 +14,25 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:text="Dictionay Name"
+            android:ems="10"
+            android:textSize="15dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             />
-        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ll2"
-        android:layout_below="@+id/ll1">
     <TextView
         android:id="@+id/txt_dictionaryType_of_spinnerd"
+        android:layout_below="@id/txt_dictionaryName_of_spinnerd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Dictionay Type"
+        android:ems="10"
+        android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
        />
-    </LinearLayout>
 
 
-</RelativeLayout>
+
+</LinearLayout>

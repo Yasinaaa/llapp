@@ -24,7 +24,7 @@ public class StartActivity extends SherlockFragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start);
         signButton = (Button)findViewById(R.id.signInButton);
-        //signButton.setOnClickListener();
+        signButton.setOnClickListener(onClick(););
 
     }
 
@@ -41,7 +41,7 @@ public class StartActivity extends SherlockFragmentActivity
             default:
                 break;
         }
-    }*/
-
+    }
+*/
 }
 

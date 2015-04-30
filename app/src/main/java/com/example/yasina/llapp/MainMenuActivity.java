@@ -22,6 +22,7 @@ import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Notification.NotificationWordActivity;
 import com.example.yasina.llapp.Train.MenuTrainActivity;
+import com.example.yasina.llapp.Train.TestTrain;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
@@ -184,6 +185,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 //startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
                  startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
                 break;
+
+
 
             default:
                 break;

@@ -104,7 +104,7 @@ public class AlarmScreen extends Activity {
 
             text3.setText(alarmWord.getExplanation());
 
-       Button dismissButton = (Button) findViewById(R.id.alarm_screen_button);
+        Button dismissButton = (Button) findViewById(R.id.alarm_screen_button);
         dismissButton.setOnClickListener(new OnClickListener() {
 
             @Override
