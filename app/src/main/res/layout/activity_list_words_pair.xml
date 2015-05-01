@@ -24,7 +24,7 @@
         android:textColor="@android:color/white" />
 
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_train_words_list_to_theme"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -100,7 +100,7 @@
         android:id="@+id/list_wps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/txt_header_list_wp"
+        android:layout_below="@+id/btn_save_words_list_to_theme"
         android:layout_margin="4dp"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="0.5dp"

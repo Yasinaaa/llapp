@@ -3,6 +3,8 @@ package com.example.yasina.llapp.Train;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -39,6 +41,8 @@ public class TrainWordsActivity extends FragmentActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_train_words);
+
+            getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
 
             try {
 

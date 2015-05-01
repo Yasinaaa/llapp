@@ -45,26 +45,23 @@ public class ListWordsPairActivity
 
     public static final String TAG = "ListWordsPairActivity";
 
-    public static final int REQUEST_CODE_ADD_WORDS_PAIR = 40;
-    public static final String EXTRA_ADDED_WORDS_PAIR = "extra_key_added_words_pair";
-
     private ListView mListviewWP;
     private TextView mTxtEmptyWP;
-    private ImageButton mBtnAddWP;
-
     private ListWordsAdapter mAdapter;
     private ArrayList<Words> mListWP;
     private WordsDAO mWordsPairDao;
     private ArrayList<Words> forTest;
     private String name2 = "";
 
-    private static int currentMenuPosition = -1;
+    private int currentMenuPosition = -1;
     private SlidingMenu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_words_pair);
+
+        getActionBar().setTitle("All Words");
 
         try {
             DictionaryDAO dicDAO = new DictionaryDAO(this);
@@ -92,10 +89,6 @@ public class ListWordsPairActivity
                         Words clickedWordsPair = ((Words) adapterView.getItemAtPosition(i));
                         forTest.add(clickedWordsPair);
                         Log.d(TAG, "clickedItem : " + clickedWordsPair.getFirstLang());
-                  /*  Toast.makeText(getApplicationContext(), ((Words)
-                            adapterView.getItemAtPosition(i)).getFirstLang(), Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "clickedItem : " + i);//clickedWordsPair.getFirstLang());*/
-
 
                     }
                 });
@@ -103,7 +96,7 @@ public class ListWordsPairActivity
                 mTxtEmptyWP.setVisibility(View.VISIBLE);
                 mListviewWP.setVisibility(View.GONE);
             }
-        }catch (Exception e){
+        }catch (RuntimeException e){
             setContentView(R.layout.empty);
 
             String button1String = "Create dictionary";
@@ -125,27 +118,13 @@ public class ListWordsPairActivity
             ad.setCancelable(true);
             ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 public void onCancel(DialogInterface dialog) {
-
+                    finish();
                 }
             });
             AlertDialog alert = ad.create();
             alert.show();
         }
-       /* mListviewWP.setOnItemClickListener(
-                new OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View view,
-                                            int position, long id) {
-                        Words clickedWordsPair = mAdapter.getItem(position);
-                        Log.d(TAG, "clickedItem : " + clickedWordsPair.getFirstLang());
-                        forTest.add(clickedWordsPair);
 
-
-                    }
-                }
-        );*/
-        //  return view;
         SlidingMenu menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -153,7 +132,6 @@ public class ListWordsPairActivity
         menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
         menu.setMenu(R.layout.sidemenu);
         menu.setBackgroundColor(0xFF333333);
-        //menu.setBackgroundColor(EBAA5B);
         menu.setBehindWidthRes(R.dimen.slidingmenu_behind_width);
         menu.setSelectorDrawable(R.drawable.sidemenu_items_background);
 
@@ -169,11 +147,8 @@ public class ListWordsPairActivity
             }
         });
 
-        if (currentMenuPosition != -1) {
-            ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
-        }
 
-        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
+        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"
 
         };
 
@@ -196,11 +171,9 @@ public class ListWordsPairActivity
     private void initViews() {
         this.mListviewWP = (ListView) findViewById(R.id.list_wps);
         this.mTxtEmptyWP = (TextView) findViewById(R.id.txt_empty_list_wp);
-     //   this.mBtnAddWP = (ImageButton) findViewById(R.id.btn_addNewDWP_activity_list_wp);
         this.mListviewWP.setOnItemClickListener(this);
         this.mListviewWP.setOnItemLongClickListener(this);
-//        this.mBtnAddWP.setOnClickListener(this);
-       forTest = new ArrayList<Words>();
+        forTest = new ArrayList<Words>();
     }
 
    private String name;
@@ -209,10 +182,6 @@ public class ListWordsPairActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_save_words_list_to_theme:
-               /* Intent intent = new Intent(this, AddWordsPairActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_ADD_WORDS_PAIR);*/
-          //      break;
-
 
                 final EditText input = new EditText(this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListWordsPairActivity.this);
@@ -263,101 +232,18 @@ public class ListWordsPairActivity
         }
     }
 
-  /*  @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_CODE_ADD_WORDS_PAIR) {
-            if(resultCode == RESULT_OK) {
-                if(data != null) {
-                    Words createdDictionary = (Words) data.getSerializableExtra(EXTRA_ADDED_WORDS_PAIR);
-                    if(createdDictionary != null) {
-                        if(mListWP == null)
-                            mListWP = new ArrayList<Words>();
-                        mListWP.add(createdDictionary);
-
-                        if(mListviewWP.getVisibility() != View.VISIBLE) {
-                            mListviewWP.setVisibility(View.VISIBLE);
-                            mTxtEmptyWP.setVisibility(View.GONE);
-                        }
-
-                        if(mAdapter == null) {
-                            mAdapter = new ListWordsAdapter(this, mListWP);
-                            mListviewWP.setAdapter(mAdapter);
-                        }
-                        else {
-                            mAdapter.setItems(mListWP);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        }
-        else
-            super.onActivityResult(requestCode, resultCode, data);
-    }*/
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mWordsPairDao.close();
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Words clickedWordsPair = mAdapter.getItem(position);
         Log.d(TAG, "clickedItem : " + clickedWordsPair.getFirstLang());
-        //forTest.add(clickedWordsPair);
-        // Intent intent = new Intent(this, ListEmployeesActivity.class);
-        // intent.putExtra(ListEmployeesActivity.EXTRA_SELECTED_COMPANY_ID, clickedWordsPair.getImage());
-        // startActivity(intent);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         Words clickedWordsPair = mAdapter.getItem(position);
         Log.d(TAG, "clickedItem : " + clickedWordsPair.getFirstLang());
-       // forTest.add(clickedWordsPair);
         return true;
     }
-
-
- /*   private void showDeleteDialogConfirmation(final Words clickedDicitonary) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        alertDialogBuilder.setTitle("Delete");
-        alertDialogBuilder.setMessage("Are you sure you want to delete the \""+clickedDicitonary.getmId()+"\" dictionary ?");
-        alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(mWordsPairDao != null) {
-                    mWordsPairDao.deleteDictionary(clickedDicitonary);
-                    mListWP.remove(clickedDicitonary);
-
-                    if(mListWP.isEmpty()) {
-                        mListWP = null;
-                        mListviewWP.setVisibility(View.GONE);
-                        mTxtEmptyWP.setVisibility(View.VISIBLE);
-                    }
-                    mAdapter.setItems(mListWP);
-                    mAdapter.notifyDataSetChanged();
-                }
-
-                dialog.dismiss();
-                Toast.makeText(ListWordsPairActivity.this, "dictionary_deleted_successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertDialogBuilder.setNeutralButton("no", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }*/
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
@@ -375,26 +261,14 @@ public class ListWordsPairActivity
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
                 break;
             case 1:
-                //showFragment(new LearnWordsFragment());
-                // startActivity(new Intent(getApplicationContext(),LearnWordsActivity.class));
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case 2:
-//                showFragment(new AddWordsActivity());
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
-
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-           /* case 4:
-                Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
-                intent.putExtra("table name","first_theme");
-                startActivity(intent);
-                break;
-            case 5:
-                startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                break;*/
         }
     }
     public SlidingMenu getMenu() {

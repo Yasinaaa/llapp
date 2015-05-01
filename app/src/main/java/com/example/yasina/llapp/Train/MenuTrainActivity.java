@@ -36,9 +36,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
     private String tableName = "";
     public static final String TAG = "MenuTrainActivity";
     private  ArrayList<String> listOfTableThemeNames;
-
-
-    private static int currentMenuPosition = -1;
+    private int currentMenuPosition = -1;
     private SlidingMenu menu;
 
     @Override
@@ -63,7 +61,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
       public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
         long name = themesSpinner.getSelectedItemId();
         tableName = listOfTableThemeNames.get((int)name);
-        Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Position = " + tableName, Toast.LENGTH_SHORT).show();
       }
       @Override
               public void onNothingSelected(AdapterView<?> arg0) {
@@ -77,7 +75,6 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
         menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
         menu.setMenu(R.layout.sidemenu);
         menu.setBackgroundColor(0xFF333333);
-        //menu.setBackgroundColor(EBAA5B);
         menu.setBehindWidthRes(R.dimen.slidingmenu_behind_width);
         menu.setSelectorDrawable(R.drawable.sidemenu_items_background);
 
@@ -125,17 +122,14 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case R.id.ibNext:
-
-                Toast.makeText(getBaseContext(), "TableName = " + tableName, Toast.LENGTH_SHORT).show();
                 intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
                 break;
             case R.id.alarmSet:
-               // startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                 intent = new Intent(getApplicationContext(), AlarmDetailsActivity.class);
 
-               // intent2.putExtra("table name",tableName);
+                intent = new Intent(getApplicationContext(), AlarmDetailsActivity.class);
+                intent.putExtra("table name",tableName);
                 startActivity(intent);
                 break;
 
@@ -143,6 +137,10 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
                 intent = new Intent(getApplicationContext(), TestTrain.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
+                break;
+
+            case R.id.ibTrainDelete:
+                wordsDAO.deletebyTableName(tableName);
                 break;
         }
     }
@@ -164,26 +162,15 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
                 break;
             case 1:
-                //showFragment(new LearnWordsFragment());
-                // startActivity(new Intent(getApplicationContext(),LearnWordsActivity.class));
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case 2:
-//                showFragment(new AddWordsActivity());
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
 
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-     /*       case 4:
-                Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
-                intent.putExtra("table name","first_theme");
-                startActivity(intent);
-                break;
-            case 5:
-                startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                break;*/
         }
     }
     public SlidingMenu getMenu() {

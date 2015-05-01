@@ -16,7 +16,6 @@ package com.example.yasina.llapp.Alarm;
         import android.os.PowerManager.WakeLock;
         import android.os.SystemClock;
         import android.util.Log;
-        import android.view.MotionEvent;
         import android.view.View;
         import android.view.View.OnClickListener;
         import android.view.Window;
@@ -24,15 +23,12 @@ package com.example.yasina.llapp.Alarm;
         import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.TextView;
-
         import com.example.yasina.llapp.DAO.WordsDAO;
         import com.example.yasina.llapp.Model.Words;
         import com.example.yasina.llapp.R;
-
-        import java.io.ByteArrayInputStream;
-        import java.text.DateFormat;
         import java.util.ArrayList;
-        import java.util.Date;
+        import java.util.Calendar;
+        import java.util.GregorianCalendar;
 
 public class AlarmScreen extends Activity {
 
@@ -41,18 +37,17 @@ public class AlarmScreen extends Activity {
     private WakeLock mWakeLock;
     private MediaPlayer mPlayer;
     private String name;
-    private  WordsDAO themeWordsDAO;
+    private WordsDAO themeWordsDAO;
     private ArrayList<Words> words;
     private Words alarmWord;
     private TextView text1, text2, text3;
     private ImageView im1;
-   // public int cur;
-
-
+    private Calendar calendarEND, calendar_sleepFROM, calendar_sleepTo;
+    private boolean sleep;
+    private int repeat;
     private static final int WAKELOCK_TIMEOUT = 60 * 1000;
-
-    MediaPlayer mp = null;
-    TextView e = null;
+    private String tone;
+    private int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,210 +58,108 @@ public class AlarmScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-        int amount =  getIntent().getExtras().getInt("amount");
-        int cu =  getIntent().getExtras().getInt("current");
-        AlarmManager am = (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
+        name = getIntent().getExtras().getString("table name");
+        repeat = getIntent().getExtras().getInt("repeat");
+        int cu = getIntent().getExtras().getInt("current");
+        calendarEND = (Calendar) getIntent().getExtras().get("endDate");
+        calendar_sleepFROM = (Calendar) getIntent().getExtras().get("sleepTime_from");
+        calendar_sleepTo = (Calendar) getIntent().getExtras().get("sleepTime_to");
+        sleep = getIntent().getExtras().getBoolean("sleep");
+        Log.d(TAG,"sleep " + sleep);
+        tone =  getIntent().getExtras().getString("tone");
 
-        if(amount == cu){
-
-            PendingIntent   pendingIntent =   PendingIntent.getActivity(this,
-                    12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
-            am.cancel(pendingIntent);
-
-        }else{
-            Intent intent = getIntent();
-
-            String name = "first_theme";
-            themeWordsDAO = new WordsDAO(getApplicationContext(),name);
-            words = new ArrayList<Words>();
-            words =  themeWordsDAO.getAllDictionaries();
-            Log.d("Train",words.size()+"");
-            alarmWord = words.get(cu);
-
-
-            text1 = (TextView) findViewById(R.id.txt_word_list_item_wp);
-            text2 = (TextView) findViewById(R.id.txt_translate_list_item_wp);
-            text3 = (TextView) findViewById(R.id.txt_explanation_item_wp);
-            im1 = (ImageView) findViewById(R.id.ivPicture_list_item_wp);
-
-            text1.setText(alarmWord.getFirstLang());
-            text2.setText(alarmWord.getSecondLang());
-
-            byte[] outImage = alarmWord.getImage();
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
-            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-
-
-            Bitmap bitmap = BitmapFactory.decodeByteArray(outImage, 0, outImage.length);
-            im1.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 200, 120, false));
-
-            //im1.setImageBitmap(theImage);
-
-            text3.setText(alarmWord.getExplanation());
-
-        Button dismissButton = (Button) findViewById(R.id.alarm_screen_button);
-        dismissButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // mPlayer.stop();
-               finish();
-            }
-        });
-            cu = cu + 1;
-
-            if(amount != cu) {
-                intent.putExtra("current", cu);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                        12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
-                        1000 * 15, pendingIntent);
-            }
-
-        }
-
-
-        Log.d("ring alarm","hi");
-     //   Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
-       // e = (TextView) findViewById(R.id.text);
-
-        //e.setText("num " +cu);
-
-        //   mp = MediaPlayer.create(getBaseContext(), R.raw.audio);
-
-        //   mp = MediaPlayer.create(getBaseContext(), null);
-
-      /*  stopAlarm.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-
-                //    mp.stop();
-                finish();
-                return false;
-            }
-        });*/
-
-        // playSound(this, getAlarmUri());
-    }
-
-      /*  super.onCreate(savedInstanceState);
-
-        //Setup layout
-        // this.setContentView(R.layout.list_item_words_pair_2);
-        this.setContentView(R.layout.activity_alarm_screen);
-
-
-        int amount = getIntent().getExtras().getInt("amount");
-        Log.d("amount", amount + "");
-        //  int cu =  getIntent().getExtras().getInt("current");
+        themeWordsDAO = new WordsDAO(getApplicationContext(), name);
+        words = new ArrayList<Words>();
+        words = themeWordsDAO.getAllDictionaries();
+        Log.d("Train", words.size() + "");
+        alarmWord = words.get(cu);
+        size = words.size();
 
         AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
+        Calendar calendar = new GregorianCalendar();
 
-        if (amount == cur) {
-            Log.d("cancel amount", amount + "==" + cur);
+        if (calendar.equals(calendarEND)) {
+            Log.d(TAG,"cancel alarm becouce equals");
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                    12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
+                   12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
             am.cancel(pendingIntent);
-        } else {
-            Log.d("now cur", cur + "");
+            pendingIntent.cancel();
+            finish();
+
+        } /*else if (sleep == true) {
             Intent intent = getIntent();
-
-            name = "first_theme";
-         /*   Log.d(" Name", name + "");
-            themeWordsDAO = new WordsDAO(getApplicationContext(), name);
-            words = new ArrayList<Words>();
-            words = themeWordsDAO.getAllDictionaries();
-            Log.d("Alarm Train", words.size() + "");
-            alarmWord = words.get(cur);*/
-
-       /*     cur = cur + 1;
-            Log.d("after add cur", cur + "");
-            intent.putExtra("current", cur);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
-                    1000 * 15, pendingIntent);
+            am.cancel(pendingIntent);
+            Log.d(TAG,"cancel alarm becouce sleep");
+
+            intent.putExtra("current", cu);
+            intent.putExtra("endDate", calendarEND);
+            intent.putExtra("sleepTime_from", calendar_sleepFROM);
+            intent.putExtra("sleepTime_to", calendar_sleepTo);
+            intent.putExtra("sleep", true);
+            intent.putExtra("repeat", repeat);
+            intent.putExtra("table name", name);
+            am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
+            Log.d(TAG,"set alarm (i'm sleeping) " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
+                    + " " + calendar_sleepTo.get(Calendar.AM_PM));
+        } */else {
+            Intent intent = getIntent();
+
+            if (calendar.get(Calendar.HOUR) == calendar_sleepFROM.get(Calendar.HOUR) &&
+                    calendar.get(Calendar.MINUTE) == calendar_sleepFROM.get(Calendar.MINUTE)) {
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                        12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                am.cancel(pendingIntent);
+                Log.d(TAG, "cancel alarm becouce 22:00");
+                if (cu == size) cu = 0;
+
+                intent.putExtra("current", cu);
+                intent.putExtra("endDate", calendarEND);
+                intent.putExtra("sleepTime_from", calendar_sleepFROM);
+                intent.putExtra("sleepTime_to", calendar_sleepTo);
+                intent.putExtra("sleep", true);
+                intent.putExtra("repeat", repeat);
+                intent.putExtra("table name", name);
+                am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
+                Log.d(TAG, "set alarm " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
+                        + " " + calendar_sleepTo.get(Calendar.AM_PM));
+              /*  while(sleep){
+
+                }*/
+                init();
+
+                pendingIntent.cancel();
+                finish();
+
+            } else if(!sleep){
+                sleep = false;
+                init();
+
+                cu = cu + 1;
+                if (!calendar.equals(calendarEND)) {
+                    if (cu == size) cu = 0;
+
+                    intent.putExtra("current", cu);
+                    intent.putExtra("endDate", calendarEND);
+                    intent.putExtra("sleepTime_from", calendar_sleepFROM);
+                    intent.putExtra("sleepTime_to", calendar_sleepTo);
+                    intent.putExtra("repeat", repeat);
+                    intent.putExtra("sleep", false);
+                    intent.putExtra("table name", name);
+
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                            12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
+                            1000 * 60 * repeat, pendingIntent);
+                    Log.d(TAG, "set alarm (usual)");
+                }
+
+            }
         }
 
-        // name = getIntent().getExtras().getString("table name");
+        Log.d(TAG, "hi");
 
-
-        String name = getIntent().getStringExtra(AlarmManagerHelper.NAME);
-        int timeHour = getIntent().getIntExtra(AlarmManagerHelper.TIME_HOUR, 0);
-        int timeMinute = getIntent().getIntExtra(AlarmManagerHelper.TIME_MINUTE, 0);
-        String tone = getIntent().getStringExtra(AlarmManagerHelper.TONE);
-
-        text1 = (TextView) findViewById(R.id.txt_word_list_item_wp);
-        text2 = (TextView) findViewById(R.id.txt_translate_list_item_wp);
-        text3 = (TextView) findViewById(R.id.txt_explanation_item_wp);
-        im1 = (ImageView) findViewById(R.id.ivPicture_list_item_wp);
-
-      //  try {
-            text1.setText(alarmWord.getFirstLang());
-            text2.setText(alarmWord.getSecondLang());
-
-            byte[] outImage = alarmWord.getImage();
-            ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
-            Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-            im1.setImageBitmap(theImage);
-
-            text3.setText(alarmWord.getExplanation());
-      /*  }catch (Exception e){
-            finish();
-        }*/
-
-      /*  TextView tvName = (TextView) findViewById(R.id.alarm_screen_name);
-        tvName.setText(name);
-
-        TextView tvTime = (TextView) findViewById(R.id.alarm_screen_time);
-        tvTime.setText(String.format("%02d : %02d", timeHour, timeMinute));*/
-
-
-     /*   Button dismissButton = (Button) findViewById(R.id.alarm_screen_button);
-        dismissButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // mPlayer.stop();
-               finish();
-            }
-        });*/
-
-        //Play alarm tone
-     /*   mPlayer = new MediaPlayer();
-        try {
-            if (tone != null && !tone.equals("")) {
-                Uri toneUri = Uri.parse(tone);
-                if (toneUri != null) {
-                    mPlayer.setDataSource(this, toneUri);
-                    mPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-                    mPlayer.setLooping(true);
-                    mPlayer.prepare();
-                    mPlayer.start();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //Ensure wakelock release
-        Runnable releaseWakelock = new Runnable() {
-
-            @Override
-            public void run() {
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-
-                if (mWakeLock != null && mWakeLock.isHeld()) {
-                    mWakeLock.release();
-                }
-            }
-        };
-
-        new Handler().postDelayed(releaseWakelock, WAKELOCK_TIMEOUT);
     }
 
     @SuppressWarnings("deprecation")
@@ -274,13 +167,11 @@ public class AlarmScreen extends Activity {
     protected void onResume() {
         super.onResume();
 
-        // Set the window to keep screen on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-        // Acquire wakelock
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
         if (mWakeLock == null) {
             mWakeLock = pm.newWakeLock((PowerManager.FULL_WAKE_LOCK | PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), TAG);
@@ -300,7 +191,65 @@ public class AlarmScreen extends Activity {
         if (mWakeLock != null && mWakeLock.isHeld()) {
             mWakeLock.release();
         }
-    }*/
-  //  }
-}
+    }
 
+    private void init(){
+        text1 = (TextView) findViewById(R.id.txt_word_list_item_wp);
+        text2 = (TextView) findViewById(R.id.txt_translate_list_item_wp);
+        text3 = (TextView) findViewById(R.id.txt_explanation_item_wp);
+        im1 = (ImageView) findViewById(R.id.ivPicture_list_item_wp);
+
+        text1.setText(alarmWord.getFirstLang());
+        text2.setText(alarmWord.getSecondLang());
+
+        byte[] outImage = alarmWord.getImage();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(outImage, 0, outImage.length);
+        im1.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 200, 120, false));
+        text3.setText(alarmWord.getExplanation());
+
+        Button dismissButton = (Button) findViewById(R.id.alarm_screen_button);
+        dismissButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                mPlayer.stop();
+                sleep = false;
+                finish();
+            }
+        });
+
+        mPlayer = new MediaPlayer();
+        try {
+            if (tone != null && !tone.equals("")) {
+                Uri toneUri = Uri.parse(tone);
+                if (toneUri != null) {
+                    mPlayer.setDataSource(this, toneUri);
+                    mPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                    mPlayer.setLooping(true);
+                    mPlayer.prepare();
+                    mPlayer.start();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Runnable releaseWakelock = new Runnable() {
+
+            @Override
+            public void run() {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+
+                if (mWakeLock != null && mWakeLock.isHeld()) {
+                    mWakeLock.release();
+                }
+            }
+        };
+
+        new Handler().postDelayed(releaseWakelock, WAKELOCK_TIMEOUT);
+
+    }
+
+}

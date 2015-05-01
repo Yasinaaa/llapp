@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
@@ -37,7 +38,7 @@ public class TestTrain extends Activity {
     private Button checkButton, againButton, backButton;
     private Random random;
     private int allWordsCount;
-    private ArrayList<Integer> input;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,86 +53,8 @@ public class TestTrain extends Activity {
             words = themeWordsDAO.getAllDictionaries();
             Log.d("Train", words.size() + "");
 
-            layout = (LinearLayout) findViewById(R.id.linearLayout2);
-            layout.setOrientation(LinearLayout.VERTICAL);
 
-            textView = new TextView[3];
-            ll = new LinearLayout[3];
-            editText = new EditText[3];
-
-            random = new Random();
-            randoms = new int[3];
-            int num = 0;
-
-            input = new ArrayList<Integer>();
-
-            for (int i = 0; i < 3; i++) {
-                num = random.nextInt(3);
-                //randoms[i] = num;
-                RandomFour randomFour = new RandomFour(num, input);
-                num = randomFour.generate();
-
-                textView[num] = new TextView(this);
-                textView[num].setText(words.get(num).getFirstLang());
-                textView[num].setId(i);
-                textView[num].setEms(10);
-
-                editText[num] = new EditText(this);
-                editText[num].setId(num);
-                editText[num].setEms(10);
-
-                ll[num] = new LinearLayout(this);
-                ll[num].setOrientation(LinearLayout.HORIZONTAL);
-                ll[num].addView(textView[num]);
-                ll[num].addView(editText[num]);
-
-                layout.addView(ll[num]);
-            }
-
-
-            checkButton = new Button(this);
-            checkButton.setText("Check");
-            checkButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (int i = 0; i < 3; i++) {
-                        String answer = editText[i].getText().toString();
-                        int temp = input.get(i);
-                        if (!answer.equals(words.get(temp).getSecondLang())) {
-                            textView[i].setBackgroundColor(Color.RED);
-                            editText[i].setBackgroundColor(Color.RED);
-
-
-                        }
-                    }
-                    againButton = new Button(getApplicationContext());
-                    againButton.setText("Again");
-                    againButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(getApplicationContext(), TestTrain.class);
-                            i.putExtra("table name", name);
-                            startActivity(i);
-                            finish();
-                        }
-                    });
-                    layout.addView(againButton);
-                }
-            });
-            layout.addView(checkButton);
-
-
-            backButton = new Button(getApplicationContext());
-            backButton.setText("Back");
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
-
-            layout.addView(backButton);
-        }catch (Exception e){
+        }catch (RuntimeException e){
             setContentView(R.layout.empty);
 
             String button1String = "Create dictionary";
@@ -160,6 +83,80 @@ public class TestTrain extends Activity {
             alert.show();
 
         }
+
+        layout = (LinearLayout) findViewById(R.id.linearLayout2);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        textView = new TextView[3];
+        ll = new LinearLayout[3];
+        editText = new EditText[3];
+
+        random = new Random();
+        randoms = new int[3];
+        int num = 0;
+
+        for (int i = 0; i < 3; i++) {
+            num = random.nextInt(3);
+            randoms[i] = num;
+
+            textView[num] = new TextView(this);
+            textView[num].setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            textView[num].setText(words.get(num).getFirstLang());
+            textView[num].setId(i);
+            textView[num].setEms(10);
+
+            editText[num] = new EditText(this);
+            editText[num].setId(num);
+            editText[num].setEms(10);
+
+            ll[num] = new LinearLayout(this);
+            ll[num].setOrientation(LinearLayout.HORIZONTAL);
+            ll[num].addView(textView[num]);
+            ll[num].addView(editText[num]);
+
+            layout.addView(ll[num]);
+        }
+
+
+        checkButton = new Button(this);
+        checkButton.setText("Check");
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < 3; i++) {
+                    String answer = editText[i].getText().toString();
+                    int temp = randoms[i];
+                    if (!answer.equals(words.get(temp).getSecondLang())) {
+                        editText[i].setBackgroundColor(Color.RED);
+                    }
+                }
+                againButton = new Button(getApplicationContext());
+                againButton.setText("Again");
+                againButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getApplicationContext(), TestTrain.class);
+                        i.putExtra("table name", name);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+                layout.addView(againButton);
+            }
+        });
+        layout.addView(checkButton);
+
+
+        backButton = new Button(getApplicationContext());
+        backButton.setText("Back");
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        layout.addView(backButton);
     }
 
 
@@ -185,31 +182,5 @@ public class TestTrain extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    class RandomFour
-    {
-        private final ArrayList<Integer> input;
-        private final Random rnd;
-        private final int Count;
-        private int genCount=0;
-        public RandomFour(int in, ArrayList<Integer> input)
-        {
-            this.input = input;
-            Count=in;
-            rnd=new Random(in);
-        }
 
-        public int generate()
-        {
-            if (genCount>=Count)
-                return -1;
-            int next;
-            do
-            {
-                next = rnd.nextInt(Count);
-            }
-            while (!input.add(next));
-            genCount++;
-            return next;
-        }
-    }
 }

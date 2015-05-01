@@ -1,6 +1,11 @@
 package com.example.yasina.llapp;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,10 +44,16 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     public static long clickedDictionary;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+        AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
+        am.cancel(pendingIntent);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
 
         dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
 

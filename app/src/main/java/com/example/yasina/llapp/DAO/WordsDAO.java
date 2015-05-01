@@ -164,5 +164,9 @@ public class WordsDAO {
         }
         return dirArray;
     }
+
+    public void deletebyTableName(String name) {
+        mDatabase.execSQL("DROP TABLE " + name);
+    }
     }
 
