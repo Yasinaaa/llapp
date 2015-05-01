@@ -81,7 +81,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification","Alarm"
+            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
                     /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
@@ -132,7 +132,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-            case 4:
+         /*   case 4:
                 Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
                 intent.putExtra("table name","first_theme");
                 startActivity(intent);
@@ -141,7 +141,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                Intent i = new Intent(getApplicationContext(), AlarmListActivity.class);
                 i.putExtra("table name","first_theme");
                 startActivity(i);
-                break;
+                break;*/
 
 
         }

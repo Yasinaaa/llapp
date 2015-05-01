@@ -97,7 +97,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
             ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
         }
 
-        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification","Alarm"
+        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
 
         };
 
@@ -176,14 +176,14 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-            case 4:
+     /*       case 4:
                 Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
                 intent.putExtra("table name","first_theme");
                 startActivity(intent);
                 break;
             case 5:
                 startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                break;
+                break;*/
         }
     }
     public SlidingMenu getMenu() {

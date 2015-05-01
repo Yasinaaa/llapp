@@ -1,6 +1,8 @@
 package com.example.yasina.llapp;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,32 +64,75 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
 
     private static int currentMenuPosition = -1;
     private SlidingMenu menu;
+    private Dictionary dic;
 
    // @Override
    // public View onCreate(){
     //View(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_words);
-        tvFirstL = (TextView) findViewById(R.id.tvFirstLangAddWord);
-        tvSecondL = (TextView) findViewById(R.id.tvSecondLangAddWord);
 
-        initViews();
-        this.wordsDAO = new WordsDAO(this);
-        dicDAO = new DictionaryDAO(this);
-       Dictionary dic = dicDAO.getDicitonaryById(MainMenuActivity.clickedDictionary);
 
-        StringTokenizer tokenizer = new StringTokenizer(dic.getName(),"-");
-        //StringTokenizer tokenizer = new StringTokenizer("russian-english","-");
-        while (tokenizer.hasMoreElements()) {
-            firstL = tokenizer.nextToken();
-            secondL = tokenizer.nextToken();
-            name = firstL + "_" + secondL;
-        }
-        tvFirstL.setText(firstL);
-        tvSecondL.setText(secondL);
+       try {
+
+
+           setContentView(R.layout.add_words);
+           tvFirstL = (TextView) findViewById(R.id.tvFirstLangAddWord);
+           tvSecondL = (TextView) findViewById(R.id.tvSecondLangAddWord);
+
+           initViews();
+           this.wordsDAO = new WordsDAO(this);
+           dicDAO = new DictionaryDAO(this);
+
+           dic = dicDAO.getDicitonaryById(MainMenuActivity.clickedDictionary);
+
+           StringTokenizer tokenizer = new StringTokenizer(dic.getName(),"-");
+           //StringTokenizer tokenizer = new StringTokenizer("russian-english","-");
+           while (tokenizer.hasMoreElements()) {
+               firstL = tokenizer.nextToken();
+               secondL = tokenizer.nextToken();
+               name = firstL + "_" + secondL;
+           }
+           tvFirstL.setText(firstL);
+           tvSecondL.setText(secondL);
+
+       }catch (Exception e1){
+
+
+        setContentView(R.layout.empty);
+
+        String button1String = "Create dictionary";
+        String button2String = "Cancel";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        ad.setTitle("Mistake");
+        ad.setMessage("You don't have any dictionaries.Please create new one for this.");
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                finish();
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+           AlertDialog alert = ad.create();
+           alert.show();
+    }
+
+       //}
+
+
 
        // View view = inflater.inflate(R.layout.add_words, container, false);
 
@@ -126,7 +171,7 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
             ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
         }
 
-        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Notification","Alarm"
+        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
 
         };
 
@@ -400,14 +445,14 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-            case 4:
+        /*    case 4:
                 Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
                 intent.putExtra("table name","first_theme");
                 startActivity(intent);
                 break;
             case 5:
                 startActivity(new Intent(getApplicationContext(), AlarmListActivity.class));
-                break;
+                break;*/
         }
     }
     public SlidingMenu getMenu() {
