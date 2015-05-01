@@ -1,5 +1,8 @@
 package com.example.yasina.llapp.Train;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -11,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
+import com.example.yasina.llapp.Activities.ListDictionariesActivity;
+import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
@@ -35,33 +40,63 @@ public class TrainWordsActivity extends FragmentActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_train_words);
 
-            name = getIntent().getExtras().getString("table name");
-            Log.d(" Name",name+"");
-            themeWordsDAO = new WordsDAO(getApplicationContext(),name);
-            words = new ArrayList<Words>();
-            words =  themeWordsDAO.getAllDictionaries();
-            Log.d("Train",words.size()+"");
+            try {
 
-            pager = (ViewPager) findViewById(R.id.pager);
-            pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-            pager.setAdapter(pagerAdapter);
+                name = getIntent().getExtras().getString("table name");
+                Log.d(" Name", name + "");
+                themeWordsDAO = new WordsDAO(getApplicationContext(), name);
+                words = new ArrayList<Words>();
+                words = themeWordsDAO.getAllDictionaries();
+                Log.d("Train", words.size() + "");
 
-            pager.setOnPageChangeListener(new OnPageChangeListener() {
+                pager = (ViewPager) findViewById(R.id.pager);
+                pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+                pager.setAdapter(pagerAdapter);
 
-                @Override
-                public void onPageSelected(int position) {
-                    Log.d(TAG, "onPageSelected, position = " + position);
-                }
+                pager.setOnPageChangeListener(new OnPageChangeListener() {
 
-                @Override
-                public void onPageScrolled(int position, float positionOffset,
-                                           int positionOffsetPixels) {
-                }
+                    @Override
+                    public void onPageSelected(int position) {
+                        Log.d(TAG, "onPageSelected, position = " + position);
+                    }
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset,
+                                               int positionOffsetPixels) {
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                    }
+                });
+            }catch (Exception e){
+                setContentView(R.layout.empty);
+
+                String button1String = "Create dictionary";
+                String button2String = "Cancel";
+
+                AlertDialog.Builder ad = new AlertDialog.Builder(this);
+                ad.setTitle("Mistake");
+                ad.setMessage("You don't have any themes of words. Please create new one for this.");
+                ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
+                    }
+                });
+                ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        finish();
+                    }
+                });
+                ad.setCancelable(true);
+                ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+
+                    }
+                });
+                AlertDialog alert = ad.create();
+                alert.show();
+            }
         }
 
 
