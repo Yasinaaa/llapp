@@ -80,6 +80,10 @@
         December - 31 days -->
     </string-array>
 
+    <string-array name="timeZone">
+        <item>am</item>
+        <item>pm</item>
+    </string-array>
 
 </resources>
 

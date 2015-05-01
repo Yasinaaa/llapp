@@ -15,11 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Words;
@@ -31,26 +33,13 @@ import java.util.GregorianCalendar;
 
 public class AlarmDetailsActivity extends Activity {
 
-  //  private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
-
     private AlarmModel alarmDetails;
-
-   // private TimePicker timePicker;
-   // private EditText edtName;
-   /* private CustomSwitch chkWeekly;
-    private CustomSwitch chkSunday;
-    private CustomSwitch chkMonday;
-    private CustomSwitch chkTuesday;
-    private CustomSwitch chkWednesday;
-    private CustomSwitch chkThursday;
-    private CustomSwitch chkFriday;
-    private CustomSwitch chkSaturday;*/
     private TextView txtToneSelection;
 
     private EditText et_fromHours, et_fromMinutes, et_toHours, et_toMinutes, et_repeatTime,
     et_fromDay, et_fromYear, et_toDay, et_toYear;
 
-    private Spinner timeSize, timeMonth_from, timeMonth_to;
+    private Spinner timeSize, timeMonth_from, timeMonth_to, timeAM_PM_from, timeAM_PM_to;
     private TextView theme_name;
     public  int cur;
 
@@ -73,12 +62,14 @@ public class AlarmDetailsActivity extends Activity {
         et_repeatTime = (EditText) findViewById(R.id.editText_repeat);
         et_fromDay = (EditText) findViewById(R.id.editText_fromDay);
         timeMonth_from = (Spinner) findViewById(R.id.spinner_fromMonth);
+        timeAM_PM_from = (Spinner) findViewById(R.id.spinner_am_pm_From);
         et_fromYear  = (EditText) findViewById(R.id.editText_fromYear);
         et_toDay  = (EditText) findViewById(R.id.editText_ToDay);
         timeMonth_to = (Spinner) findViewById(R.id.spinner_ToMonth);
         et_toYear  = (EditText) findViewById(R.id.editText_ToYear);
-
+        timeAM_PM_to = (Spinner) findViewById(R.id.spinner_am_pm_To);
         timeSize = (Spinner) findViewById(R.id.spinnerAlarmTime);
+
 
        // edtName = (EditText) findViewById(R.id.alarm_details_name);
        /* chkWeekly = (CustomSwitch) findViewById(R.id.alarm_details_repeat_weekly);
@@ -103,10 +94,22 @@ public class AlarmDetailsActivity extends Activity {
             alarmDetails = new AlarmModel();
 
            Calendar currentTime = new GregorianCalendar();
-           et_fromHours.setText(currentTime.getTime().getHours()+"");
-           et_fromMinutes.setText(currentTime.getTime().getMinutes()+"");
-           et_fromDay.setText(currentTime.getTime().getDay()+"");
-           et_fromYear.setText(currentTime.getTime().getYear()+"");
+           et_fromHours.setText(currentTime.get(Calendar.HOUR)+"");
+           et_fromMinutes.setText(currentTime.get(Calendar.MINUTE)+"");
+           et_fromDay.setText(currentTime.get(Calendar.DAY_OF_MONTH)+"");
+           et_fromYear.setText(currentTime.get(Calendar.YEAR)+"");
+           int am_pm = currentTime.get(Calendar.AM_PM);
+           Toast.makeText(this,am_pm+"",Toast.LENGTH_LONG).show();
+           timeAM_PM_from.setSelection(am_pm);
+           int month = currentTime.get(Calendar.MONTH);
+           timeMonth_from.setSelection(month);
+
+            et_toHours.setText(currentTime.get(Calendar.HOUR)+"");
+            et_toMinutes.setText(currentTime.get(Calendar.MINUTE)+"");
+            et_toDay.setText(currentTime.get(Calendar.DAY_OF_MONTH)+ "");
+            et_toYear.setText(currentTime.get(Calendar.YEAR)+"");
+            timeAM_PM_to.setSelection(am_pm);
+            timeMonth_to.setSelection(month);
 
           /*  et_fromHours.setText(alarmDetails.timeHour);
             et_fromMinutes.setText(alarmDetails.timeHour);

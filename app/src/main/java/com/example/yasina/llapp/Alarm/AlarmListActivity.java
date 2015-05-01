@@ -19,7 +19,7 @@ package com.example.yasina.llapp.Alarm;
 
 public class AlarmListActivity extends ListActivity {
 
-    private AlarmListAdapter mAdapter;
+  /*  private AlarmListAdapter mAdapter;
     private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
     private Context mContext;
     private String name;
@@ -128,7 +128,7 @@ public class AlarmListActivity extends ListActivity {
                        // AlarmManagerHelper.setAlarms(mContext);
                     }
                 }).show();
-    }
+    }*/
 }
 
 
