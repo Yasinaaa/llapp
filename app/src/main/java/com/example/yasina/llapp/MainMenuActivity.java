@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.yasina.llapp.Activities.ListDictionariesActivity;
@@ -42,20 +43,21 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     private DictionaryDAO dictionaryDAO;
     private DictionariesSpinner mAdapter;
     public static long clickedDictionary;
-
+    private TextView theme_name, alarmTheme_to, alarmTheme_from, alarmTheme_repeat;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
-        am.cancel(pendingIntent);
+
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
 
         dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
+        theme_name = (TextView) findViewById(R.id.tv_theme_main);
+        alarmTheme_to = (TextView) findViewById(R.id.tv_AlarmThemeTo_main);
+        alarmTheme_from = (TextView) findViewById(R.id.tv_AlarmThemeFrom_main);
+        alarmTheme_repeat = (TextView) findViewById(R.id.tv_AlarmThemeRepeat_main);
 
         dictionaryDAO = new DictionaryDAO(this);
 		List<Dictionary> listDictionaries = dictionaryDAO.getAllDictionaries();

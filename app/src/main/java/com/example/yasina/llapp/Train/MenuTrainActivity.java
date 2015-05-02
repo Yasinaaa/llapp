@@ -60,7 +60,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
       @Override
       public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
         long name = themesSpinner.getSelectedItemId();
-        tableName = listOfTableThemeNames.get((int)name);
+        tableName = listOfTableThemeNames.get((int)name) + "_theme";
         Toast.makeText(getBaseContext(), "Position = " + tableName, Toast.LENGTH_SHORT).show();
       }
       @Override
@@ -90,11 +90,11 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
             }
         });
 
-        if (currentMenuPosition != -1) {
+      /*  if (currentMenuPosition != -1) {
             ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
-        }
+        }*/
 
-        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
+        String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"
 
         };
 

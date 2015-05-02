@@ -154,11 +154,11 @@ public class WordsDAO {
         while (c.moveToNext()) {
             String s = c.getString(0);
             if (s.equals("android_metadata")) {;
-                //System.out.println("Get Metadata");
                 continue;
             } else {
                 if(s.contains("_theme")) {
-                    dirArray.add(s);
+                    String temp = s.replace("_theme","");
+                    dirArray.add(temp);
                 }
             }
         }

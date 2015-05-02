@@ -32,7 +32,7 @@ package com.example.yasina.llapp.Alarm;
 
 public class AlarmScreen extends Activity {
 
-    public final String TAG = this.getClass().getSimpleName();
+    public final String TAG = this.getClass().getSimpleName() + "1";
 
     private WakeLock mWakeLock;
     private MediaPlayer mPlayer;
@@ -58,7 +58,7 @@ public class AlarmScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-        name = getIntent().getExtras().getString("table name");
+        name = getIntent().getExtras().getString("table name") + "_theme";
         repeat = getIntent().getExtras().getInt("repeat");
         int cu = getIntent().getExtras().getInt("current");
         calendarEND = (Calendar) getIntent().getExtras().get("endDate");
@@ -76,7 +76,10 @@ public class AlarmScreen extends Activity {
         size = words.size();
 
         AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
-        Calendar calendar = new GregorianCalendar();
+        Calendar calendar = Calendar.getInstance();
+        Log.d("AlarmScreen1","calendar from AlarmScreen before set  " + calendar.toString());
+        Log.d("AlarmScreen1", "calendarEND before equlas  " + calendarEND.toString());
+        Log.d("AlarmScreen1","equlas?  " + calendar.equals(calendarEND));
 
         if (calendar.equals(calendarEND)) {
             Log.d(TAG,"cancel alarm becouce equals");
@@ -105,34 +108,7 @@ public class AlarmScreen extends Activity {
                     + " " + calendar_sleepTo.get(Calendar.AM_PM));
         } */else {
             Intent intent = getIntent();
-
-            if (calendar.get(Calendar.HOUR) == calendar_sleepFROM.get(Calendar.HOUR) &&
-                    calendar.get(Calendar.MINUTE) == calendar_sleepFROM.get(Calendar.MINUTE)) {
-                PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                        12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                am.cancel(pendingIntent);
-                Log.d(TAG, "cancel alarm becouce 22:00");
-                if (cu == size) cu = 0;
-
-                intent.putExtra("current", cu);
-                intent.putExtra("endDate", calendarEND);
-                intent.putExtra("sleepTime_from", calendar_sleepFROM);
-                intent.putExtra("sleepTime_to", calendar_sleepTo);
-                intent.putExtra("sleep", true);
-                intent.putExtra("repeat", repeat);
-                intent.putExtra("table name", name);
-                am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
-                Log.d(TAG, "set alarm " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
-                        + " " + calendar_sleepTo.get(Calendar.AM_PM));
-              /*  while(sleep){
-
-                }*/
-                init();
-
-                pendingIntent.cancel();
-                finish();
-
-            } else if(!sleep){
+            if(!sleep){
                 sleep = false;
                 init();
 
@@ -150,9 +126,35 @@ public class AlarmScreen extends Activity {
 
                     PendingIntent pendingIntent = PendingIntent.getActivity(this,
                             12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                    am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
-                            1000 * 60 * repeat, pendingIntent);
+
                     Log.d(TAG, "set alarm (usual)");
+
+
+
+            Log.d(TAG, "equlas  " + calendar.get(Calendar.HOUR) + " and " + calendar_sleepFROM.get(Calendar.HOUR) +
+                   " also " + calendar.get(Calendar.MINUTE) + " and " + calendar_sleepFROM.get(Calendar.MINUTE));
+
+            if (calendar.get(Calendar.HOUR) == calendar_sleepFROM.get(Calendar.HOUR) &&
+                    calendar.get(Calendar.MINUTE) + repeat == calendar_sleepFROM.get(Calendar.MINUTE)) {
+
+                Log.d(TAG, "cancel alarm becouce 22:00");
+                if (cu == size) cu = 0;
+
+                intent.putExtra("current", cu);
+                //intent.putExtra("endDate", calendarEND);
+                //intent.putExtra("sleepTime_from", calendar_sleepFROM);
+                //intent.putExtra("sleepTime_to", calendar_sleepTo);
+                intent.putExtra("sleep", true);
+                //intent.putExtra("repeat", repeat);
+                //intent.putExtra("table name", name);
+                am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
+                Log.d(TAG, "set alarm " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
+                        + " " + calendar_sleepTo.get(Calendar.AM_PM));
+
+            }else
+                am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
+                        1000 * 60 * repeat, pendingIntent);
+
                 }
 
             }

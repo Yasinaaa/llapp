@@ -52,7 +52,8 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
         try{
             theme_name = (TextView) findViewById(R.id.textView_themeName_Alarm);
             name = getIntent().getExtras().getString("table name");
-            theme_name.setText(name);
+            String temp = name.replace("_theme","");
+            theme_name.setText(temp);
         }catch (Exception e){
             setContentView(R.layout.empty);
 
@@ -187,13 +188,15 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
                 int fromDay =  Integer.parseInt(et_fromDay.getText().toString());
                 int fromYear =  Integer.parseInt(et_fromYear.getText().toString());
 
-                Calendar calendarFrom = new GregorianCalendar();
+                Calendar calendarFrom = Calendar.getInstance();
+                Log.d("AlarmScreen1","calendarFROM before set " + calendarFrom.toString());
                 calendarFrom.set(Calendar.HOUR_OF_DAY, fromDay);
                 calendarFrom.set(Calendar.MINUTE, fromMinutes);
                 calendarFrom.set(Calendar.DAY_OF_MONTH, fromMonth);
                 calendarFrom.set(Calendar.YEAR, fromYear);
                 calendarFrom.set(Calendar.AM_PM, fromAM_PM);
                 calendarFrom.set(Calendar.MONTH, fromMonth);
+                Log.d("AlarmScreen1","calendarFROM after set " + calendarFrom.toString());
 
                 int toHours = Integer.parseInt(et_toHours.getText().toString());
                 int toMinutes = Integer.parseInt(et_toMinutes.getText().toString());
@@ -201,14 +204,15 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
                 int toYear = Integer.parseInt(et_toYear.getText().toString());
                // int toAM_PM = (Integer) timeAM_PM_to.getSelectedItem();
                 //int toMonth = (Integer) timeMonth_to.getSelectedItem();
-                Calendar calendarTo = new GregorianCalendar();
+                Calendar calendarTo = Calendar.getInstance();
+                Log.d("AlarmScreen1","calendarTo before set  " + calendarTo.toString());
                 calendarTo.set(Calendar.HOUR_OF_DAY, toHours);
                 calendarTo.set(Calendar.MINUTE, toMinutes);
                 calendarTo.set(Calendar.DAY_OF_MONTH, toDay);
                 calendarTo.set(Calendar.YEAR, toYear);
                 calendarTo.set(Calendar.AM_PM, toAM_PM);
                 calendarTo.set(Calendar.MONTH, toMonth);
-
+                Log.d("AlarmScreen1","calendarTo after set  " + calendarTo.toString());
 
                // int fromAM_PM_sleep = (Integer) timeAM_PM_from_sleep.getSelectedItem();
                // int toAM_PM_sleep = (Integer) timeAM_PM_to_sleep.getSelectedItem();
@@ -216,23 +220,55 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
                 int fromMinutes_sleep = Integer.parseInt(et_fromMinutes_sleep.getText().toString());
                 int toHours_sleep = Integer.parseInt(et_toHours_sleep.getText().toString());
                 int toMinutes_sleep = Integer.parseInt(et_toMinutes_sleep.getText().toString());
-                Calendar calendar_sleepFROM = new GregorianCalendar();
+                Calendar calendar_sleepFROM = Calendar.getInstance();
+                Log.d("AlarmScreen1","calendar_sleepFROM before set  " + calendar_sleepFROM.toString());
                 calendar_sleepFROM.set(Calendar.HOUR_OF_DAY, fromHours_sleep);
                 calendar_sleepFROM.set(Calendar.MINUTE, fromMinutes_sleep);
                 calendar_sleepFROM.set(Calendar.AM_PM, fromAM_PM_sleep);
+                Log.d("AlarmScreen1","calendar_sleepFROM after set  " + calendar_sleepFROM.toString());
 
-                Calendar calendar_sleepTo = new GregorianCalendar();
+                Calendar calendar_sleepTo = Calendar.getInstance();
+                Log.d("AlarmScreen1","calendar_sleepTO before set  " + calendar_sleepTo.toString());
                 calendar_sleepTo.set(Calendar.HOUR_OF_DAY, toHours_sleep);
                 calendar_sleepTo.set(Calendar.MINUTE, toMinutes_sleep);
                 calendar_sleepTo.set(Calendar.AM_PM, toAM_PM);
+                Log.d("AlarmScreen1","calendar_sleepTo after set  " + calendar_sleepTo.toString());
 
                 int repeat = Integer.parseInt(et_repeatTime.getText().toString());
-              //  int rep_min_hour = (Integer) repeat_min_hour.getSelectedItem();
-
                 if(rep_min_hour == 1) repeat = repeat*60;
 
                 Intent intent = new Intent(this, AlarmScreen.class);
-                intent.putExtra("tone", alarmTone.toString());
+
+                try {
+                    intent.putExtra("tone", alarmTone.toString());
+                }catch (NullPointerException e ){
+
+                    String button1String = "Set ringtone";
+                    String button2String = "Cancel";
+
+                    AlertDialog.Builder ad = new AlertDialog.Builder(this);
+                    ad.setTitle("Mistake");
+                    ad.setMessage("You forget to set ringtone for alarm.");
+                    ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
+                              Intent i = new Intent(getApplicationContext(),AlarmDetailsActivity.class);
+                              i.putExtra("table name",name);
+                        }
+                    });
+                    ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int arg1) {
+                            finish();
+                        }
+                    });
+                    ad.setCancelable(true);
+                    ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        public void onCancel(DialogInterface dialog) {
+
+                        }
+                    });
+                    AlertDialog alert = ad.create();
+                    alert.show();
+                }
                 intent.putExtra("current",cur);
                 intent.putExtra("endDate",calendarTo);
                 intent.putExtra("sleepTime_from",calendar_sleepFROM);
@@ -245,10 +281,10 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
                         12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager a =(AlarmManager)getSystemService(Activity.ALARM_SERVICE);
                 a.cancel(pendingIntent);
-                Log.d("AlarmScreen","cancel alarm becouce new alarm");
+                Log.d("AlarmScreen1","cancel alarm becouce new alarm");
 
                 a.set(AlarmManager.RTC_WAKEUP, calendarFrom.getTimeInMillis(), pendingIntent);
-                Log.d("AlarmScreen","set alarm " + calendarFrom.get(Calendar.HOUR) + " " + calendarFrom.get(Calendar.MINUTE)
+                Log.d("AlarmScreen1","set alarm " + calendarFrom.get(Calendar.HOUR) + " " + calendarFrom.get(Calendar.MINUTE)
                         + " " + calendarFrom.get(Calendar.AM_PM));
                 finish();
             }
