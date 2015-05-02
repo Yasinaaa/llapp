@@ -49,6 +49,8 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details2);
 
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(251,192,45)));
+
         try{
             theme_name = (TextView) findViewById(R.id.textView_themeName_Alarm);
             name = getIntent().getExtras().getString("table name");
@@ -269,15 +271,18 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
                     AlertDialog alert = ad.create();
                     alert.show();
                 }
-                intent.putExtra("current",cur);
+               /* intent.putExtra("current",cur);
                 intent.putExtra("endDate",calendarTo);
                 intent.putExtra("sleepTime_from",calendar_sleepFROM);
                 intent.putExtra("sleepTime_to",calendar_sleepTo);
                 intent.putExtra("sleep",false);
                 intent.putExtra("repeat",repeat);
-                intent.putExtra("table name",name);
+                intent.putExtra("table name",name);*/
 
-                PendingIntent pendingIntent =   PendingIntent.getActivity(this,
+                AlarmDAO alarmDAO = new AlarmDAO(this);
+                alarmDAO.set(name, calendarFrom, calendarTo, calendar_sleepFROM, calendar_sleepTo, repeat, rep_min_hour);
+
+               /* PendingIntent pendingIntent =   PendingIntent.getActivity(this,
                         12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager a =(AlarmManager)getSystemService(Activity.ALARM_SERVICE);
                 a.cancel(pendingIntent);
@@ -285,7 +290,7 @@ public class AlarmDetailsActivity extends Activity implements AdapterView.OnItem
 
                 a.set(AlarmManager.RTC_WAKEUP, calendarFrom.getTimeInMillis(), pendingIntent);
                 Log.d("AlarmScreen1","set alarm " + calendarFrom.get(Calendar.HOUR) + " " + calendarFrom.get(Calendar.MINUTE)
-                        + " " + calendarFrom.get(Calendar.AM_PM));
+                        + " " + calendarFrom.get(Calendar.AM_PM));*/
                 finish();
             }
         }

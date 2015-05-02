@@ -66,24 +66,14 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
-       <!-- January - 31 days
-        February - 28 days; 29 days in Leap Years
-        March - 31 days
-        April - 30 days
-        May - 31 days
-        June - 30 days
-        July - 31 days
-        August - 31 days
-        September - 30 days
-        October - 31 days
-        November - 30 days
-        December - 31 days -->
+
     </string-array>
 
     <string-array name="timeZone">
         <item>am</item>
         <item>pm</item>
     </string-array>
+    <string name="title_activity_choose_color">ChooseColor</string>
 
 </resources>
 

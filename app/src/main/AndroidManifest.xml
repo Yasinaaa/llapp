@@ -19,12 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DictionaryActivity" />
+        <activity android:name=".forPainting.Color_Picker" />
         <activity android:name=".Activities.ListDictionariesActivity" />
         <activity android:name=".Activities.AddDictionaryActivity" />
         <activity android:name=".AddWordsActivity" />
         <activity android:name=".forPainting.MainPaint" />
-        <activity android:name=".LearnWordsActivity" />
         <activity android:name=".Activities.ListWordsPairActivity" />
 
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -58,15 +57,21 @@
             android:name=".Alarm.AlarmService"
             android:enabled="true" />
 
-       <!-- <receiver android:name=".Alarm.AlarmManagerHelper" >
+        <!--
+        <receiver android:name=".Alarm.AlarmManagerHelper" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver> -->
+        </receiver>
+        -->
 
         <activity
             android:name=".Train.TestTrain"
             android:label="@string/title_activity_test_train" >
+        </activity>
+        <activity
+            android:name=".forPainting.ChooseColor"
+            android:label="@string/title_activity_choose_color" >
         </activity>
     </application>
 

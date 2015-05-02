@@ -8,41 +8,27 @@ public class AlarmModel  implements Serializable {
     private static final long serialVersionUID = -7406082437623008161L;
 
     private int id,
-    fromDay, fromMonth, fromYear, fromHours, fromMinutes ,fromAM_PM,
-    toDay, toMonth, toYear, toHours, toMinutes, toAM_PM,
-    fromSleepHours, fromSleepMinutes, fromSleep_AM_PM,
-    toSleepHours, toSleepMinutes, toSleep_AM_PM,
+    fromDay, fromMonth, fromYear, fromHours, fromMinutes ,
+    toDay, toMonth, toYear, toHours, toMinutes,
+    fromSleepHours, fromSleepMinutes,
+    toSleepHours, toSleepMinutes,
     repeat;
-    private String themeName;
+    private String themeName,fromAM_PM, toAM_PM, fromSleep_AM_PM,  toSleep_AM_PM, repeatMin_Hour;
 
-    public AlarmModel(int fromDay, int fromYear, int fromMonth, int fromHours, int fromMinutes, int fromAM_PM, int toDay, int toMonth, int toHours, int toYear, int toMinutes, int toAM_PM, int fromSleepHours, int fromSleepMinutes, int fromSleep_AM_PM, int toSleepHours, int toSleepMinutes, int toSleep_AM_PM, int repeat, String themeName) {
-        this.fromDay = fromDay;
-        this.fromYear = fromYear;
-        this.fromMonth = fromMonth;
-        this.fromHours = fromHours;
-        this.fromMinutes = fromMinutes;
-        this.fromAM_PM = fromAM_PM;
-        this.toDay = toDay;
-        this.toMonth = toMonth;
-        this.toHours = toHours;
-        this.toYear = toYear;
-        this.toMinutes = toMinutes;
-        this.toAM_PM = toAM_PM;
-        this.fromSleepHours = fromSleepHours;
-        this.fromSleepMinutes = fromSleepMinutes;
-        this.fromSleep_AM_PM = fromSleep_AM_PM;
-        this.toSleepHours = toSleepHours;
-        this.toSleepMinutes = toSleepMinutes;
-        this.toSleep_AM_PM = toSleep_AM_PM;
-        this.repeat = repeat;
-        this.themeName = themeName;
-    }
 
     public AlarmModel() {
     }
 
     public String getThemeName() {
         return themeName;
+    }
+
+    public String getRepeatMin_Hour() {
+        return repeatMin_Hour;
+    }
+
+    public void setRepeatMin_Hour(String repeatMin_Hour) {
+        this.repeatMin_Hour = repeatMin_Hour;
     }
 
     public void setThemeName(String themeName) {
@@ -55,14 +41,6 @@ public class AlarmModel  implements Serializable {
 
     public void setRepeat(int repeat) {
         this.repeat = repeat;
-    }
-
-    public int getToSleep_AM_PM() {
-        return toSleep_AM_PM;
-    }
-
-    public void setToSleep_AM_PM(int toSleep_AM_PM) {
-        this.toSleep_AM_PM = toSleep_AM_PM;
     }
 
     public int getToSleepMinutes() {
@@ -79,14 +57,6 @@ public class AlarmModel  implements Serializable {
 
     public void setToSleepHours(int toSleepHours) {
         this.toSleepHours = toSleepHours;
-    }
-
-    public int getFromSleep_AM_PM() {
-        return fromSleep_AM_PM;
-    }
-
-    public void setFromSleep_AM_PM(int fromSleep_AM_PM) {
-        this.fromSleep_AM_PM = fromSleep_AM_PM;
     }
 
     public int getFromSleepMinutes() {
@@ -161,14 +131,6 @@ public class AlarmModel  implements Serializable {
         this.fromMinutes = fromMinutes;
     }
 
-    public int getFromAM_PM() {
-        return fromAM_PM;
-    }
-
-    public void setFromAM_PM(int fromAM_PM) {
-        this.fromAM_PM = fromAM_PM;
-    }
-
     public int getToDay() {
         return toDay;
     }
@@ -201,11 +163,35 @@ public class AlarmModel  implements Serializable {
         this.toHours = toHours;
     }
 
-    public int getToAM_PM() {
+    public String getFromAM_PM() {
+        return fromAM_PM;
+    }
+
+    public void setFromAM_PM(String fromAM_PM) {
+        this.fromAM_PM = fromAM_PM;
+    }
+
+    public String getToAM_PM() {
         return toAM_PM;
     }
 
-    public void setToAM_PM(int toAM_PM) {
+    public void setToAM_PM(String toAM_PM) {
         this.toAM_PM = toAM_PM;
+    }
+
+    public String getFromSleep_AM_PM() {
+        return fromSleep_AM_PM;
+    }
+
+    public void setFromSleep_AM_PM(String fromSleep_AM_PM) {
+        this.fromSleep_AM_PM = fromSleep_AM_PM;
+    }
+
+    public String getToSleep_AM_PM() {
+        return toSleep_AM_PM;
+    }
+
+    public void setToSleep_AM_PM(String toSleep_AM_PM) {
+        this.toSleep_AM_PM = toSleep_AM_PM;
     }
 }

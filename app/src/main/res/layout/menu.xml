@@ -1,99 +1,78 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <ImageView
             android:id="@+id/ivUser"
-            android:src="@drawable/user"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="160dp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
-        <EditText
-            android:id="@+id/etLogin"
+            android:background="@drawable/back_fon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            android:layout_marginLeft="110dp"
-            android:hint="Login"
-            android:ems="10"
-            android:textSize="13dp"
-            />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+            android:layout_height="120dp" />
 
         <TextView
-            android:id="@+id/etLang"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/etLogin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_marginLeft="10dp"
-            android:padding="7dp"
+            android:text="Hi, Yasina"
+            android:padding="9dp"
+            android:textSize="17dp"
+            android:layout_below="@+id/ivUser"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/etLang"
+            android:layout_below="@+id/etLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:ems="14"
             android:hint="Dictionaries"
             android:textSize="15dp"
             />
-    </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/ll3"
-        android:layout_width="match_parent"
+        android:id="@+id/main_layout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/ll2"
-        android:layout_marginTop="170dp"
-        android:layout_marginLeft="10dp"
-
+        android:layout_below="@+id/etLang"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         >
-
         <Spinner
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:id="@+id/spinnerOfDictionaries"
             />
         <ImageButton
+            android:ellipsize="end"
+            android:layout_gravity="end"
             android:id="@+id/ibAddDictionary"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/add"
-            android:onClick="onClick"
-            android:layout_weight="1" />
+            android:onClick="onClick" />
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/main_layout2"
+        android:layout_below="@+id/main_layout1"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="230dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         >
     <TextView
         android:id="@+id/etTheme"
@@ -114,14 +93,26 @@
             android:padding="7dp"
             android:textSize="15dp"
             android:layout_weight="1"/>
+
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="10dp"
-        >
+
+
+    <View
+        android:id="@+id/divider1"
+        style="@style/Divider"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/main_layout2" />
+
+    <TextView
+        android:id="@+id/em"
+        android:layout_below="@+id/divider1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
         <TextView
             android:id="@+id/etAlarm_main"
             android:layout_width="wrap_content"
@@ -130,69 +121,106 @@
             android:ems="9"
             android:hint="Alarm"
             android:textSize="15dp"
-            android:layout_weight="1"
+            android:layout_below="@+id/em"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             />
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/main_layout3"
+        android:layout_below="@+id/etAlarm_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        >
+
         <TextView
             android:id="@+id/tv_AlarmThemeFrom_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="From Monday 12:30"
-            android:padding="7dp"
-            android:textSize="15dp"
-            android:layout_weight="5"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="265dp"
-        android:layout_marginLeft="10dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:ems="9"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            />
+            android:padding="2dp"
+            android:textSize="13dp"/>
         <TextView
             android:id="@+id/tv_AlarmThemeTo_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To Wendesday 12:30"
-            android:ems="9"
-            android:padding="7dp"
-            android:textSize="15dp"
-            android:layout_weight="5"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="280dp"
-        android:layout_marginLeft="10dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:ems="9"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            />
+            android:padding="2dp"
+            android:textSize="13dp"/>
         <TextView
             android:id="@+id/tv_AlarmThemeRepeat_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Every 20 min"
-            android:ems="9"
-            android:padding="7dp"
+            android:textSize="13dp"
+            android:padding="2dp"
+           />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:layout_weight="5"/>
+            android:padding="2dp"
+            />
     </LinearLayout>
 
+    <View
+        android:id="@+id/divider2"
+        style="@style/Divider"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/main_layout3" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/etAlarmSleep"
+            android:layout_below="@+id/main_layout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:ems="9"
+            android:hint="Sleep time "
+            android:textSize="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="17dp"
+            />
+
+
+    <LinearLayout
+        android:id="@+id/main_layout4"
+        android:layout_below="@+id/etAlarmSleep"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_AlarmThemeSleepFrom_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep time "
+            android:textSize="13dp"
+            android:padding="2dp"
+            />
+        <TextView
+            android:id="@+id/tv_AlarmThemeSleepTo_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep time "
+            android:textSize="13dp"
+            android:padding="2dp"
+            />
+        </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        style="@style/Divider"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/main_layout4" />
+
+
+
+
+</RelativeLayout>

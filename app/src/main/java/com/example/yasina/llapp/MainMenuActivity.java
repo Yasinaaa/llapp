@@ -23,7 +23,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
+import com.example.yasina.llapp.Alarm.AlarmDAO;
 import com.example.yasina.llapp.Alarm.AlarmListActivity;
+import com.example.yasina.llapp.Alarm.AlarmModel;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Notification.NotificationWordActivity;
@@ -43,21 +45,23 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     private DictionaryDAO dictionaryDAO;
     private DictionariesSpinner mAdapter;
     public static long clickedDictionary;
-    private TextView theme_name, alarmTheme_to, alarmTheme_from, alarmTheme_repeat;
-
+    private TextView theme_name, alarmTheme_to, alarmTheme_from, alarmTheme_repeat, sleepFrom, sleepTo;
+    private AlarmDAO alarmDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
 
         dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
         theme_name = (TextView) findViewById(R.id.tv_theme_main);
         alarmTheme_to = (TextView) findViewById(R.id.tv_AlarmThemeTo_main);
         alarmTheme_from = (TextView) findViewById(R.id.tv_AlarmThemeFrom_main);
         alarmTheme_repeat = (TextView) findViewById(R.id.tv_AlarmThemeRepeat_main);
+        sleepFrom = (TextView) findViewById(R.id.tv_AlarmThemeSleepFrom_main);
+        sleepTo = (TextView) findViewById(R.id.tv_AlarmThemeTo_main);
 
         dictionaryDAO = new DictionaryDAO(this);
 		List<Dictionary> listDictionaries = dictionaryDAO.getAllDictionaries();
@@ -67,6 +71,21 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
 			dictionariesSpinner.setOnItemSelectedListener(this);
 		}
 
+        alarmDAO = new AlarmDAO(this);
+        try {
+            AlarmModel model = alarmDAO.get(1);
+            String temp = model.getThemeName().replace("_theme","");
+            theme_name.setText(temp);
+
+            alarmTheme_from.setText("From " + model.getFromDay() + "." + model.getFromMonth() + "." + model.getFromYear() + " " + model.getFromHours() + ":" + model.getFromMinutes() + " " + model.getFromAM_PM());
+            alarmTheme_to.setText("To " + model.getToDay() + "." + model.getToMonth() + "." + model.getToYear() + " " + model.getToHours() + ":" + model.getToMinutes() + " " + model.getToAM_PM());
+            alarmTheme_repeat.setText("Every " + model.getRepeat() + " " + model.getRepeatMin_Hour());
+            sleepFrom.setText("From " + model.getFromSleepHours() + ":" + model.getFromSleepMinutes() + " " + model.getFromSleep_AM_PM());
+            sleepTo.setText("To " + model.getToSleepHours() + ":" + model.getToSleepMinutes() + " " + model.getToSleep_AM_PM());
+        }catch(RuntimeException e){
+
+       }
+
             SlidingMenu menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
             menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -74,7 +93,6 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
             menu.setMenu(R.layout.sidemenu);
             menu.setBackgroundColor(0xFF333333);
-            //menu.setBackgroundColor(EBAA5B);
             menu.setBehindWidthRes(R.dimen.slidingmenu_behind_width);
             menu.setSelectorDrawable(R.drawable.sidemenu_items_background);
 
@@ -90,9 +108,9 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 }
             });
 
-            if (currentMenuPosition != -1) {
+          /*  if (currentMenuPosition != -1) {
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
-            }
+            }*/
 
             String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
                     /*, getString(R.string.add_languages_fragmnet),

@@ -58,7 +58,7 @@ public class AlarmScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-        name = getIntent().getExtras().getString("table name") + "_theme";
+        name = getIntent().getExtras().getString("table name");
         repeat = getIntent().getExtras().getInt("repeat");
         int cu = getIntent().getExtras().getInt("current");
         calendarEND = (Calendar) getIntent().getExtras().get("endDate");

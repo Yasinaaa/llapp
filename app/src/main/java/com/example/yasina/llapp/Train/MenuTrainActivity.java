@@ -2,6 +2,8 @@ package com.example.yasina.llapp.Train;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -43,6 +45,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_train);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
 
         wordsDAO = new WordsDAO(this);
         Log.d(TAG, " wordsDAO = new WordsDAO(this)");

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/new_btn"
+        android:icon="@drawable/new_pic"
+        android:showAsAction="always"
+        android:title="@string/start_new" />
+
+    <item
+        android:id="@+id/draw_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:title="@string/brush"
+        android:showAsAction="always"
+        android:icon="@drawable/brush" />
+
+    <item
+        android:id="@+id/erase_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:title="@string/erase"
+        android:showAsAction="always"
+        android:icon="@drawable/eraser" />
+
+    <item
+        android:id="@+id/save_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:showAsAction="always"
+        android:title="@string/save"
+        android:icon="@drawable/save" />
+</menu>

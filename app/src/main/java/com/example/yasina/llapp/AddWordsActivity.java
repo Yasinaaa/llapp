@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +66,7 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_words);
         getActionBar().setTitle("Add Words");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
 
         tvFirstL = (TextView) findViewById(R.id.tvFirstLangAddWord);
         tvSecondL = (TextView) findViewById(R.id.tvSecondLangAddWord);
