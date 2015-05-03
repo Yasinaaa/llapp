@@ -204,8 +204,6 @@ public class AlarmDetailsActivity extends Activity {
             case R.id.action_save_alarm_details: {
                  setAlarmParameters();
 
-
-
                  AlarmManagerHelper.cancelAlarms(this);
 
                 if(old_alarm) {
@@ -216,32 +214,7 @@ public class AlarmDetailsActivity extends Activity {
                     alarmDAO.createAlarm(alarm);
                     Log.d("alala","create new alarm");
                 }
-                AlarmModel alarm = alarmDAO.getByID();
-
-                Intent values = new Intent(this, AlarmScreen.class);
-                values.putExtra("alarm",alarm);
-                PendingIntent pIntent = PendingIntent.getActivity(this,
-                        12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
-
-                Log.d("alala", "set pIntent");
-
-                Calendar calendarFROM = Calendar.getInstance();
-                calendarFROM.setTimeInMillis(System.currentTimeMillis());
-
-                calendarFROM.set(Calendar.DAY_OF_MONTH,alarm.getFromMonth());
-                calendarFROM.set(Calendar.MONTH,alarm.getFromMonth());
-                calendarFROM.set(Calendar.YEAR,alarm.getFromYear());
-                calendarFROM.set(Calendar.HOUR_OF_DAY, alarm.getFromHours());
-                calendarFROM.set(Calendar.MINUTE, alarm.getFromMinutes());
-                calendarFROM.set(Calendar.SECOND, 00);
-                int am_pm;
-                if(alarm.getFromAM_PM().equals("am")) am_pm = 0;
-                else am_pm = 1;
-                calendarFROM.set(Calendar.AM_PM,am_pm);
-
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendarFROM.getTimeInMillis(), pIntent);
+                AlarmManagerHelper.setAlarms(this);
 
                 finish();
             }
