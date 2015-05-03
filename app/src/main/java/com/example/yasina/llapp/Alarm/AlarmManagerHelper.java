@@ -45,7 +45,7 @@ public class AlarmManagerHelper extends BroadcastReceiver{
                  //   PendingIntent pIntent = PendingIntent.getActivity(context,
                    //     12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
                         //PendingIntent.getBroadcast(context, 0, values, 0);
-
+//
                // PendingIntent pIntent =  PendingIntent.getService(context, alarm.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
                 Log.d("alala", "set pIntent");
 
