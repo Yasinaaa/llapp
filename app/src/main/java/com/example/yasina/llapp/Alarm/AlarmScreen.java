@@ -30,7 +30,8 @@ package com.example.yasina.llapp.Alarm;
         import java.util.Calendar;
         import java.util.GregorianCalendar;
 
-public class AlarmScreen extends Activity {
+public class AlarmScreen
+        extends Activity {
 
     public final String TAG = this.getClass().getSimpleName() + "1";
 
@@ -48,6 +49,7 @@ public class AlarmScreen extends Activity {
     private static final int WAKELOCK_TIMEOUT = 60 * 1000;
     private String tone;
     private int size;
+    private AlarmModel alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,30 +60,25 @@ public class AlarmScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-        name = getIntent().getExtras().getString("table name");
-        repeat = getIntent().getExtras().getInt("repeat");
-        int cu = getIntent().getExtras().getInt("current");
-        calendarEND = (Calendar) getIntent().getExtras().get("endDate");
-        calendar_sleepFROM = (Calendar) getIntent().getExtras().get("sleepTime_from");
-        calendar_sleepTo = (Calendar) getIntent().getExtras().get("sleepTime_to");
-        sleep = getIntent().getExtras().getBoolean("sleep");
-        Log.d(TAG,"sleep " + sleep);
-        tone =  getIntent().getExtras().getString("tone");
 
-        themeWordsDAO = new WordsDAO(getApplicationContext(), name);
+        alarm = (AlarmModel) getIntent().getExtras().get("alarm");
+        tone = alarm.alarmTone;
+
+        themeWordsDAO = new WordsDAO(getApplicationContext(), alarm.getThemeName());
         words = new ArrayList<Words>();
         words = themeWordsDAO.getAllDictionaries();
         Log.d("Train", words.size() + "");
-        alarmWord = words.get(cu);
+       // alarmWord = words.get(cu);
+        alarmWord = words.get(0);
         size = words.size();
 
-        AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
+       /* AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         Log.d("AlarmScreen1","calendar from AlarmScreen before set  " + calendar.toString());
         Log.d("AlarmScreen1", "calendarEND before equlas  " + calendarEND.toString());
-        Log.d("AlarmScreen1","equlas?  " + calendar.equals(calendarEND));
+        Log.d("AlarmScreen1","equlas?  " + calendar.equals(calendarEND));*/
 
-        if (calendar.equals(calendarEND)) {
+     /*   if (calendar.equals(calendarEND)) {
             Log.d(TAG,"cancel alarm becouce equals");
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                    12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
@@ -89,24 +86,7 @@ public class AlarmScreen extends Activity {
             pendingIntent.cancel();
             finish();
 
-        } /*else if (sleep == true) {
-            Intent intent = getIntent();
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                    12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-            am.cancel(pendingIntent);
-            Log.d(TAG,"cancel alarm becouce sleep");
-
-            intent.putExtra("current", cu);
-            intent.putExtra("endDate", calendarEND);
-            intent.putExtra("sleepTime_from", calendar_sleepFROM);
-            intent.putExtra("sleepTime_to", calendar_sleepTo);
-            intent.putExtra("sleep", true);
-            intent.putExtra("repeat", repeat);
-            intent.putExtra("table name", name);
-            am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
-            Log.d(TAG,"set alarm (i'm sleeping) " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
-                    + " " + calendar_sleepTo.get(Calendar.AM_PM));
-        } */else {
+        } else {
             Intent intent = getIntent();
             if(!sleep){
                 sleep = false;
@@ -158,9 +138,9 @@ public class AlarmScreen extends Activity {
                 }
 
             }
-        }
-
-        Log.d(TAG, "hi");
+        }*/
+        init();
+        Log.d("alala", "hi i'm in alarm screen");
 
     }
 

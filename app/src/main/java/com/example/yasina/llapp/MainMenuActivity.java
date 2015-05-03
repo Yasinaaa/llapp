@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,8 +25,8 @@ import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.Alarm.AlarmDAO;
-import com.example.yasina.llapp.Alarm.AlarmListActivity;
 import com.example.yasina.llapp.Alarm.AlarmModel;
+import com.example.yasina.llapp.DAO.DBHelper;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Notification.NotificationWordActivity;
@@ -53,8 +54,6 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
-
         dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
         theme_name = (TextView) findViewById(R.id.tv_theme_main);
         alarmTheme_to = (TextView) findViewById(R.id.tv_AlarmThemeTo_main);
@@ -72,8 +71,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
 		}
 
         alarmDAO = new AlarmDAO(this);
-        try {
-            AlarmModel model = alarmDAO.get(1);
+       /* try {
+           AlarmModel model = alarmDAO.getByID();
             String temp = model.getThemeName().replace("_theme","");
             theme_name.setText(temp);
 
@@ -84,7 +83,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             sleepTo.setText("To " + model.getToSleepHours() + ":" + model.getToSleepMinutes() + " " + model.getToSleep_AM_PM());
         }catch(RuntimeException e){
 
-       }
+       }*/
 
             SlidingMenu menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
@@ -151,29 +150,15 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
                 break;
             case 1:
-                //showFragment(new LearnWordsFragment());
-               // startActivity(new Intent(getApplicationContext(),LearnWordsActivity.class));
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case 2:
-//                showFragment(new AddWordsActivity());
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
 
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-         /*   case 4:
-                Intent intent = new Intent(getApplicationContext(), NotificationWordActivity.class);
-                intent.putExtra("table name","first_theme");
-                startActivity(intent);
-                break;
-            case 5:
-               Intent i = new Intent(getApplicationContext(), AlarmListActivity.class);
-                i.putExtra("table name","first_theme");
-                startActivity(i);
-                break;*/
-
 
         }
     }
@@ -213,7 +198,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         switch (v.getId())
         {
             case R.id.ibAddDictionary:
-                //startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+
                  startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
                 break;
 
@@ -230,10 +215,6 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         if(clickedDictionary == 0) clickedDictionary = 1;
 
         Log.d(TAG, "clickedItem : " + clickedDictionary);
-
-         //Intent intent = new Intent(this, AddWordsFragment.class);
-         //intent.putExtra(ListEmployeesActivity.EXTRA_SELECTED_COMPANY_ID, clickedCompany.getId());
-         //startActivity(intent);
     }
 
     @Override

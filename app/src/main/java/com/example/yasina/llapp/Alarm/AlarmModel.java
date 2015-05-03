@@ -1,6 +1,8 @@
 package com.example.yasina.llapp.Alarm;
 
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class AlarmModel  implements Serializable {
@@ -14,10 +16,21 @@ public class AlarmModel  implements Serializable {
     toSleepHours, toSleepMinutes,
     repeat;
     private String themeName,fromAM_PM, toAM_PM, fromSleep_AM_PM,  toSleep_AM_PM, repeatMin_Hour;
+    private boolean isEnabled;
+    public String alarmTone;
 
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
 
     public AlarmModel() {
     }
+
+
 
     public String getThemeName() {
         return themeName;

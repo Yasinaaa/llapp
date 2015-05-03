@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".forPainting.Color_Picker" />
+
         <activity android:name=".Activities.ListDictionariesActivity" />
         <activity android:name=".Activities.AddDictionaryActivity" />
         <activity android:name=".AddWordsActivity" />
@@ -57,13 +57,13 @@
             android:name=".Alarm.AlarmService"
             android:enabled="true" />
 
-        <!--
+
         <receiver android:name=".Alarm.AlarmManagerHelper" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        -->
+
 
         <activity
             android:name=".Train.TestTrain"
