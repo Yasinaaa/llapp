@@ -47,7 +47,7 @@ public class DrawingView extends View {
         private void setupDrawing(){
 
 
-            brushSize = getResources().getInteger(R.integer.medium_size);
+            brushSize = getResources().getInteger(R.integer.small_size);
             lastBrushSize = brushSize;
             drawPath = new Path();
             drawPaint = new Paint();
@@ -109,9 +109,17 @@ public class DrawingView extends View {
         //update color
         public void setColor(String newColor){
             invalidate();
+            Log.d("color", paintColor + " is " + newColor);
             paintColor = Color.parseColor(newColor);
             drawPaint.setColor(paintColor);
+
         }
+
+    public void setColor(int newColor){
+        invalidate();
+       // paintColor = Color.parseColor(newColor);
+         drawPaint.setColor(newColor);
+    }
 
         //set brush size
         public void setBrushSize(float newSize){

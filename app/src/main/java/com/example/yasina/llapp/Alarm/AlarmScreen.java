@@ -60,7 +60,15 @@ public class AlarmScreen
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-
+       /* name = getIntent().getExtras().getString("table name");
+        repeat = getIntent().getExtras().getInt("repeat");
+        int cu = getIntent().getExtras().getInt("current");
+        calendarEND = (Calendar) getIntent().getExtras().get("endDate");
+        calendar_sleepFROM = (Calendar) getIntent().getExtras().get("sleepTime_from");
+        calendar_sleepTo = (Calendar) getIntent().getExtras().get("sleepTime_to");
+        sleep = getIntent().getExtras().getBoolean("sleep");
+        Log.d(TAG,"sleep " + sleep);
+        tone =  getIntent().getExtras().getString("tone");*/
         alarm = (AlarmModel) getIntent().getExtras().get("alarm");
         tone = alarm.alarmTone;
 

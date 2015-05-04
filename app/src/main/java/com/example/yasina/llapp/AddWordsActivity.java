@@ -28,7 +28,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
-import com.example.yasina.llapp.Alarm.AlarmListActivity;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Dictionary;
@@ -219,11 +218,15 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
      // Log.d("hi","im here");
 
       ByteArrayOutputStream bos=new ByteArrayOutputStream();
-      d.compress(Bitmap.CompressFormat.PNG, 100, bos);
-      img = bos.toByteArray();
+      try {
+          d.compress(Bitmap.CompressFormat.PNG, 100, bos);
+          img = bos.toByteArray();
 
-       mImage = (ImageView) findViewById(R.id.ivPictureOfWord);
-       mImage.setImageResource(R.drawable.checkmark);
+          mImage = (ImageView) findViewById(R.id.ivPictureOfWord);
+          mImage.setImageResource(R.drawable.checkmark);
+      }catch (RuntimeException e){
+
+      }
 
       }
 

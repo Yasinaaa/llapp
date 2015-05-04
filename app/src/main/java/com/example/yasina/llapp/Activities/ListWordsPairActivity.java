@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.yasina.llapp.Adapter.ListWordsAdapter;
 import com.example.yasina.llapp.AddWordsActivity;
-import com.example.yasina.llapp.Alarm.AlarmListActivity;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.MainMenuActivity;

@@ -142,7 +142,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:contentDescription="@string/paint"
-            android:onClick="paintClicked"
+            android:onClick="onClick"
             android:src="@drawable/add"
             android:tag="#FF660000" />
     </LinearLayout>

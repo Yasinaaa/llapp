@@ -19,7 +19,6 @@ import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.WordsPairsSpinner;
 import com.example.yasina.llapp.AddWordsActivity;
 import com.example.yasina.llapp.Alarm.AlarmDetailsActivity;
-import com.example.yasina.llapp.Alarm.AlarmListActivity;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.MainMenuActivity;
 import com.example.yasina.llapp.Model.Words;

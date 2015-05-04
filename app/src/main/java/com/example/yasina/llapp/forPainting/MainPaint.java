@@ -213,11 +213,23 @@ public class MainPaint extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-
-
-
+      startActivityForResult(new Intent(this,ChooseColor.class),1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+       // if (resultCode == RESULT_OK) {
+
+           int color = data.getExtras().getInt("color");
+  ///      Log.d("color", color + " is another ");
+           drawView.setColor(color);
+
+
+         //   }
+
+    }
 }
 
 

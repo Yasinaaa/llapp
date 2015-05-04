@@ -22,6 +22,7 @@ import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class TestTrain extends Activity {
     private Button checkButton, againButton, backButton;
     private Random random;
     private int allWordsCount;
-
+    private int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class TestTrain extends Activity {
             themeWordsDAO = new WordsDAO(getApplicationContext(), name);
             words = new ArrayList<Words>();
             words = themeWordsDAO.getAllDictionaries();
+            size = words.size();
             Log.d("Train", words.size() + "");
 
 
@@ -87,17 +89,31 @@ public class TestTrain extends Activity {
         layout = (LinearLayout) findViewById(R.id.linearLayout2);
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        textView = new TextView[3];
-        ll = new LinearLayout[3];
-        editText = new EditText[3];
+        textView = new TextView[size];
+        ll = new LinearLayout[size];
+        editText = new EditText[size];
 
         random = new Random();
-        randoms = new int[3];
+        randoms = new int[size];
+        boolean used[] = new boolean[size];
+        Arrays.fill(used, Boolean.FALSE);
+
         int num = 0;
 
-        for (int i = 0; i < 3; i++) {
-            num = random.nextInt(3);
-            randoms[i] = num;
+        for (int i = 0; i < size; i++) {
+            num = random.nextInt(size);
+
+            if(used[num]){
+                for(int j = 0; j < size; j++){
+                    if(!used[j]){
+                        used[j]= true;
+                        randoms[i] = num;
+                    }
+                }
+            }else{
+                randoms[i] = num;
+                used[i] = true;
+            }
 
             textView[num] = new TextView(this);
             textView[num].setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));

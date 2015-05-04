@@ -3,6 +3,7 @@ package com.example.yasina.llapp.forPainting;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,7 +68,15 @@ public class ChooseColor extends Activity {
         switch (v.getId())
         {
             case R.id.btn_check_color:
-                startActivity(new Intent(this,MainPaint.class));
+                int color = picker.getColor();
+                Log.d("color", color + " is another ");
+
+
+                Intent intent = new Intent();
+                intent.putExtra("color",color);
+                setResult(RESULT_OK, intent);
+
+                finish();
                 break;
 
 
