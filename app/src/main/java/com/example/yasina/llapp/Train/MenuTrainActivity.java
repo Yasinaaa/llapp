@@ -122,27 +122,35 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
         switch (v.getId()) {
             case R.id.ibAdd_newTheme:
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
+                finish();
                 break;
             case R.id.ibNext:
                 intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.alarmSet:
 
                 intent = new Intent(getApplicationContext(), AlarmDetailsActivity.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.ibTestTrain:
                 intent = new Intent(getApplicationContext(), TestTrain.class);
                 intent.putExtra("table name",tableName);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.ibTrainDelete:
                 wordsDAO.deletebyTableName(tableName);
+                intent = new Intent(getApplicationContext(), MenuTrainActivity.class);
+                intent.putExtra("table name",tableName);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

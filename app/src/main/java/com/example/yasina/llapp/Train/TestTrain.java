@@ -37,9 +37,10 @@ public class TestTrain extends Activity {
     private EditText[] editText;
     private int[] randoms;
     private Button checkButton, againButton, backButton;
-    private Random random;
     private int allWordsCount;
-    private int size;
+    private int size, n;
+    private ArrayList<Integer> mas;
+    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,44 +94,39 @@ public class TestTrain extends Activity {
         ll = new LinearLayout[size];
         editText = new EditText[size];
 
-        random = new Random();
         randoms = new int[size];
-        boolean used[] = new boolean[size];
-        Arrays.fill(used, Boolean.FALSE);
+        //int num = 0;
 
-        int num = 0;
+        mas = new ArrayList<Integer>();
+        for(int j = 0; j< size; j++){
+            mas.add(j);
+        }
+
+        n = size;
+        int num;
+        random = new Random();
 
         for (int i = 0; i < size; i++) {
-            num = random.nextInt(size);
 
-            if(used[num]){
-                for(int j = 0; j < size; j++){
-                    if(!used[j]){
-                        used[j]= true;
-                        randoms[i] = num;
-                    }
-                }
-            }else{
-                randoms[i] = num;
-                used[i] = true;
-            }
+            num = random.nextInt(n - i);
+            randoms[i] = mas.remove(num);
 
-            textView[num] = new TextView(this);
-            textView[num].setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            textView[num].setText(words.get(num).getFirstLang());
-            textView[num].setId(i);
-            textView[num].setEms(10);
+            textView[i] = new TextView(this);
+            textView[i].setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            textView[i].setText(words.get(randoms[i]).getFirstLang());
+            textView[i].setId(i);
+            textView[i].setEms(10);
 
-            editText[num] = new EditText(this);
-            editText[num].setId(num);
-            editText[num].setEms(10);
+            editText[i] = new EditText(this);
+            editText[i].setId(i);
+            editText[i].setEms(10);
 
-            ll[num] = new LinearLayout(this);
-            ll[num].setOrientation(LinearLayout.HORIZONTAL);
-            ll[num].addView(textView[num]);
-            ll[num].addView(editText[num]);
+            ll[i] = new LinearLayout(this);
+            ll[i].setOrientation(LinearLayout.HORIZONTAL);
+            ll[i].addView(textView[i]);
+            ll[i].addView(editText[i]);
 
-            layout.addView(ll[num]);
+            layout.addView(ll[i]);
         }
 
 
@@ -139,25 +135,32 @@ public class TestTrain extends Activity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < size; i++) {
                     String answer = editText[i].getText().toString();
                     int temp = randoms[i];
                     if (!answer.equals(words.get(temp).getSecondLang())) {
                         editText[i].setBackgroundColor(Color.RED);
                     }
                 }
-                againButton = new Button(getApplicationContext());
-                againButton.setText("Again");
-                againButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(getApplicationContext(), TestTrain.class);
-                        i.putExtra("table name", name);
-                        startActivity(i);
-                        finish();
-                    }
-                });
-                layout.addView(againButton);
+                try {
+                    layout.removeView(againButton);
+                }catch (RuntimeException e){
+
+                }
+
+                    againButton = new Button(getApplicationContext());
+                    againButton.setText("Again");
+                    againButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(getApplicationContext(), TestTrain.class);
+                            i.putExtra("table name", name);
+                            startActivity(i);
+                            finish();
+                        }
+                    });
+                    layout.addView(againButton);
+
             }
         });
         layout.addView(checkButton);
