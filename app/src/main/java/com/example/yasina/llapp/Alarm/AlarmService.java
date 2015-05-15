@@ -20,13 +20,14 @@ public class AlarmService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.d("alala", "hi i'm in alarm service");
+
         Intent alarmIntent = new Intent(getBaseContext(), AlarmScreen.class);
         alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         alarmIntent.putExtras(intent);
         getApplication().startActivity(alarmIntent);
         Log.d("alala", "i'm send to alarm screen");
 
-        AlarmManagerHelper.setAlarms(this);
+     //   AlarmManagerHelper.setAlarms(this);
 
         return super.onStartCommand(intent, flags, startId);
     }

@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="horizontal"
+    tools:context=".MainActivity" >
+
+    <ImageButton
+        android:id="@+id/add_color_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/paint"
+        android:onClick="onClick"
+        android:src="@drawable/add"
+        android:tag="#FF660000"
+        android:layout_alignParentTop="true" />
+
+    <ListView
+        android:id="@+id/paint_colors"
+        android:layout_below="@+id/add_color_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:divider="@null"
+        android:orientation="vertical" >
+
+
+
+    </ListView>
+
+    <!-- Custom View -->
+
+    <com.example.yasina.llapp.forPainting.DrawingView
+        android:id="@+id/drawing"
+        android:layout_below="@+id/lA"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF" />
+
+
+
+
+
+</RelativeLayout>

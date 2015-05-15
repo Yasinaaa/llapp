@@ -26,9 +26,6 @@ public class ListWordsAdapter extends ArrayAdapter {
     private Context context;
     private ArrayList<Words> objects = new ArrayList<Words>();
 
-    //private List<Words> mItems;
-    //private LayoutInflater mInflater;
-
     public ListWordsAdapter(Context context,int list_item_layout, ArrayList<Words> listDictionaries) {
         super(context,list_item_layout,listDictionaries);
         this.context = context;

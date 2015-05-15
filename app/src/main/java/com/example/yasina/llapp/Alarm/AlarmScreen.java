@@ -28,7 +28,6 @@ package com.example.yasina.llapp.Alarm;
         import com.example.yasina.llapp.R;
         import java.util.ArrayList;
         import java.util.Calendar;
-        import java.util.GregorianCalendar;
 
 public class AlarmScreen
         extends Activity {
@@ -43,13 +42,12 @@ public class AlarmScreen
     private Words alarmWord;
     private TextView text1, text2, text3;
     private ImageView im1;
-    private Calendar calendarEND, calendar_sleepFROM, calendar_sleepTo;
-    private boolean sleep;
-    private int repeat;
+    private int repeat, toAM_PM, fromSleep_AM_PM, toSleepAM_PM;
     private static final int WAKELOCK_TIMEOUT = 60 * 1000;
     private String tone;
     private int size;
-    private AlarmModel alarm;
+    private boolean addDaySleep, sleep;
+    private AlarmModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,95 +58,271 @@ public class AlarmScreen
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-       /* name = getIntent().getExtras().getString("table name");
-        repeat = getIntent().getExtras().getInt("repeat");
-        int cu = getIntent().getExtras().getInt("current");
-        calendarEND = (Calendar) getIntent().getExtras().get("endDate");
-        calendar_sleepFROM = (Calendar) getIntent().getExtras().get("sleepTime_from");
-        calendar_sleepTo = (Calendar) getIntent().getExtras().get("sleepTime_to");
+        model = new AlarmModel();
+        //model = (AlarmModel) getIntent().getParcelableExtra("model");
         sleep = getIntent().getExtras().getBoolean("sleep");
-        Log.d(TAG,"sleep " + sleep);
-        tone =  getIntent().getExtras().getString("tone");*/
-        alarm = (AlarmModel) getIntent().getExtras().get("alarm");
-        tone = alarm.alarmTone;
+        model.setToDay(getIntent().getExtras().getInt("toDay"));
+        model.setToMonth(getIntent().getExtras().getInt("toMonth"));
+        model.setToYear(getIntent().getExtras().getInt("toYear"));
+        model.setToHours(getIntent().getExtras().getInt("toHours"));
+        model.setToMinutes(getIntent().getExtras().getInt("toMinutes"));
+        toAM_PM = getIntent().getExtras().getInt("toAM_PM");
+        model.setFromSleepHours(getIntent().getExtras().getInt("fromSleepH"));
+        model.setFromSleepMinutes(getIntent().getExtras().getInt("fromSleepM"));
+        fromSleep_AM_PM = getIntent().getExtras().getInt("fromSleepAM_PM");
+        model.setToHours(getIntent().getExtras().getInt("toSleepH"));
+        model.setToMinutes(getIntent().getExtras().getInt("toSleepM"));
+        toSleepAM_PM = getIntent().getExtras().getInt("toSleepAM_PM");
+        model.setRepeat(getIntent().getExtras().getInt("repeat"));
+        model.alarmTone = getIntent().getExtras().getString("alarmTune");
+        addDaySleep = getIntent().getExtras().getBoolean("add day sleep");
 
-        themeWordsDAO = new WordsDAO(getApplicationContext(), alarm.getThemeName());
+
+        Calendar calendarTO = Calendar.getInstance();
+        calendarTO.set(Calendar.DAY_OF_MONTH, getIntent().getExtras().getInt("toDay"));
+        calendarTO.set(Calendar.MONTH, getIntent().getExtras().getInt("toMonth"));
+        calendarTO.set(Calendar.YEAR, getIntent().getExtras().getInt("toYear"));
+        calendarTO.set(Calendar.HOUR, getIntent().getExtras().getInt("toHours"));
+        calendarTO.set(Calendar.MINUTE, getIntent().getExtras().getInt("toMinutes"));
+        calendarTO.set(Calendar.AM_PM, getIntent().getExtras().getInt("toAM_PM"));
+        calendarTO.set(Calendar.SECOND, 00);
+
+        Calendar calendarSleepFROM = Calendar.getInstance();
+        calendarSleepFROM.set(Calendar.HOUR, getIntent().getExtras().getInt("fromSleepH"));
+        calendarSleepFROM.set(Calendar.MINUTE, getIntent().getExtras().getInt("fromSleepM"));
+        calendarSleepFROM.set(Calendar.AM_PM, getIntent().getExtras().getInt("fromSleepAM_PM"));
+        calendarSleepFROM.set(Calendar.SECOND, 00);
+
+        Calendar calendarSleepTO = Calendar.getInstance();
+        if (addDaySleep) {
+            calendarSleepTO.add(Calendar.DAY_OF_MONTH, 1);
+            Log.d("TimeInmmm", "add day");
+        }
+        calendarSleepTO.set(Calendar.HOUR, getIntent().getExtras().getInt("toSleepH"));
+        calendarSleepTO.set(Calendar.MINUTE, getIntent().getExtras().getInt("toSleepM"));
+        calendarSleepTO.set(Calendar.AM_PM, getIntent().getExtras().getInt("toSleepAM_PM"));
+        calendarSleepTO.set(Calendar.SECOND, 00);
+
+
+        model.setRepeat(getIntent().getExtras().getInt("repeat"));
+        //   model.setRepeatMin_Hour(getIntent().getExtras().getString("repeatMin_H"));
+        model.alarmTone = getIntent().getExtras().getString("alarmTune");
+
+
+        int cu = getIntent().getExtras().getInt("cur");
+        Log.d("TimeInmmm", "cu=" + cu);
+        tone = model.alarmTone;
+        name = getIntent().getExtras().getString("alarmTheme");
+        repeat = model.getRepeat();
+
+
+        themeWordsDAO = new WordsDAO(getApplicationContext(), name);
         words = new ArrayList<Words>();
         words = themeWordsDAO.getAllDictionaries();
         Log.d("Train", words.size() + "");
-       // alarmWord = words.get(cu);
-        alarmWord = words.get(0);
+        alarmWord = words.get(cu);
         size = words.size();
 
-       /* AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        Log.d("AlarmScreen1","calendar from AlarmScreen before set  " + calendar.toString());
-        Log.d("AlarmScreen1", "calendarEND before equlas  " + calendarEND.toString());
-        Log.d("AlarmScreen1","equlas?  " + calendar.equals(calendarEND));*/
+        AlarmManager am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
+        if (cu == words.size()) {
+            cu = 0;
+            Log.d("TimeInmmm", "cu=" + cu);
+        }
+        Calendar c = Calendar.getInstance();
+        Log.d("TimeInmmm", calendarTO.getTimeInMillis() + " calendarTO.getTimeInMillis()");
+        Log.d("TimeInmmm", c.getTimeInMillis() + " c.getTimeInMillis()");
+        if(calendarTO.getTimeInMillis() <= c.getTimeInMillis()){
+            Log.d("TimeInmmm","this is the end");
+            Intent values = getIntent();
 
-     /*   if (calendar.equals(calendarEND)) {
-            Log.d(TAG,"cancel alarm becouce equals");
+           /* values.putExtra("cur", cu);
+            values.putExtra("alarmTheme", model.getThemeName());
+            values.putExtra("toDay", model.getToDay());
+            values.putExtra("toMonth", model.getToMonth());
+            values.putExtra("toYear", model.getToYear());
+            values.putExtra("toHours", model.getToHours());
+            values.putExtra("toMinutes", model.getToMinutes());
+            values.putExtra("toAM_PM", toAM_PM);
+            values.putExtra("fromSleepH", model.getFromSleepHours());
+            values.putExtra("fromSleepM", model.getToSleepMinutes());
+            values.putExtra("fromSleepAM_PM", fromSleep_AM_PM);
+            values.putExtra("toSleepH", model.getToSleepHours());
+            values.putExtra("toSleepM", model.getToSleepMinutes());
+            values.putExtra("toSleepAM_PM", toSleepAM_PM);
+            values.putExtra("repeat", model.getRepeat());
+            // values.putExtra("repeatMin_H",model.getRepeatMin_Hour());
+            values.putExtra("alarmTune", model.alarmTone);*/
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
+
+           // init();
+            am.cancel(pendingIntent);
+            pendingIntent.cancel();
+            themeWordsDAO.close();
+            finish();
+        /*
+        else if(c.getTimeInMillis() >= calendarSleepFROM.getTimeInMillis()) {
+
+            Log.d("TimeInmmm", calendarSleepFROM.getTimeInMillis() + " calendarSleepFROM.getTimeInMillis()");
+            Intent values = getIntent();
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
+            cu = cu + 1;
+            Log.d("TimeInmmm", "cu=" + cu);
+            values.putExtra("cur", cu);
+            values.putExtra("alarmTheme", model.getThemeName());
+            values.putExtra("toDay", model.getToDay());
+            values.putExtra("toMonth", model.getToMonth());
+            values.putExtra("toYear", model.getToYear());
+            values.putExtra("toHours", model.getToHours());
+            values.putExtra("toMinutes", model.getToMinutes());
+            values.putExtra("toAM_PM", toAM_PM);
+            values.putExtra("fromSleepH", model.getFromSleepHours());
+            values.putExtra("fromSleepM", model.getToSleepMinutes());
+            values.putExtra("fromSleepAM_PM", fromSleep_AM_PM);
+            values.putExtra("toSleepH", model.getToSleepHours());
+            values.putExtra("toSleepM", model.getToSleepMinutes());
+            values.putExtra("toSleepAM_PM", toSleepAM_PM);
+            values.putExtra("repeat", model.getRepeat());
+            //values.putExtra("repeatMin_H", model.getRepeatMin_Hour());
+            values.putExtra("alarmTune", model.alarmTone);
+
+
+            am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
+                    calendarSleepTO.getTimeInMillis(), pendingIntent);
+
+             init();
+         */
+        }
+        else{ // if(c.getTimeInMillis() >= calendarSleepTO.getTimeInMillis())
+        Log.d("TimeInmmm", " i'm hereeeeee");
+        Intent values = getIntent();
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        cu = cu + 1;
+        Log.d("TimeInmmm", "cu=" + cu);
+        values.putExtra("cur", cu);
+        values.putExtra("alarmTheme", model.getThemeName());
+        values.putExtra("toDay", model.getToDay());
+        values.putExtra("toMonth", model.getToMonth());
+        values.putExtra("toYear", model.getToYear());
+        values.putExtra("toHours", model.getToHours());
+        values.putExtra("toMinutes", model.getToMinutes());
+        values.putExtra("toAM_PM", toAM_PM);
+        values.putExtra("fromSleepH", model.getFromSleepHours());
+        values.putExtra("fromSleepM", model.getToSleepMinutes());
+        values.putExtra("fromSleepAM_PM", fromSleep_AM_PM);
+        values.putExtra("toSleepH", model.getToSleepHours());
+        values.putExtra("toSleepM", model.getToSleepMinutes());
+        values.putExtra("toSleepAM_PM", toSleepAM_PM);
+        values.putExtra("repeat", model.getRepeat());
+        // values.putExtra("repeatMin_H",model.getRepeatMin_Hour());
+        values.putExtra("alarmTune", model.alarmTone);
+
+
+        if (c.getTimeInMillis() + 1000 * 60 * repeat >= calendarSleepFROM.getTimeInMillis() && (c.getTimeInMillis() <= calendarSleepTO.getTimeInMillis()) &&
+                c.getTimeInMillis() < calendarTO.getTimeInMillis()) {
+            values.putExtra("sleep", true);
+            init();
+            am.set(AlarmManager.RTC_WAKEUP,
+                    calendarSleepTO.getTimeInMillis(), pendingIntent);
+            Log.d("TimeInmmm", "next " + calendarSleepTO.get(Calendar.HOUR) + " "
+                    + calendarSleepTO.get(Calendar.MINUTE) + " " +
+                    calendarSleepTO.get(Calendar.AM_PM));
+        } else /*if (c.getTimeInMillis() + 1000 * 60 * repeat >= calendarTO.getTimeInMillis()) {
+            Log.d("TimeInmmm", "this is the end");
+            init();
+            am.cancel(pendingIntent);
+            pendingIntent.cancel();
+            themeWordsDAO.close();
+            finish();
+        } else*/ {
+            values.putExtra("sleep", false);
+            init();
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+                    1000 * 60 * repeat, pendingIntent);
+            Log.d("TimeInmmm", "just add");
+        }
+
+    //}
+
+
+
+       // Calendar calendar = Calendar.getInstance();
+       // Log.d("AlarmScreen1","calendar from AlarmScreen before set  " + calendar.toString());
+
+
+//        Log.d("AlarmScreen1", "calendarEND before equlas  " + calendarEND.toString());
+  //      Log.d("AlarmScreen1","equlas?  " + calendar.equals(calendarEND));
+
+      /*  if (calendar.equals(calendarEND)) {
+            Log.d(TAG,"cancel model becouce equals");
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                    12345, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
             am.cancel(pendingIntent);
             pendingIntent.cancel();
             finish();
 
-        } else {
-            Intent intent = getIntent();
-            if(!sleep){
-                sleep = false;
-                init();
+        } else {*/
+           // Intent intent = getIntent();
+           // if(!sleep){
+             //   sleep = false;
+             //   init();
 
-                cu = cu + 1;
-                if (!calendar.equals(calendarEND)) {
+
+               /* if (!calendar.equals(calendarEND)) {
                     if (cu == size) cu = 0;
 
                     intent.putExtra("current", cu);
-                    intent.putExtra("endDate", calendarEND);
-                    intent.putExtra("sleepTime_from", calendar_sleepFROM);
-                    intent.putExtra("sleepTime_to", calendar_sleepTo);
-                    intent.putExtra("repeat", repeat);
-                    intent.putExtra("sleep", false);
-                    intent.putExtra("table name", name);
+
+                   // intent.putExtra("sleep", false);
+
 
                     PendingIntent pendingIntent = PendingIntent.getActivity(this,
                             12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-                    Log.d(TAG, "set alarm (usual)");
+                    Log.d(TAG, "set model (usual)");*/
 
 
 
-            Log.d(TAG, "equlas  " + calendar.get(Calendar.HOUR) + " and " + calendar_sleepFROM.get(Calendar.HOUR) +
-                   " also " + calendar.get(Calendar.MINUTE) + " and " + calendar_sleepFROM.get(Calendar.MINUTE));
+//            Log.d(TAG, "equlas  " + calendar.get(Calendar.HOUR) + " and " + calendar_sleepFROM.get(Calendar.HOUR) +
+  //                 " also " + calendar.get(Calendar.MINUTE) + " and " + calendar_sleepFROM.get(Calendar.MINUTE));
 
-            if (calendar.get(Calendar.HOUR) == calendar_sleepFROM.get(Calendar.HOUR) &&
-                    calendar.get(Calendar.MINUTE) + repeat == calendar_sleepFROM.get(Calendar.MINUTE)) {
+         //   if (calendar.get(Calendar.HOUR) == calendar_sleepFROM.get(Calendar.HOUR) &&
+           //         calendar.get(Calendar.MINUTE) + repeat == calendar_sleepFROM.get(Calendar.MINUTE)) {
 
-                Log.d(TAG, "cancel alarm becouce 22:00");
-                if (cu == size) cu = 0;
+               // Log.d(TAG, "cancel model becouce 22:00");
+               // if (cu == size) cu = 0;
 
-                intent.putExtra("current", cu);
-                //intent.putExtra("endDate", calendarEND);
-                //intent.putExtra("sleepTime_from", calendar_sleepFROM);
-                //intent.putExtra("sleepTime_to", calendar_sleepTo);
-                intent.putExtra("sleep", true);
-                //intent.putExtra("repeat", repeat);
-                //intent.putExtra("table name", name);
-                am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
-                Log.d(TAG, "set alarm " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
-                        + " " + calendar_sleepTo.get(Calendar.AM_PM));
+              /*  intent.putExtra("current", cu);
+                intent.putExtra("model",model);
+               // intent.putExtra("sleep", true);
 
-            }else
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    12345, intent, PendingIntent.FLAG_CANCEL_CURRENT);*/
+
+               // am.set(AlarmManager.RTC_WAKEUP, calendar_sleepTo.getTimeInMillis(), pendingIntent);
+               // Log.d(TAG, "set model " + calendar_sleepTo.get(Calendar.HOUR) + " " + calendar_sleepTo.get(Calendar.MINUTE)
+                 //       + " " + calendar_sleepTo.get(Calendar.AM_PM));
+
+         //   }else
+          /*  if(cu != size) {
+                cu = cu + 1;
                 am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
                         1000 * 60 * repeat, pendingIntent);
+                init();
 
-                }
+            }*/
 
-            }
-        }*/
-        init();
-        Log.d("alala", "hi i'm in alarm screen");
+               }
+
+           // }
+       // }
+     //   init();
+        Log.d("alala", "hi i'm in model screen");
 
     }
 

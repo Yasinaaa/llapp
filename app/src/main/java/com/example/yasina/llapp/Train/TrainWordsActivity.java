@@ -15,6 +15,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
@@ -27,25 +29,41 @@ import java.util.ArrayList;
 
 public class TrainWordsActivity extends FragmentActivity {
 
-        static final String TAG = "myLogs";
-
-        ViewPager pager;
-        PagerAdapter pagerAdapter;
-
+    private final String TAG = "myLogs";
+    private ViewPager pager;
+    private PagerAdapter pagerAdapter;
     private WordsDAO themeWordsDAO;
     private ArrayList<Words> words;
     private String name = "";
 
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_train_words, menu);
+        return true;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_train_words);
 
-            getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
+            getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
+            getActionBar().setTitle("Training");
 
             try {
-
                 name = getIntent().getExtras().getString("table name");
                 Log.d(" Name", name + "");
                 themeWordsDAO = new WordsDAO(getApplicationContext(), name);

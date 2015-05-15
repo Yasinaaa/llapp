@@ -12,43 +12,47 @@
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
+        import android.widget.AdapterView;
         import android.widget.ImageButton;
         import android.widget.LinearLayout;
+        import android.widget.ListView;
+        import android.widget.ScrollView;
         import android.widget.Toast;
         import com.example.yasina.llapp.AddWordsActivity;
         import com.example.yasina.llapp.R;
         import java.io.ByteArrayOutputStream;
+        import java.util.ArrayList;
 
-/**
+        /**
  * Created by yasina on 25.03.15.
  */
-public class MainPaint extends Activity implements View.OnClickListener {
+public class MainPaint extends Activity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
 
 
     private DrawingView drawView;
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
     private float smallBrush, mediumBrush, largeBrush;
+    private ColorDAO colorDAO;
+    private ArrayList<MyColor> colors;
+    private ColorAdapter colorAdapter;
+    private ListView colorsListView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.paint, menu);
 
         drawBtn = (ImageButton)findViewById(R.id.draw_btn);
-       // drawBtn.setOnClickListener(this);
         drawView.setBrushSize(smallBrush);
         eraseBtn = (ImageButton)findViewById(R.id.erase_btn);
-        //eraseBtn.setOnClickListener(this);
         newBtn = (ImageButton)findViewById(R.id.new_btn);
-        //newBtn.setOnClickListener(this);
         saveBtn = (ImageButton)findViewById(R.id.save_btn);
-        //saveBtn.setOnClickListener(this);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//item.getItemId()
+
         if(item.getItemId()==R.id.draw_btn){
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush size:");
@@ -86,11 +90,10 @@ public class MainPaint extends Activity implements View.OnClickListener {
             brushDialog.show();
         }
         else if(item.getItemId()==R.id.erase_btn){
-            //switch to erase - choose size
+
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Eraser size:");
             brushDialog.setContentView(R.layout.brush_chooser);
-            //size buttons
             ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
             smallBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -159,21 +162,67 @@ public class MainPaint extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.for_paint);
+        //setContentView(R.layout.for_paint);
+        setContentView(R.layout.for_paint2);
+        colorDAO = new ColorDAO(this);
+        currPaint = new ImageButton(this);
+        colorsListView = (ListView)findViewById(R.id.paint_colors);
 
+        try{
+            colors = colorDAO.getAll();
+        }catch (RuntimeException e){
+            colors = new ArrayList<MyColor>();
+        }
+
+       /* try {
+            int color = data.getExtras().getInt("color");
+            drawView.setColor(color);
+            colorDAO.add(color);
+        }catch (RuntimeException e ){
+
+        }*/
+
+        if(colors.size() > 0){
+            colorAdapter =  new ColorAdapter(this, R.layout.colors, colors);
+            colorsListView.setAdapter(colorAdapter);
+            colorsListView.setOnItemClickListener(this);
+          /*  colorsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    return false;
+                }
+            });*/
+        }
         drawView = (DrawingView)findViewById(R.id.drawing);
-
-        LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
-        currPaint = (ImageButton)paintLayout.getChildAt(0);
-        currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-
         smallBrush = getResources().getInteger(R.integer.small_size);
         mediumBrush = getResources().getInteger(R.integer.medium_size);
         largeBrush = getResources().getInteger(R.integer.large_size);
 
+
     }
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                currPaint = (ImageButton) adapterView.getItemAtPosition(i);
+                currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
+            }
 
     public void paintClicked(View view){
+
+        drawView.setErase(false);
+        drawView.setBrushSize(drawView.getLastBrushSize());
+
+        if(view!=currPaint){
+            ImageButton imgView = (ImageButton)view;
+            int color = Integer.parseInt(view.getTag().toString());
+           // Log.d("coloooor",color);
+            drawView.setColor(color);
+            imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
+            currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint222));
+            currPaint=(ImageButton)view;
+        }
+    }
+
+   /* public void paintClicked(){
 
         drawView.setErase(false);
         drawView.setBrushSize(drawView.getLastBrushSize());
@@ -186,7 +235,7 @@ public class MainPaint extends Activity implements View.OnClickListener {
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint222));
             currPaint=(ImageButton)view;
         }
-    }
+    }*/
 
     public byte[] getPicture()
     {
@@ -213,23 +262,43 @@ public class MainPaint extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-      startActivityForResult(new Intent(this,ChooseColor.class),1);
+
+        switch (view.getId()){
+            case R.id.add_color_btn:
+                startActivityForResult(new Intent(this, ChooseColor.class), 1);
+                break;
+
+        }
+
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       // if (resultCode == RESULT_OK) {
+        int color = data.getExtras().getInt("color");
+        drawView.setColor(color);
+        colorDAO.add(color);
 
-           int color = data.getExtras().getInt("color");
-  ///      Log.d("color", color + " is another ");
-           drawView.setColor(color);
+        try{
+            colorDAO = new ColorDAO(this);
+            colors = colorDAO.getAll();
+        }catch (RuntimeException e){
+            colors = new ArrayList<MyColor>();
+        }
 
-
-         //   }
-
+        colorAdapter =  new ColorAdapter(this, R.layout.colors, colors);
+        colorsListView.setAdapter(colorAdapter);
+        colorsListView.setOnItemClickListener(this);
+           //startActivity(new Intent(getApplicationContext(),MainPaint.class));
     }
-}
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                return false;
+            }
+        }
 
 

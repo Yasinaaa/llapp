@@ -14,6 +14,6 @@
         android:layout_margin="4dp"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="0.5dp"
-        android:listSelector="@android:drawable/list_selector_background" />
+        android:listSelector="#EDD38C" />
 
 </LinearLayout>

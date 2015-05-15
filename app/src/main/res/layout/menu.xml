@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     >
 
-        <ImageView
+     <!--   <ImageView
             android:id="@+id/ivUser"
             android:background="@drawable/back_fon"
             android:layout_width="wrap_content"
-            android:layout_height="120dp" />
+            android:layout_height="120dp" /> -->
 
         <TextView
             android:layout_marginLeft="15dp"

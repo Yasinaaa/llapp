@@ -86,15 +86,8 @@ public class AlarmDAO {
         AlarmModel alarmModel = null;
         Cursor cursor = mDatabase.rawQuery("SELECT id,themeName,fromDay,fromMonth,fromYear,fromHours,fromMinutes,fromAM_PM,toDay,toMonth,toYear,toHours,toMinutes,toAM_PM,fromSleepHours,fromSleepMinutes,fromSleep_AM_PM,toSleepHours,toSleepMinutes, toSleep_AM_PM,repeat,repeatMin_Hour,alarmTone,enabled FROM alarmTable WHERE themeName=\""+theme+"\"",null);
 
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                alarmModel = cursorTo(cursor);
-
-                Log.d("get","" + alarmModel.getThemeName());
-                cursor.moveToNext();
-            }
+        if(cursor.moveToNext()){
+            alarmModel = cursorTo(cursor);
             cursor.close();
         }
         return alarmModel;
@@ -106,14 +99,9 @@ public class AlarmDAO {
         Cursor cursor = mDatabase.rawQuery("SELECT * FROM alarmTable WHERE id=1",null);
                 //"SELECT id,themeName,fromDay,fromMonth,fromYear,fromHours,fromMinutes,fromAM_PM,toDay,toMonth,toYear,toHours,toMinutes,toAM_PM,fromSleepHours,fromSleepMinutes,fromSleep_AM_PM,toSleepHours,toSleepMinutes, toSleep_AM_PM,repeat,repeatMin_Hour,alarmTone,enabled FROM alarmTable WHERE id=1",null);
         //AlarmModel alarmModel = cursorTo(cursor);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                alarmModel = cursorTo(cursor);
 
-                Log.d("get","" + alarmModel.getThemeName());
-                cursor.moveToNext();
-            }
+        if(cursor.moveToNext()){
+            alarmModel = cursorTo(cursor);
             cursor.close();
         }
 
@@ -123,7 +111,7 @@ public class AlarmDAO {
     private AlarmModel cursorTo(Cursor cursor) {
 
         AlarmModel alarmModel = new AlarmModel();
-        cursor.moveToFirst();
+
         alarmModel.setId(cursor.getInt(0));
         Log.d("alala", "setId 0");
         alarmModel.setThemeName(cursor.getString(1));
@@ -174,16 +162,24 @@ public class AlarmDAO {
 
         List<AlarmModel> alarmList = new ArrayList<AlarmModel>();
 
-        if (cursor != null) {
+     /*   if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 AlarmModel alarmModel = cursorTo(cursor);
                 alarmList.add(alarmModel);
                 Log.d("Add","" + alarmModel.getThemeName());
                 cursor.moveToNext();
-            }
-            cursor.close();
+            }*/
+        while (cursor.moveToNext()) {
+            alarmList.add(cursorTo(cursor));
         }
+
+        if (!alarmList.isEmpty()) {
+            cursor.close();
+            return alarmList;
+        }
+
+
         return  alarmList;
     }
 

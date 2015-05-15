@@ -4,10 +4,11 @@ package com.example.yasina.llapp.Alarm;
 import android.net.Uri;
 
 import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
-public class AlarmModel  implements Serializable {
-
-    private static final long serialVersionUID = -7406082437623008161L;
+public class AlarmModel  implements Parcelable {
 
     private int id,
     fromDay, fromMonth, fromYear, fromHours, fromMinutes ,
@@ -18,6 +19,37 @@ public class AlarmModel  implements Serializable {
     private String themeName,fromAM_PM, toAM_PM, fromSleep_AM_PM,  toSleep_AM_PM, repeatMin_Hour;
     private boolean isEnabled;
     public String alarmTone;
+    public  int cur = 0;
+
+    private AlarmModel(Parcel in) {
+        fromDay = in.readInt();
+        fromMonth = in.readInt();
+        fromMonth = in.readInt();
+        fromYear = in.readInt();
+        fromHours = in.readInt();
+        fromMinutes = in.readInt();
+        fromAM_PM = in.readString();
+        toDay = in.readInt();
+        toMonth = in.readInt();
+        toYear = in.readInt();
+        toDay = in.readInt();
+        toMonth = in.readInt();
+        toYear = in.readInt();
+        toHours = in.readInt();
+        toMinutes = in.readInt();
+        toAM_PM = in.readString();
+        fromDay = in.readInt();
+        fromHours = in.readInt();
+        fromSleepHours = in.readInt();
+        fromSleepMinutes = in.readInt();
+        fromSleep_AM_PM = in.readString();
+        toSleepHours  = in.readInt();
+        toSleepMinutes = in.readInt();
+        toAM_PM = in.readString();
+        repeatMin_Hour = in.readString();
+        repeat = in.readInt();
+        alarmTone = in.readString();
+    }
 
     public boolean isEnabled() {
         return isEnabled;
@@ -29,8 +61,6 @@ public class AlarmModel  implements Serializable {
 
     public AlarmModel() {
     }
-
-
 
     public String getThemeName() {
         return themeName;
@@ -207,4 +237,53 @@ public class AlarmModel  implements Serializable {
     public void setToSleep_AM_PM(String toSleep_AM_PM) {
         this.toSleep_AM_PM = toSleep_AM_PM;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        Log.d("parse","writeToParse");
+        dest.writeInt(fromDay);
+        dest.writeInt(fromMonth);
+        dest.writeInt(fromYear);
+        dest.writeInt(fromHours);
+        dest.writeInt(fromMinutes);
+        dest.writeString(fromAM_PM);
+        dest.writeInt(toDay);
+        dest.writeInt(toMonth);
+        dest.writeInt(toYear);
+        dest.writeInt(toDay);
+        dest.writeInt(toMonth);
+        dest.writeInt(toYear);
+        dest.writeInt(toHours);
+        dest.writeInt(toMinutes);
+        dest.writeString(toAM_PM);
+        dest.writeInt(fromDay);
+        dest.writeInt(fromHours);
+        dest.writeInt(fromSleepHours);
+        dest.writeInt(fromSleepMinutes);
+        dest.writeString(fromSleep_AM_PM);
+        dest.writeInt(toSleepHours);
+        dest.writeInt(toSleepMinutes);
+        dest.writeString(toAM_PM);
+        dest.writeString(repeatMin_Hour);
+        dest.writeInt(repeat);
+        dest.writeString(alarmTone);
+      }
+
+    public static final Parcelable.Creator<AlarmModel> CREATOR = new Parcelable.Creator<AlarmModel>() {
+
+        public AlarmModel createFromParcel(Parcel in) {
+            Log.d("parceable", "createFromParcel");
+            return new AlarmModel(in);
+        }
+
+        public AlarmModel[] newArray(int size) {
+            return new AlarmModel[size];
+        }
+    };
 }

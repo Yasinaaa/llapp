@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Words;
@@ -41,11 +43,14 @@ public class TestTrain extends Activity {
     private int size, n;
     private ArrayList<Integer> mas;
     private Random random;
+    private LinearLayout.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_train);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
+        getActionBar().setTitle("Test");
 
         try {
             name = getIntent().getExtras().getString("table name");
@@ -95,8 +100,6 @@ public class TestTrain extends Activity {
         editText = new EditText[size];
 
         randoms = new int[size];
-        //int num = 0;
-
         mas = new ArrayList<Integer>();
         for(int j = 0; j< size; j++){
             mas.add(j);
@@ -131,6 +134,11 @@ public class TestTrain extends Activity {
 
 
         checkButton = new Button(this);
+        checkButton.setEms(10);
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        checkButton.setLayoutParams(params);
+        checkButton.setBackgroundResource(R.drawable.buttonshape2);
         checkButton.setText("Check");
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +155,11 @@ public class TestTrain extends Activity {
                 }catch (RuntimeException e){
 
                 }
-
-                    againButton = new Button(getApplicationContext());
-                    againButton.setText("Again");
+                againButton = new Button(getApplicationContext());
+                againButton.setText("Again");
+                againButton.setEms(10);
+                againButton.setLayoutParams(params);
+                againButton.setBackgroundResource(R.drawable.buttonshape2);
                     againButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -166,8 +176,11 @@ public class TestTrain extends Activity {
         layout.addView(checkButton);
 
 
-        backButton = new Button(getApplicationContext());
+      /*  backButton = new Button(getApplicationContext());
         backButton.setText("Back");
+        backButton.setEms(10);
+        againButton.setLayoutParams(params);
+        againButton.setBackgroundResource(R.drawable.buttonshape2);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,29 +188,25 @@ public class TestTrain extends Activity {
             }
         });
 
-        layout.addView(backButton);
+        layout.addView(backButton);*/
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_test_train, menu);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+                break;
+            }
         }
-
         return super.onOptionsItemSelected(item);
     }
 

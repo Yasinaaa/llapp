@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.DAO.DBHelper;
 import com.example.yasina.llapp.R;
+import com.example.yasina.llapp.Train.MenuTrainActivity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -45,7 +46,7 @@ public class AlarmDetailsActivity extends Activity {
     private String name;
     private Uri alarmTone;
     private int fromAM_PM,  fromMonth, toAM_PM, toMonth, fromAM_PM_sleep, toAM_PM_sleep, rep_min_hour;
-    private boolean old_alarm;
+    private boolean old_alarm = false;
     private AlarmDAO alarmDAO;
 
     @Override
@@ -53,6 +54,9 @@ public class AlarmDetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details2);
 
+        DBHelper b = new DBHelper(this);
+        SQLiteDatabase db = b.getWritableDatabase();
+        db.execSQL("DROP TABLE alarmTable");
 
         alarmDAO = new AlarmDAO(this);
 
@@ -106,7 +110,7 @@ public class AlarmDetailsActivity extends Activity {
         cur = 0;
 
         getActionBar().setTitle("Create New Alarm");
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         repeat_min_hour = (Spinner) findViewById(R.id.spinner_repeat_min_hour);
@@ -198,7 +202,7 @@ public class AlarmDetailsActivity extends Activity {
 
         switch (item.getItemId()) {
             case android.R.id.home: {
-                finish();
+                startActivity(new Intent(getApplicationContext(),MenuTrainActivity.class));
                 break;
             }
             case R.id.action_save_alarm_details: {
@@ -215,7 +219,8 @@ public class AlarmDetailsActivity extends Activity {
                     Log.d("alala","create new alarm");
                 }
                 AlarmManagerHelper.setAlarms(this);
-
+                alarmDAO.close();
+                setResult(RESULT_OK);
                 finish();
             }
         }
@@ -245,11 +250,11 @@ public class AlarmDetailsActivity extends Activity {
         int toYear = Integer.parseInt(et_toYear.getText().toString());
         String toAM_PM1 = timeAM_PM_to.getSelectedItem().toString();
 
-        int fromMonth = timeMonth_from.getSelectedItemPosition() + 1;
+        int fromMonth = timeMonth_from.getSelectedItemPosition();
         alarm.setFromMonth(fromMonth);
         Log.d("alala","fromMonth  " + fromMonth);
 
-        int toMonth = timeMonth_to.getSelectedItemPosition() + 1;
+        int toMonth = timeMonth_to.getSelectedItemPosition();
         alarm.setToMonth(toMonth);
         Log.d("alala","toMonth  " + toMonth);
 

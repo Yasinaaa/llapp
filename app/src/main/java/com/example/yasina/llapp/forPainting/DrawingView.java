@@ -22,20 +22,12 @@ import com.example.yasina.llapp.R;
  */
 public class DrawingView extends View {
 
-
-    //drawing path
         private Path drawPath;
-        //drawing and canvas paint
         private Paint drawPaint, canvasPaint;
-        //initial color
         private int paintColor = 0xFF660000;
-        //canvas
         private Canvas drawCanvas;
-        //canvas bitmap
         private Bitmap canvasBitmap;
-        //brush sizes
         private float brushSize, lastBrushSize;
-        //erase flag
         private boolean erase=false;
 
         public DrawingView(Context context, AttributeSet attrs){
@@ -43,9 +35,7 @@ public class DrawingView extends View {
             setupDrawing();
         }
 
-        //setup drawing
         private void setupDrawing(){
-
 
             brushSize = getResources().getInteger(R.integer.small_size);
             lastBrushSize = brushSize;
@@ -107,13 +97,13 @@ public class DrawingView extends View {
         }
 
         //update color
-        public void setColor(String newColor){
+     /*   public void setColor(String newColor){
             invalidate();
             Log.d("color", paintColor + " is " + newColor);
             paintColor = Color.parseColor(newColor);
             drawPaint.setColor(paintColor);
 
-        }
+        }*/
 
     public void setColor(int newColor){
         invalidate();

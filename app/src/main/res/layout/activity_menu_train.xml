@@ -15,17 +15,22 @@
             android:padding="7dp"
             android:ems="9"
             android:hint="Choose your theme"
-            android:textSize="15dp"></TextView>
+            android:textSize="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"></TextView>
 
         <Spinner
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:id="@+id/spinnerOfThemes"
+            android:layout_gravity="center_horizontal"
             />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
         android:orientation="horizontal">
 
         <TextView
@@ -47,41 +52,58 @@
         </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:id="@+id/alarmSet"
         android:onClick="onClick"
         android:text="Alarm"
-        android:background="#ebaa5b"/>
+        android:textColor="#2B2B2B"
+        android:textSize="20sp"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonshape2"
+        android:layout_gravity="center_horizontal"
+         />
 
     <Button
         android:id="@+id/ibNext"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Train"
         android:onClick="onClick"
-        android:background="#ebaa5b"
-  />
+        android:ems="10"
+        android:textColor="#2B2B2B"
+        android:textSize="20sp"
+        android:background="@drawable/buttonshape2"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:id="@+id/ibTestTrain"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test"
         android:onClick="onClick"
-        android:background="#ebaa5b"
+        android:ems="10"
+        android:textColor="#2B2B2B"
+        android:textSize="20sp"
+        android:background="@drawable/buttonshape2"
+        android:layout_gravity="center_horizontal"
         />
 
     <Button
         android:id="@+id/ibTrainDelete"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Theme"
         android:onClick="onClick"
-        android:background="#ebaa5b"
+        android:ems="10"
+        android:textColor="#2B2B2B"
+        android:textSize="20sp"
+        android:background="@drawable/buttonshape2"
+        android:layout_gravity="center_horizontal"
         />
 
 

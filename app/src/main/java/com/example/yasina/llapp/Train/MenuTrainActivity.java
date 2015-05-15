@@ -44,7 +44,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_train);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
 
         wordsDAO = new WordsDAO(this);
         Log.d(TAG, " wordsDAO = new WordsDAO(this)");

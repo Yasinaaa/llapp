@@ -25,6 +25,7 @@ import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.Alarm.AlarmDAO;
+import com.example.yasina.llapp.Alarm.AlarmManagerHelper;
 import com.example.yasina.llapp.Alarm.AlarmModel;
 import com.example.yasina.llapp.DAO.DBHelper;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
@@ -53,6 +54,8 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
+        getActionBar().setTitle("Main");
 
         dictionariesSpinner = (Spinner) findViewById(R.id.spinnerOfDictionaries);
         theme_name = (TextView) findViewById(R.id.tv_theme_main);
@@ -60,7 +63,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
         alarmTheme_from = (TextView) findViewById(R.id.tv_AlarmThemeFrom_main);
         alarmTheme_repeat = (TextView) findViewById(R.id.tv_AlarmThemeRepeat_main);
         sleepFrom = (TextView) findViewById(R.id.tv_AlarmThemeSleepFrom_main);
-        sleepTo = (TextView) findViewById(R.id.tv_AlarmThemeTo_main);
+        sleepTo = (TextView) findViewById(R.id.tv_AlarmThemeSleepTo_main);
 
         dictionaryDAO = new DictionaryDAO(this);
 		List<Dictionary> listDictionaries = dictionaryDAO.getAllDictionaries();
@@ -71,8 +74,9 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
 		}
 
         alarmDAO = new AlarmDAO(this);
-       /* try {
+       try {
            AlarmModel model = alarmDAO.getByID();
+           alarmDAO.close();
             String temp = model.getThemeName().replace("_theme","");
             theme_name.setText(temp);
 
@@ -83,9 +87,9 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             sleepTo.setText("To " + model.getToSleepHours() + ":" + model.getToSleepMinutes() + " " + model.getToSleep_AM_PM());
         }catch(RuntimeException e){
 
-       }*/
+       }
 
-            SlidingMenu menu = new SlidingMenu(this);
+            menu = new SlidingMenu(this);
             menu.setMode(SlidingMenu.LEFT);
             menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
             menu.setFadeDegree(0.35f);
@@ -107,7 +111,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 }
             });
 
-          /*  if (currentMenuPosition != -1) {
+         /*   if (currentMenuPosition != -1) {
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }*/
 
@@ -154,7 +158,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 break;
             case 2:
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
-
+              //  showFragment(new AddWordsActivity());
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));

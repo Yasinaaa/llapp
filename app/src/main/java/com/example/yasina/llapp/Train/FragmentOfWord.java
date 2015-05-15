@@ -34,13 +34,6 @@ public class FragmentOfWord extends Fragment {
         this.word = word;
     }
 
-       /* static FragmentOfWord newInstance(int page) {
-            FragmentOfWord pageFragment = new FragmentOfWord();
-            Bundle arguments = new Bundle();
-            arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
-            pageFragment.setArguments(arguments);
-            return pageFragment;
-        }*/
        static FragmentOfWord newInstance(int page,Words wo) {
            Bundle arguments = new Bundle();
            FragmentOfWord fragmentOfWord = new FragmentOfWord(wo);
@@ -75,11 +68,6 @@ public class FragmentOfWord extends Fragment {
             ivPicture.setImageBitmap(theImage);
 
             txtExplanation.setText(word.getExplanation());
-
-          /*  TextView tvPage = (TextView) view.findViewById(R.id.tvPage);
-            tvPage.setText("Page " + pageNumber);
-            tvPage.setBackgroundColor(backColor);*/
-
             return view;
         }
 

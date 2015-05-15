@@ -39,34 +39,37 @@ public class AlarmManagerHelper extends BroadcastReceiver{
             if (alarm.isEnabled()) {
 
                PendingIntent pIntent = createPendingIntent(context, alarm);
-
-                    Intent values = new Intent(context, AlarmScreen.class);
-                    values.putExtra("alarm",alarm);
-                 //   PendingIntent pIntent = PendingIntent.getActivity(context,
-                   //     12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
-                        //PendingIntent.getBroadcast(context, 0, values, 0);
-//
-               // PendingIntent pIntent =  PendingIntent.getService(context, alarm.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
-                Log.d("alala", "set pIntent");
+               Log.d("alala", "set pIntent");
 
                 Calendar calendarFROM = Calendar.getInstance();
-                calendarFROM.setTimeInMillis(System.currentTimeMillis());
 
-                calendarFROM.set(Calendar.DAY_OF_MONTH,alarm.getFromMonth());
                 calendarFROM.set(Calendar.MONTH,alarm.getFromMonth());
+                Log.d("time", calendarFROM.get(Calendar.MONTH) + " month");
                 calendarFROM.set(Calendar.YEAR,alarm.getFromYear());
+                Log.d("time", calendarFROM.get(Calendar.YEAR) + " year");
+
+                int day = alarm.getFromDay();
+                Log.d("time", day + " day ");
+                calendarFROM.set(Calendar.DAY_OF_MONTH,day);
+
                 calendarFROM.set(Calendar.HOUR_OF_DAY, alarm.getFromHours());
+                Log.d("time", calendarFROM.get(Calendar.HOUR_OF_DAY) + " hours");
                 calendarFROM.set(Calendar.MINUTE, alarm.getFromMinutes());
+                Log.d("time", calendarFROM.get(Calendar.MINUTE) +  " minutes");
                 calendarFROM.set(Calendar.SECOND, 00);
+
                 int am_pm;
                 if(alarm.getFromAM_PM().equals("am")) am_pm = 0;
                 else am_pm = 1;
                 calendarFROM.set(Calendar.AM_PM,am_pm);
+                Log.d("time", calendarFROM.get(Calendar.AM_PM) + " am-pm");
 
                 alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendarFROM.getTimeInMillis(), pIntent);
-
+                dbHelper.close();
+                Log.d("time", calendarFROM.getTimeInMillis() + " in millis");
+                Log.d("time", " " + System.currentTimeMillis());
 
             }
        }
@@ -85,16 +88,59 @@ public class AlarmManagerHelper extends BroadcastReceiver{
 
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     alarmManager.cancel(pIntent);
+                    dbHelper.close();
                 }
             }
         }
     }
 
     private static PendingIntent createPendingIntent(Context context, AlarmModel model) {
-        Intent values = new Intent(context, AlarmService.class);
-        values.putExtra("alarm",model);
+      //  Intent values = new Intent(context, AlarmService.class);
+        Intent values = new Intent(context, AlarmScreen.class);
+         int cur = 0;
+       // values.putExtra("alarm",model);
 
-        return PendingIntent.getService(context, model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
+        values.putExtra("alarmTheme", model.getThemeName());
+        values.putExtra("toDay",model.getToDay());
+        values.putExtra("toMonth", model.getToMonth());
+        values.putExtra("toYear",model.getToYear());
+        values.putExtra("toHours",model.getToHours());
+        values.putExtra("toMinutes",model.getToMinutes());
+        int am_pm2;
+        if(model.getToAM_PM().equals("am")) am_pm2 = 0;
+        else am_pm2 = 1;
+        values.putExtra("toAM_PM",am_pm2);
+        values.putExtra("fromSleepH",model.getFromSleepHours());
+        values.putExtra("fromSleepM",model.getFromSleepMinutes());
+
+        values.putExtra("toSleepH",model.getToSleepHours());
+        values.putExtra("toSleepM",model.getToSleepMinutes());
+
+        values.putExtra("repeat",model.getRepeat());
+     //   values.putExtra("repeatMin_H",model.getRepeatMin_Hour());
+        values.putExtra("alarmTune",model.alarmTone);
+        values.putExtra("sleep",false);
+
+        if(model.getFromAM_PM().equals("am")) am_pm2 = 0;
+        else am_pm2 = 1;
+        values.putExtra("fromSleepAM_PM",am_pm2);
+
+        int am_pm;
+        if(model.getToSleep_AM_PM().equals("am")) am_pm = 0;
+        else am_pm = 1;
+        values.putExtra("toSleepAM_PM",am_pm);
+
+        if(am_pm2==1 && am_pm==0) {
+            values.putExtra("add day sleep",true);
+        }
+
+        values.putExtra("cur",cur);
+       // values.putExtra("name",model.getThemeName());
+        //values.putExtra("tune",model.alarmTone);
+      //  return PendingIntent.getBroadcast(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
+       PendingIntent peng =  PendingIntent.getActivity(context,12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
+        return peng;
+       // return PendingIntent.getService(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

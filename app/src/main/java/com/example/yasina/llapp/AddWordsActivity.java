@@ -65,7 +65,7 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_words);
         getActionBar().setTitle("Add Words");
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(235,170,91)));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
 
         tvFirstL = (TextView) findViewById(R.id.tvFirstLangAddWord);
         tvSecondL = (TextView) findViewById(R.id.tvSecondLangAddWord);
@@ -74,50 +74,50 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
 
         try {
 
-           this.wordsDAO = new WordsDAO(this);
-           dicDAO = new DictionaryDAO(this);
+            this.wordsDAO = new WordsDAO(this);
+            dicDAO = new DictionaryDAO(this);
 
-           dic = dicDAO.getDicitonaryById(MainMenuActivity.clickedDictionary);
+            dic = dicDAO.getDicitonaryById(MainMenuActivity.clickedDictionary);
 
-           StringTokenizer tokenizer = new StringTokenizer(dic.getName(),"-");
+            StringTokenizer tokenizer = new StringTokenizer(dic.getName(),"-");
 
-           while (tokenizer.hasMoreElements()) {
-               firstL = tokenizer.nextToken();
-               secondL = tokenizer.nextToken();
-               name = firstL + "_" + secondL;
-           }
-           tvFirstL.setText(firstL);
-           tvSecondL.setText(secondL);
-
-       }catch (Exception e1){
-
-        setContentView(R.layout.empty);
-
-        String button1String = "Create dictionary";
-        String button2String = "Cancel";
-
-        AlertDialog.Builder ad = new AlertDialog.Builder(this);
-        ad.setTitle("Mistake");
-        ad.setMessage("You don't have any dictionaries.Please create new one for this.");
-        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+            while (tokenizer.hasMoreElements()) {
+                firstL = tokenizer.nextToken();
+                secondL = tokenizer.nextToken();
+                name = firstL + "_" + secondL;
             }
-        });
-        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                finish();
-            }
-        });
-        ad.setCancelable(true);
-        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            public void onCancel(DialogInterface dialog) {
-                   finish();
-            }
-        });
-           AlertDialog alert = ad.create();
-           alert.show();
-    }
+            tvFirstL.setText(firstL);
+            tvSecondL.setText(secondL);
+
+        }catch (Exception e1){
+
+            setContentView(R.layout.empty);
+
+            String button1String = "Create dictionary";
+            String button2String = "Cancel";
+
+            AlertDialog.Builder ad = new AlertDialog.Builder(this);
+            ad.setTitle("Mistake");
+            ad.setMessage("You don't have any dictionaries.Please create new one for this.");
+            ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int arg1) {
+                    startActivity(new Intent(getApplicationContext(),ListDictionariesActivity.class));
+                }
+            });
+            ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int arg1) {
+                    finish();
+                }
+            });
+            ad.setCancelable(true);
+            ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                public void onCancel(DialogInterface dialog) {
+                    finish();
+                }
+            });
+            AlertDialog alert = ad.create();
+            alert.show();
+        }
 
         SlidingMenu menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
@@ -177,8 +177,8 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
         switch (v.getId()) {
             case R.id.btnADD_addWordActivity:
 
-               initViews();
-               this.wordsDAO = new WordsDAO(this,name);
+                initViews();
+                this.wordsDAO = new WordsDAO(this,name);
 
                 if (mTxtFirstLang != null && mTxtSecondLang != null && mTxtExplanation != null
                         && mImage != null) {
@@ -211,24 +211,24 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
 
 
 
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-      Bitmap d = GlobalBitmap.img;
-     // Log.d("hi",d.getWidth() + " - " + d.getHeight());
-     // Log.d("hi","im here");
+        Bitmap d = GlobalBitmap.img;
+        // Log.d("hi",d.getWidth() + " - " + d.getHeight());
+        // Log.d("hi","im here");
 
-      ByteArrayOutputStream bos=new ByteArrayOutputStream();
-      try {
-          d.compress(Bitmap.CompressFormat.PNG, 100, bos);
-          img = bos.toByteArray();
+        ByteArrayOutputStream bos=new ByteArrayOutputStream();
+        try {
+            d.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            img = bos.toByteArray();
 
-          mImage = (ImageView) findViewById(R.id.ivPictureOfWord);
-          mImage.setImageResource(R.drawable.checkmark);
-      }catch (RuntimeException e){
+            mImage = (ImageView) findViewById(R.id.ivPictureOfWord);
+            mImage.setImageResource(R.drawable.checkmark);
+        }catch (RuntimeException e){
 
-      }
+        }
 
-      }
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -280,4 +280,3 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
 
 
 }
-

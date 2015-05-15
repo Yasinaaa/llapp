@@ -7,6 +7,7 @@ package com.example.yasina.llapp.DAO;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -17,26 +18,38 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME_ID = "id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TYPE = "type";
-   /* public static final String COLUMN_WORD_ID = "wordID";
-    public static final String COLUMN_FIRST_LANG = "firstLang";
-    public static final String COLUMN_SECOND_LANG = "secondLang";
-    private String[] mAllColumns = { COLUMN_WORD_ID, COLUMN_FIRST_LANG, COLUMN_SECOND_LANG};*/
-
-
     private static final String DATABASE_NAME = "dictionaries.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static  String SQL_CREATE_TABLE_DICTIONARY = "CREATE TABLE " + TABLE_DICTIONARY + "("
+    private String SQL_CREATE_TABLE_DICTIONARY = "CREATE TABLE " + TABLE_DICTIONARY + "("
             + COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME + " TEXT NOT NULL, "
             + COLUMN_TYPE + " TEXT NOT NULL)";
-           /* + COLUMN_FIRST_LANG + " TEXT NOT NULL, "
-            + COLUMN_SECOND_LANG + " TEXT NOT NULL)";*/
+
+    private String SQL_CREATE_COLOR_TABLE = "CREATE TABLE IF NOT EXISTS colors("
+            + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "color INTEGER)";
+
+
+    String red = "#FFFF0000";
+    String brawn = "#FF660000";
+    String orange = "#FFFF6600";
+    String yellow = "#FFFFCC00";
+    String green = "#FF009900";
+    String turquoise = "#FF009999";
+    String blue = "#FF0000FF";
+    String pink = "#FFFF6666";
+    String purple = "#FF990099";
+    String white = "#FFFFFFFF";
+    String grey = "#FF787878";
+    String black = "#FF000000";
+
+    private String insert_color = "INSERT INTO colors(color) VALUES (";
+    private String insert_color2 = ")";
+
 
     public DBHelper(Context context, String sql) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.SQL_CREATE_TABLE_DICTIONARY = sql;
-       // context.deleteDatabase(DATABASE_NAME);
     }
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,7 +58,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
+
         database.execSQL(SQL_CREATE_TABLE_DICTIONARY);
+        database.execSQL(SQL_CREATE_COLOR_TABLE);
+
+        database.execSQL(insert_color + Color.parseColor(red) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(brawn) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(orange) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(yellow) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(green) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(turquoise) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(blue) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(pink) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(purple) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(white) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(grey) + insert_color2);
+        database.execSQL(insert_color + Color.parseColor(black) + insert_color2);
     }
 
     @Override
