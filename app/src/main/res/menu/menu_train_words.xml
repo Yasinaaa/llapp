@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.yasina.llapp.Train.TrainWordsActivity">
-
+    <item
+        android:id="@+id/action_add_new_alarm"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="" />
 </menu>

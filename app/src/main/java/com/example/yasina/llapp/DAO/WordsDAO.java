@@ -97,10 +97,10 @@ public class WordsDAO {
           }
       }
 
-        public void deleteDictionary(Words wordPair) {
+        public void deleteDictionary(Words wordPair, String name) {
             long id = wordPair.getmId();
             System.out.println("the deleted dictionary has the id: " + id);
-            mDatabase.delete(TABLE_NAME, "id" + " = " + id, null);
+            mDatabase.delete(name, "id" + " = " + id, null);
         }
 
         public ArrayList<Words> getAllDictionaries() {

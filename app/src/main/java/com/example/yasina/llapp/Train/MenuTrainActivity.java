@@ -63,7 +63,7 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
       public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
         long name = themesSpinner.getSelectedItemId();
         tableName = listOfTableThemeNames.get((int)name) + "_theme";
-        Toast.makeText(getBaseContext(), "Position = " + tableName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Position = " + tableName, Toast.LENGTH_SHORT).show();
       }
       @Override
               public void onNothingSelected(AdapterView<?> arg0) {

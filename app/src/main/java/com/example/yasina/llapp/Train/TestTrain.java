@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +52,10 @@ public class TestTrain extends Activity {
         setContentView(R.layout.activity_test_train);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
         getActionBar().setTitle("Test");
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowCustomEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             name = getIntent().getExtras().getString("table name");
@@ -108,13 +113,16 @@ public class TestTrain extends Activity {
         n = size;
         int num;
         random = new Random();
-
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,30,0,0);
         for (int i = 0; i < size; i++) {
 
             num = random.nextInt(n - i);
             randoms[i] = mas.remove(num);
 
             textView[i] = new TextView(this);
+            textView[i].setLayoutParams(params);
             textView[i].setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
             textView[i].setText(words.get(randoms[i]).getFirstLang());
             textView[i].setId(i);
@@ -135,11 +143,11 @@ public class TestTrain extends Activity {
 
         checkButton = new Button(this);
         checkButton.setEms(10);
-        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(120,100,0,0);
         checkButton.setLayoutParams(params);
         checkButton.setBackgroundResource(R.drawable.buttonshape2);
         checkButton.setText("Check");
+        checkButton.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +166,9 @@ public class TestTrain extends Activity {
                 againButton = new Button(getApplicationContext());
                 againButton.setText("Again");
                 againButton.setEms(10);
+                params.setMargins(120,30,0,0);
                 againButton.setLayoutParams(params);
+                againButton.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
                 againButton.setBackgroundResource(R.drawable.buttonshape2);
                     againButton.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -15,8 +15,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.yasina.llapp.DAO.DictionaryDAO;
+import com.example.yasina.llapp.MainMenuActivity;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.R;
+
+import java.util.StringTokenizer;
 
 /**
  * Created by yasina on 11.03.15.
@@ -32,13 +35,48 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
     private DictionaryDAO mDictionaryDao;
     private  ArrayAdapter<String> adapter;
     private  String clicked;
+    private long position;
+    private long click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_dictionary);
 
-        initViews();
+        try{
+            click = getIntent().getExtras().getLong("id");
+            position = getIntent().getExtras().getLong("position");
+            initViews();
+            DictionaryDAO dicDao = new DictionaryDAO(this);
+            Dictionary dic = dicDao.getDicitonaryById(click);
+
+            StringTokenizer tokenizer = new StringTokenizer(dic.getName(),"-");
+
+            while (tokenizer.hasMoreElements()) {
+                mTxtFirstLang.setText(tokenizer.nextToken());
+                mTxtSecondLang.setText(tokenizer.nextToken());
+            }
+
+            int c = 0;
+            for(int i=0;i<types.length;i++){
+                if(types[i].equals(dic.getType())){
+                    c = i;
+                }
+            }
+            spinner.setSelection(c);
+
+        }catch (RuntimeException e){
+            initViews();
+
+        }
+
+    }
+
+    private void initViews() {
+        this.mTxtFirstLang = (EditText) findViewById(R.id.txt_firstLanguage_add_new_dic);
+        this.mTxtSecondLang = (EditText) findViewById(R.id.txt_secondLanguage_add_new_dic);
+        this.mBtnAdd = (Button) findViewById(R.id.btn_addNewDictionaryTable_add_new_d);
+        this.mBtnAdd.setOnClickListener(this);
 
         this.mDictionaryDao = new DictionaryDAO(this);
 
@@ -48,15 +86,6 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
         spinner = (Spinner) findViewById(R.id.spinner_TypeOfDictionaries_add_new_d);
         spinner.setAdapter(adapter);
         spinner.setSelection(1);
-
-    }
-
-    private void initViews() {
-        this.mTxtFirstLang = (EditText) findViewById(R.id.txt_firstLanguage_add_new_dic);
-        this.mTxtSecondLang = (EditText) findViewById(R.id.txt_secondLanguage_add_new_dic);
-        this.mBtnAdd = (Button) findViewById(R.id.btn_addNewDictionaryTable_add_new_d);
-
-        this.mBtnAdd.setOnClickListener(this);
     }
 
     @Override
@@ -68,13 +97,19 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
                 clicked = spinner.getSelectedItem().toString();
                 if (!TextUtils.isEmpty(firstLang) && !TextUtils.isEmpty(secondLang)) {
                    // mDictionaryDao = new DictionaryDAO(this,firstLang.toString() + "-" + secondLang.toString());
+                    try{
+                        mDictionaryDao.deleteDictionary(click);
+                    }catch (RuntimeException e){
+                        System.out.println("no dic");
+                    }
                     Dictionary createdDictionary = mDictionaryDao.createDictionary(
                             firstLang.toString() + "-" + secondLang.toString(),clicked);
 
                     Log.d(TAG, "added dictionary : " + createdDictionary.getName());
-                    Intent intent = new Intent();
-                    intent.putExtra(ListDictionariesActivity.EXTRA_ADDED_DICTIONARY, createdDictionary);
-                    setResult(RESULT_OK, intent);
+                    Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                    startActivity(intent);
+                   // intent.putExtra(ListDictionariesActivity.EXTRA_ADDED_DICTIONARY, createdDictionary);
+                   // setResult(RESULT_OK, intent);
                     Toast.makeText(this,"dictionary_created_successfully", Toast.LENGTH_LONG).show();
                     finish();
                 }

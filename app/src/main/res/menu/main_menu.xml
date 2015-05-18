@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuPurchasesListSortOrder"
+        android:orderInCategory="20"
+        android:showAsAction="ifRoom"
+        android:title="Dictionary"
+        android:icon="@drawable/pencil">
+
+        <menu>
+            <group>
+
+                <item
+                    android:id="@+id/ibAddDictionary"
+                    android:orderInCategory="100"
+                    android:showAsAction="never"
+                    android:title="Add"/>
+
+                <item
+                    android:id="@+id/ibDeleteDictionary"
+                    android:orderInCategory="200"
+                    android:showAsAction="never"
+                    android:title="Delete"/>
+
+                <item
+                    android:id="@+id/mibUpdateDicitonary"
+                    android:orderInCategory="300"
+                    android:showAsAction="never"
+                    android:title="Update"/>
+
+            </group>
+        </menu>
+
+    </item>
+</menu>

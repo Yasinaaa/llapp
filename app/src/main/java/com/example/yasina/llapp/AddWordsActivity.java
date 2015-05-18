@@ -119,6 +119,17 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
             alert.show();
         }
 
+        try{
+            int id = getIntent().getExtras().getInt("id");
+            WordsDAO w = new WordsDAO(this);
+            Words word = w.getWordById(id);
+            tvFirstL.setText(word.getFirstLang());
+            tvSecondL.setText(word.getSecondLang());
+            mTxtExplanation.setText(word.getExplanation());
+        }catch (RuntimeException e){
+
+        }
+
         SlidingMenu menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);

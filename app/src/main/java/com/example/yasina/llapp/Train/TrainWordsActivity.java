@@ -62,6 +62,9 @@ public class TrainWordsActivity extends FragmentActivity {
 
             getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
             getActionBar().setTitle("Training");
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setDisplayShowCustomEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
 
             try {
                 name = getIntent().getExtras().getString("table name");

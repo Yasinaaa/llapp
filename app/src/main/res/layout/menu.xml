@@ -5,61 +5,60 @@
     android:layout_height="match_parent"
     >
 
-     <!--   <ImageView
-            android:id="@+id/ivUser"
-            android:background="@drawable/back_fon"
-            android:layout_width="wrap_content"
-            android:layout_height="120dp" /> -->
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        >
 
         <TextView
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:id="@+id/etLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hi, Yasina"
-            android:padding="9dp"
-            android:textSize="17dp"
-            android:layout_below="@+id/ivUser"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:id="@+id/etLang"
-            android:layout_below="@+id/etLogin"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="13"
             android:padding="5dp"
-            android:ems="14"
             android:hint="Dictionaries"
-            android:textSize="15dp"
+            android:textSize="20sp"
             />
-
+     <!--   <Button
+            android:id="@+id/ibChangeDictionary"
+            android:onClick="onClick"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/pencil"
+            /> -->
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_layout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/etLang"
+        android:layout_below="@+id/main_layout"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         >
         <Spinner
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:id="@+id/spinnerOfDictionaries"
             />
-        <ImageButton
-            android:ellipsize="end"
-            android:layout_gravity="end"
+     <!--   <Button
             android:id="@+id/ibAddDictionary"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/add"
-            android:onClick="onClick" />
+            android:onClick="onClick"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="10dp"
+            android:text="+"
+            android:background="@drawable/f"
+           /> -->
+
+
 
     </LinearLayout>
 
@@ -80,7 +79,6 @@
         android:layout_height="wrap_content"
         android:padding="7dp"
         android:ems="9"
-        android:hint="Theme"
         android:textSize="15dp"
         android:layout_weight="1"
         />
@@ -88,11 +86,16 @@
             android:id="@+id/tv_theme_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="first"
             android:ems="9"
             android:padding="7dp"
             android:textSize="15dp"
             android:layout_weight="1"/>
+        <Button
+            android:id="@+id/alarmUpdate"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/alarm"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 
@@ -119,7 +122,6 @@
             android:layout_height="wrap_content"
             android:padding="7dp"
             android:ems="9"
-            android:hint="Alarm"
             android:textSize="15dp"
             android:layout_below="@+id/em"
             android:layout_marginLeft="15dp"
@@ -137,25 +139,48 @@
         android:layout_marginRight="15dp"
         >
 
-        <TextView
-            android:id="@+id/tv_AlarmThemeFrom_main"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="From Monday 12:30"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/text_AlarmThemeFrom_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:padding="2dp"
+                android:textSize="13dp"/>
+            <TextView
+                android:id="@+id/tv_AlarmThemeFrom_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:textSize="13dp"/>
+            </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_AlarmThemeTo_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="2dp"
+            android:ems="10"
             android:textSize="13dp"/>
         <TextView
             android:id="@+id/tv_AlarmThemeTo_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To Wendesday 12:30"
             android:padding="2dp"
             android:textSize="13dp"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_AlarmThemeRepeat_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Every 20 min"
             android:textSize="13dp"
             android:padding="2dp"
            />
@@ -180,7 +205,6 @@
             android:layout_height="wrap_content"
             android:padding="7dp"
             android:ems="9"
-            android:hint="Sleep time "
             android:textSize="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="17dp"
@@ -195,12 +219,36 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="15dp"
         android:layout_height="match_parent">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_AlarmThemeSleepFrom_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:ems="10"
+            android:padding="2dp"
+            />
         <TextView
             android:id="@+id/tv_AlarmThemeSleepFrom_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sleep time "
+            android:textSize="13dp"
+            android:padding="2dp"
+            />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/text_AlarmThemeSleepTo_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
             android:textSize="13dp"
             android:padding="2dp"
             />
@@ -208,10 +256,11 @@
             android:id="@+id/tv_AlarmThemeSleepTo_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sleep time "
             android:textSize="13dp"
             android:padding="2dp"
             />
+        </LinearLayout>
+
         </LinearLayout>
 
     <View
@@ -219,8 +268,5 @@
         style="@style/Divider"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/main_layout4" />
-
-
-
 
 </RelativeLayout>

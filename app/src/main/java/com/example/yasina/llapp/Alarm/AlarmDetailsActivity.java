@@ -25,9 +25,11 @@ import android.widget.TextView;
 
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.DAO.DBHelper;
+import com.example.yasina.llapp.MainMenuActivity;
 import com.example.yasina.llapp.R;
 import com.example.yasina.llapp.Train.MenuTrainActivity;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -48,15 +50,12 @@ public class AlarmDetailsActivity extends Activity {
     private int fromAM_PM,  fromMonth, toAM_PM, toMonth, fromAM_PM_sleep, toAM_PM_sleep, rep_min_hour;
     private boolean old_alarm = false;
     private AlarmDAO alarmDAO;
+    private boolean upd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details2);
-
-        DBHelper b = new DBHelper(this);
-        SQLiteDatabase db = b.getWritableDatabase();
-        db.execSQL("DROP TABLE alarmTable");
 
         alarmDAO = new AlarmDAO(this);
 
@@ -93,20 +92,52 @@ public class AlarmDetailsActivity extends Activity {
             AlertDialog alert = ad.create();
             alert.show();
         }
-
         try{
+            upd = getIntent().getExtras().getBoolean("lets go");
             alarm = alarmDAO.get(name);
             txtToneSelection.setText(RingtoneManager.getRingtone(this, Uri.parse(alarm.alarmTone)).getTitle(this));
             old_alarm = true;
+            DBHelper b = new DBHelper(this);
+            SQLiteDatabase db = b.getWritableDatabase();
+            db.execSQL("DROP TABLE alarmTable");
             Log.d("alala","old alarm");
 
         }catch (RuntimeException e){
+            upd = false;
+            DBHelper b = new DBHelper(this);
+            SQLiteDatabase db = b.getWritableDatabase();
+            db.execSQL("DROP TABLE alarmTable");
+            Log.d("drop","i'm droped table");
+
+
+            alarmDAO = new AlarmDAO(this);
+            alarm = new AlarmModel();
+            alarm.setThemeName(name);
+            old_alarm = false;
+            Log.d("alala","new alarm");
+        }
+
+    /*    try{
+            alarm = alarmDAO.get(name);
+            txtToneSelection.setText(RingtoneManager.getRingtone(this, Uri.parse(alarm.alarmTone)).getTitle(this));
+            old_alarm = true;
+            DBHelper b = new DBHelper(this);
+            SQLiteDatabase db = b.getWritableDatabase();
+            db.execSQL("DROP TABLE alarmTable");
+            Log.d("alala","old alarm");
+
+        }catch (RuntimeException e){
+           /* DBHelper b = new DBHelper(this);
+            SQLiteDatabase db = b.getWritableDatabase();
+            db.execSQL("DROP TABLE IF EXISTS alarmTable");*/
+
+          /*  alarmDAO = new AlarmDAO(this);
             alarm = new AlarmModel();
             alarm.setThemeName(name);
             old_alarm = false;
             Log.d("alala","new alarm");
 
-        }
+        }*/
         cur = 0;
 
         getActionBar().setTitle("Create New Alarm");
@@ -135,20 +166,53 @@ public class AlarmDetailsActivity extends Activity {
         et_toMinutes_sleep = (EditText) findViewById(R.id.editText_minutes_sleepTO);
         txtToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 
-           Calendar currentTime = new GregorianCalendar();
-           et_fromHours.setText(currentTime.get(Calendar.HOUR)+"");
-           et_fromMinutes.setText(currentTime.get(Calendar.MINUTE)+"");
-           et_fromDay.setText(currentTime.get(Calendar.DAY_OF_MONTH)+"");
-           et_fromYear.setText(currentTime.get(Calendar.YEAR)+"");
-           int am_pm = currentTime.get(Calendar.AM_PM);
-           timeAM_PM_from.setSelection(am_pm);
-           int month = currentTime.get(Calendar.MONTH);
-           timeMonth_from.setSelection(month);
+        if(old_alarm){
+            et_fromHours.setText(alarm.getFromHours());
+            et_fromMinutes.setText(alarm.getFromMinutes());
+            et_fromDay.setText(alarm.getFromDay());
+            et_fromYear.setText(alarm.getFromYear());
+            if(alarm.getFromAM_PM().equals("am"))
+            timeAM_PM_from.setSelection(0);
+            else  timeAM_PM_from.setSelection(1);
+            timeMonth_from.setSelection(alarm.getFromMonth());
 
-            et_toHours.setText(currentTime.get(Calendar.HOUR)+"");
-            et_toMinutes.setText(currentTime.get(Calendar.MINUTE)+"");
-            et_toDay.setText(currentTime.get(Calendar.DAY_OF_MONTH)+ "");
-            et_toYear.setText(currentTime.get(Calendar.YEAR)+"");
+            et_toHours.setText(alarm.getToHours());
+            et_toMinutes.setText(alarm.getToMinutes());
+            et_toDay.setText(alarm.getToDay());
+            et_toYear.setText(alarm.getToYear());
+            if(alarm.getToAM_PM().equals("am"))
+                timeAM_PM_to.setSelection(0);
+            else  timeAM_PM_to.setSelection(1);
+            timeMonth_to.setSelection(alarm.getToMonth());
+
+            if(alarm.getFromSleep_AM_PM().equals("am"))
+                timeAM_PM_from_sleep.setSelection(0);
+            else   timeAM_PM_from_sleep.setSelection(1);
+
+            if(alarm.getToSleep_AM_PM().equals("am"))
+                timeAM_PM_to_sleep.setSelection(0);
+            else   timeAM_PM_to_sleep.setSelection(1);
+
+            et_fromHours_sleep.setText(alarm.getFromSleepHours());
+            et_fromMinutes_sleep.setText(alarm.getFromSleepMinutes());
+            et_toHours_sleep.setText(alarm.getToSleepHours());
+            et_toMinutes_sleep.setText(alarm.getToSleepMinutes());
+           // alarm.alarmTone = "content://media/internal/audio/media/177";
+        }else {
+            Calendar currentTime = new GregorianCalendar();
+            et_fromHours.setText(currentTime.get(Calendar.HOUR) + "");
+            et_fromMinutes.setText(currentTime.get(Calendar.MINUTE) + "");
+            et_fromDay.setText(currentTime.get(Calendar.DAY_OF_MONTH) + "");
+            et_fromYear.setText(currentTime.get(Calendar.YEAR) + "");
+            int am_pm = currentTime.get(Calendar.AM_PM);
+            timeAM_PM_from.setSelection(am_pm);
+            int month = currentTime.get(Calendar.MONTH);
+            timeMonth_from.setSelection(month);
+
+            et_toHours.setText(currentTime.get(Calendar.HOUR) + "");
+            et_toMinutes.setText(currentTime.get(Calendar.MINUTE) + "");
+            et_toDay.setText(currentTime.get(Calendar.DAY_OF_MONTH) + "");
+            et_toYear.setText(currentTime.get(Calendar.YEAR) + "");
             timeAM_PM_to.setSelection(am_pm);
             timeMonth_to.setSelection(month);
 
@@ -158,9 +222,8 @@ public class AlarmDetailsActivity extends Activity {
             et_fromMinutes_sleep.setText("0");
             et_toHours_sleep.setText("8");
             et_toMinutes_sleep.setText("0");
-
-
-
+            alarm.alarmTone = "content://media/internal/audio/media/177";
+        }
 
         final LinearLayout ringToneContainer = (LinearLayout) findViewById(R.id.alarm_ringtone_container);
         ringToneContainer.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +243,15 @@ public class AlarmDetailsActivity extends Activity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 1: {
-                    alarm.alarmTone = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI).toString();
-                    txtToneSelection.setText(RingtoneManager.getRingtone(this, alarmTone).getTitle(this));
+
+                    try {
+                        alarm.alarmTone = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI).toString();
+                        txtToneSelection.setText(RingtoneManager.getRingtone(this, alarmTone).getTitle(this));
+                       // Log.d("l", data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI).toString());
+                    }catch (RuntimeException e){
+                        alarm.alarmTone = "content://media/internal/audio/media/177";
+                    }
+
                     break;
                 }
                 default: {
@@ -221,7 +291,8 @@ public class AlarmDetailsActivity extends Activity {
                 AlarmManagerHelper.setAlarms(this);
                 alarmDAO.close();
                 setResult(RESULT_OK);
-                finish();
+                //finish();
+                startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
             }
         }
 

@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +43,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
  * Created by yasina on 11.03.15.
  */
 public class ListWordsPairActivity
-        extends SherlockFragmentActivity
+        extends Activity
         implements OnItemLongClickListener, OnItemClickListener, OnClickListener{
 
     public static final String TAG = "ListWordsPairActivity";
@@ -54,6 +58,7 @@ public class ListWordsPairActivity
 
     private int currentMenuPosition = -1;
     private SlidingMenu menu;
+    private  Words clickedWordsPair;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class ListWordsPairActivity
         setContentView(R.layout.activity_list_words_pair);
 
         getActionBar().setTitle("All Words");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
 
         try {
             DictionaryDAO dicDAO = new DictionaryDAO(this);
@@ -162,14 +168,14 @@ public class ListWordsPairActivity
 
         this.menu = menu;
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowCustomEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initViews() {
         this.mListviewWP = (ListView) findViewById(R.id.list_wps);
-        this.mTxtEmptyWP = (TextView) findViewById(R.id.txt_empty_list_wp);
+     //   this.mTxtEmptyWP = (TextView) findViewById(R.id.txt_empty_list_wp);
         this.mListviewWP.setOnItemClickListener(this);
         this.mListviewWP.setOnItemLongClickListener(this);
         forTest = new ArrayList<Words>();
@@ -180,7 +186,7 @@ public class ListWordsPairActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_save_words_list_to_theme:
+           /* case R.id.btn_save_words_list_to_theme:
 
                 final EditText input = new EditText(this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListWordsPairActivity.this);
@@ -224,11 +230,48 @@ public class ListWordsPairActivity
                 AlertDialog alert2 = builder2.create();
                 alert2.show();
 
-                break;
+                break;*/
 
             default:
                 break;
         }
+    }
+    private void showDialog() {
+        String button1String = "Nothing";
+        String button2String = "Delete";
+        String button3String = "Change";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        ad.setTitle("Change");
+        ad.setMessage("What do you wanna do with this word?");
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                finish();
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                WordsDAO wordDAO = new WordsDAO(getApplicationContext());
+                wordDAO.deleteDictionary(clickedWordsPair, name2);
+                startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
+            }
+        });
+        ad.setNeutralButton(button3String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Intent i = new Intent(getApplicationContext(),AddWordsActivity.class);
+                i.putExtra("id",clickedWordsPair.getmId());
+                startActivity(i);
+            }
+        });
+
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        AlertDialog alert = ad.create();
+        alert.show();
     }
 
     @Override
@@ -239,7 +282,9 @@ public class ListWordsPairActivity
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Words clickedWordsPair = mAdapter.getItem(position);
+        clickedWordsPair = mAdapter.getItem(position);
+
+        showDialog();
         Log.d(TAG, "clickedItem : " + clickedWordsPair.getFirstLang());
         return true;
     }
@@ -275,11 +320,57 @@ public class ListWordsPairActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 menuToggle();
                 return true;
+            case R.id.btn_save_words_list_to_theme:
+
+                final EditText input = new EditText(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListWordsPairActivity.this);
+                builder.setTitle("Write here your words theme name")
+                        .setView(input)
+                        .setNegativeButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        name = input.getText().toString() + "_theme";
+                                        wordsDAO_new = new WordsDAO(getApplicationContext(),name);
+                                        Log.d(TAG,"" + wordsDAO_new.getAllDictionaries().size());
+                                        wordsDAO_new.addListOfWords(forTest);
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                break;
+            case R.id.btn_train_words_list_to_theme:
+
+                final EditText input2 = new EditText(this);
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(ListWordsPairActivity.this);
+                builder2.setTitle("Write here your words theme name")
+                        .setView(input2)
+                        .setNegativeButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        name = input2.getText().toString() + "_theme";
+                                        wordsDAO_new = new WordsDAO(getApplicationContext(),name);
+
+                                        wordsDAO_new.addListOfWords(forTest);
+                                        Log.d(TAG,"" + wordsDAO_new.getAllDictionaries().size());
+                                        Intent intent = new Intent(getApplicationContext(), TrainWordsActivity.class);
+                                        intent.putExtra("table name",name);
+                                        startActivity(intent);
+                                        dialog.cancel();
+                                        finish();
+                                    }
+                                });
+                AlertDialog alert2 = builder2.create();
+                alert2.show();
+
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -291,5 +382,14 @@ public class ListWordsPairActivity
             menu.showMenu();
     }
 
- }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu2) {
+        getMenuInflater().inflate(R.menu.menu_list_words, menu2);
+        return true;
+
+    }
+
+
+
+}
 

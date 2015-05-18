@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/btn_train_words_list_to_theme"
+        android:orderInCategory="100"
+        android:icon="@drawable/train_words_pair"
+        android:showAsAction="always"
+        android:title="add" />
+    <item
+        android:id="@+id/btn_save_words_list_to_theme"
+        android:orderInCategory="100"
+        android:icon="@drawable/save_words_pair"
+        android:showAsAction="always"
+        android:title="add" />
+
+</menu>

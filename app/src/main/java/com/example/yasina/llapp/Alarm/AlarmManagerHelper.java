@@ -27,10 +27,13 @@ public class AlarmManagerHelper extends BroadcastReceiver{
         setAlarms(context);
     }
 
+    public static PendingIntent pIntent;
+    public static AlarmDAO dbHelper;
+
     public static void setAlarms(Context context) {
         cancelAlarms(context);
 
-        AlarmDAO dbHelper = new AlarmDAO(context);
+       dbHelper = new AlarmDAO(context);
         AlarmManager alarmManager;
 
         List<AlarmModel> alarms =  dbHelper.getAlarms();
@@ -38,7 +41,7 @@ public class AlarmManagerHelper extends BroadcastReceiver{
         for (AlarmModel alarm : alarms) {
             if (alarm.isEnabled()) {
 
-               PendingIntent pIntent = createPendingIntent(context, alarm);
+               pIntent = createPendingIntent(context, alarm);
                Log.d("alala", "set pIntent");
 
                 Calendar calendarFROM = Calendar.getInstance();
@@ -85,7 +88,7 @@ public class AlarmManagerHelper extends BroadcastReceiver{
             for (AlarmModel alarm : alarms) {
                 if (alarm.isEnabled()) {
                     PendingIntent pIntent = createPendingIntent(context, alarm);
-
+                   // dbHelper.delete(alarm.getThemeName());
                     AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     alarmManager.cancel(pIntent);
                     dbHelper.close();
@@ -94,9 +97,9 @@ public class AlarmManagerHelper extends BroadcastReceiver{
         }
     }
 
-    private static PendingIntent createPendingIntent(Context context, AlarmModel model) {
+    public static PendingIntent createPendingIntent(Context context, AlarmModel model) {
       //  Intent values = new Intent(context, AlarmService.class);
-        Intent values = new Intent(context, AlarmScreen.class);
+       Intent values = new Intent(context, AlarmScreen.class);
          int cur = 0;
        // values.putExtra("alarm",model);
 
@@ -138,9 +141,9 @@ public class AlarmManagerHelper extends BroadcastReceiver{
        // values.putExtra("name",model.getThemeName());
         //values.putExtra("tune",model.alarmTone);
       //  return PendingIntent.getBroadcast(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
-       PendingIntent peng =  PendingIntent.getActivity(context,12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
+      PendingIntent peng =  PendingIntent.getActivity(context,12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
         return peng;
-       // return PendingIntent.getService(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
+      //  return PendingIntent.getService(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

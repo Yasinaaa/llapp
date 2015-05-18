@@ -23,7 +23,8 @@ public class DictionaryDAO {
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
     private String[] mAllColumns = {DBHelper.COLUMN_NAME_ID, DBHelper.COLUMN_NAME, DBHelper.COLUMN_TYPE};
-    private String sql = "rus_eng_wordsTable";
+    //private String sql = "rus_eng_wordsTable";
+    private String sql = "";
     private String SQL_CREATE_TABLE_DICTIONARY = "CREATE TABLE IF NOT EXISTS " + sql + " ("
             + DBHelper.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + DBHelper.COLUMN_NAME + " TEXT NOT NULL, "
@@ -81,6 +82,25 @@ public class DictionaryDAO {
         long id = dictionary.getmId();
         System.out.println("the deleted dictionary has the id: " + id);
         mDatabase.delete(DBHelper.TABLE_DICTIONARY, DBHelper.COLUMN_NAME_ID + " = " + id, null);
+    }
+
+    public void deleteDictionary(String dictionary) {
+        mDatabase.delete(DBHelper.TABLE_DICTIONARY, DBHelper.COLUMN_NAME + " = " + dictionary, null);
+    }
+
+    public void deleteDictionary(long dictionary) {
+        System.out.println("the deleted dictionary has the id: " + dictionary);
+        Dictionary dic = getDicitonaryById(dictionary);
+        try {
+            mDatabase.delete(DBHelper.TABLE_DICTIONARY, DBHelper.COLUMN_NAME_ID + " = " + dictionary, null);
+        }catch (RuntimeException e){
+            System.out.println("nothing2");
+        }
+        try {
+            mDatabase.rawQuery("DROP TABLE " + dic.getName(), null);
+            System.out.println("DROP TABLE " + dic.getName());
+        }catch (RuntimeException e){System.out.println("nothing");}
+
     }
 
     public List<Dictionary> getAllDictionaries() {
