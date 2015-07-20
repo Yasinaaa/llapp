@@ -71,8 +71,8 @@ public class AlarmScreen extends Activity {
         model.setFromSleepHours(getIntent().getExtras().getInt("fromSleepH"));
         model.setFromSleepMinutes(getIntent().getExtras().getInt("fromSleepM"));
         fromSleep_AM_PM = getIntent().getExtras().getInt("fromSleepAM_PM");
-        model.setToHours(getIntent().getExtras().getInt("toSleepH"));
-        model.setToMinutes(getIntent().getExtras().getInt("toSleepM"));
+        model.setToSleepHours(getIntent().getExtras().getInt("toSleepH"));
+        model.setToSleepMinutes(getIntent().getExtras().getInt("toSleepM"));
         toSleepAM_PM = getIntent().getExtras().getInt("toSleepAM_PM");
         model.setRepeat(getIntent().getExtras().getInt("repeat"));
         model.alarmTone = getIntent().getExtras().getString("alarmTune");
@@ -131,7 +131,10 @@ public class AlarmScreen extends Activity {
 
         Calendar c = Calendar.getInstance();
         Log.d("TimeInmmm", calendarTO.getTimeInMillis() + " calendarTO.getTimeInMillis()");
+        Log.d("TimeInmm", calendarTO.get(Calendar.DAY_OF_MONTH) +  "." + calendarTO.get(Calendar.MONTH) + "."
+                + calendarTO.get(Calendar.YEAR) + " " + calendarTO.get(Calendar.HOUR) + ":" + calendarTO.get(Calendar.MINUTE));
         Log.d("TimeInmmm", c.getTimeInMillis() + " c.getTimeInMillis()");
+
         if(calendarTO.getTimeInMillis() < c.getTimeInMillis()){
             Log.d("TimeInmmm","this is the end");
             Intent values = getIntent();
@@ -150,9 +153,9 @@ public class AlarmScreen extends Activity {
 
           //  PendingIntent pendingIntent =  PendingIntent.getService(getBaseContext(),(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        //cu = cu + 1;
-
-        values.putExtra("cur", cur + 1);
+        //cu = cu + 1
+            cur++;
+        values.putExtra("cur", cur);
             Log.d("TimeInmmm", "next cur=" + cur);
         values.putExtra("alarmTheme", model.getThemeName());
         values.putExtra("toDay", model.getToDay());

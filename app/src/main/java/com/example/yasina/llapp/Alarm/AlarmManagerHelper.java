@@ -79,6 +79,7 @@ public class AlarmManagerHelper extends BroadcastReceiver{
                 }
                 alarmManager.set(AlarmManager.RTC_WAKEUP, time, pIntent);
                 dbHelper.close();
+
                 Log.d("time", "calendarFROM.getTimeInMillis()" + calendarFROM.getTimeInMillis() + " in millis");
                 Log.d("time", " " + System.currentTimeMillis());
 
@@ -149,6 +150,7 @@ public class AlarmManagerHelper extends BroadcastReceiver{
        // values.putExtra("name",model.getThemeName());
         //values.putExtra("tune",model.alarmTone);
       //  return PendingIntent.getBroadcast(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
+
       PendingIntent peng =  PendingIntent.getActivity(context,12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
         return peng;
       //  return PendingIntent.getService(context,(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
