@@ -70,7 +70,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Train"
+        android:text="Show theme's words"
         android:onClick="onClick"
         android:ems="10"
         android:textColor="#2B2B2B"
@@ -102,6 +102,19 @@
         android:ems="10"
         android:textColor="#2B2B2B"
         android:textSize="20sp"
+        android:background="@drawable/buttonshape2"
+        android:layout_gravity="center_horizontal"
+        />
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/themeADD"
+        android:onClick="onClick"
+        android:text="Add word"
+        android:textColor="#2B2B2B"
+        android:textSize="20sp"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/buttonshape2"
         android:layout_gravity="center_horizontal"
         />

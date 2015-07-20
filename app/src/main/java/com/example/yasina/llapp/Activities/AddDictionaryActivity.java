@@ -85,7 +85,7 @@ public class AddDictionaryActivity extends Activity implements View.OnClickListe
 
         spinner = (Spinner) findViewById(R.id.spinner_TypeOfDictionaries_add_new_d);
         spinner.setAdapter(adapter);
-        spinner.setSelection(1);
+        spinner.setSelection(0);
     }
 
     @Override

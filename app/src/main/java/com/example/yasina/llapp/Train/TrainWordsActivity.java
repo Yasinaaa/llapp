@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 import com.example.yasina.llapp.Activities.ListDictionariesActivity;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
+import com.example.yasina.llapp.AddWordsActivity;
 import com.example.yasina.llapp.DAO.WordsDAO;
 import com.example.yasina.llapp.Model.Words;
 import com.example.yasina.llapp.R;
@@ -81,8 +82,38 @@ public class TrainWordsActivity extends FragmentActivity {
                 pager.setOnPageChangeListener(new OnPageChangeListener() {
 
                     @Override
-                    public void onPageSelected(int position) {
+                    public void onPageSelected(final int position) {
                         Log.d(TAG, "onPageSelected, position = " + position);
+                     /*   String button1String = "Delete";
+                        String button2String = "Update";
+                        String button3String = "Nothing";
+
+                        AlertDialog.Builder ad = new AlertDialog.Builder(getApplicationContext());
+                        ad.setTitle("Change");
+                        ad.setMessage("What do you wanna do with this word from theme?");
+                        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                themeWordsDAO.deleteWordFromTheme(name, words.get(position));
+                            }
+                        });
+                        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                finish();
+                            }
+                        });
+                        ad.setCancelable(true);
+                        ad.setNeutralButton(button3String, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                Intent i = new Intent(getApplicationContext(),AddWordsActivity.class);
+                                i.putExtra("id",words.get(position).getmId());
+                                i.putExtra("themeName",name);
+                                startActivity(i);
+                            }
+                        });
+
+
+                        AlertDialog alert = ad.create();
+                        alert.show();*/
                     }
 
                     @Override

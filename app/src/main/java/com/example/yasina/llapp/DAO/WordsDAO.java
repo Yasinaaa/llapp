@@ -103,6 +103,28 @@ public class WordsDAO {
             mDatabase.delete(name, "id" + " = " + id, null);
         }
 
+        public void deleteFromThemes(Words word){
+            ArrayList<String> dirArray = new ArrayList<String>();
+            Cursor c = mDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+            while (c.moveToNext()) {
+                String s = c.getString(0);
+                if (s.equals("android_metadata")) {;
+                    continue;
+                } else {
+                    if(s.contains("_theme")) {
+                        try {
+                            mDatabase.rawQuery("SELECT * FROM " + s + " WHERE " +
+                                    "firstLanguage = \"" + word.getFirstLang() + "\", " +
+                                    "secondLanguage = \"" + word.getSecondLang() + "\", " +
+                                    "explanation = \"" + word.getExplanation() + "\"", null);
+                        } catch (RuntimeException e) {
+
+                        }
+                    }
+                }
+            }
+        }
+
         public ArrayList<Words> getAllDictionaries() {
             ArrayList<Words> listDictionaries = new ArrayList<Words>();
             Log.d("allDic","" + TABLE_NAME);
@@ -146,6 +168,20 @@ public class WordsDAO {
             wordPair.setExplanation(cursor.getString(4));
             return wordPair;
         }
+
+    public void addWordToTheme(String theme, Words words){
+        ContentValues values = new ContentValues();
+        values.put("firstLanguage", words.getFirstLang());
+        values.put("secondLanguage", words.getSecondLang());
+        values.put("picture", words.getImage());
+        values.put("explanation", words.getExplanation());
+        long insertId = mDatabase.insert(theme, null, values);
+    }
+
+    public void deleteWordFromTheme(String theme, Words words){
+        long id = words.getmId();
+        mDatabase.delete(theme, "id" + " = " + id, null);
+    }
 
     public ArrayList<String> allThemesTablesNames() {
 

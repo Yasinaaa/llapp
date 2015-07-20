@@ -70,6 +70,7 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
 
        /* DBHelper b = new DBHelper(this);
         SQLiteDatabase db = b.getWritableDatabase();
+        db.execSQL("DROP TABLE fir_theme");
         db.execSQL("DROP TABLE alarmTable");*/
 
 

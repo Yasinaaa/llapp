@@ -290,9 +290,10 @@ public class AlarmDetailsActivity extends Activity {
                 }
                 AlarmManagerHelper.setAlarms(this);
                 alarmDAO.close();
-                setResult(RESULT_OK);
+              //  setResult(RESULT_OK);
                 //finish();
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
+               // finish();
             }
         }
 

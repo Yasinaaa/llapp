@@ -36,6 +36,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
     private ArrayList<MyColor> colors;
     private ColorAdapter colorAdapter;
     private ListView colorsListView;
+            private boolean clicked = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,6 +55,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==R.id.draw_btn){
+            clicked = true;
             final Dialog brushDialog = new Dialog(this);
             brushDialog.setTitle("Brush size:");
             brushDialog.setContentView(R.layout.brush_chooser);
@@ -146,12 +148,24 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
 
                 drawView.setDrawingCacheEnabled(true);
                 Bitmap bm = drawView.getDrawingCache();
+                if(clicked) {
 
-                GlobalBitmap.img = bm;
-                MainPaint.this.finish();
-                Log.d("intent send", "senddddd");
-                Intent intent = new Intent(MainPaint.this, AddWordsActivity.class);
-                setResult(RESULT_OK, intent);
+                    GlobalBitmap.img = bm;
+                    MainPaint.this.finish();
+                    Log.d("intent send", "senddddd");
+                    Intent intent = new Intent(MainPaint.this, AddWordsActivity.class);
+                    setResult(RESULT_OK, intent);
+                }else {
+                    AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+                    warningDialog.setTitle("Warning!");
+                    warningDialog.setMessage("You are not painting picture! Need to create something.");
+                    warningDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    warningDialog.show();
+                }
 
             }
         }
@@ -245,7 +259,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         Bitmap bitmap = Bitmap.createBitmap(drawView.getWidth(),drawView.getHeight(), Bitmap.Config.ARGB_8888);
         ByteArrayOutputStream stream = null;
 
-        if(bitmap!=null){
+        if(bitmap!=null && clicked){
             stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
         }

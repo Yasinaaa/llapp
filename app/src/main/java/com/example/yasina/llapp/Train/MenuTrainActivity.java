@@ -152,6 +152,11 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.themeADD:
+                intent = new Intent(getApplicationContext(),AddWordsActivity.class);
+                intent.putExtra("table name",tableName);
+                startActivity(intent);
+                finish();
         }
     }
 
@@ -170,16 +175,19 @@ public class MenuTrainActivity extends SherlockFragmentActivity implements View.
         switch (position) {
             case 0:
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
+                finish();
                 break;
             case 1:
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
+                finish();
                 break;
             case 2:
                 startActivity(new Intent(getApplicationContext(),AddWordsActivity.class));
-
+                finish();
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
+                finish();
                 break;
         }
     }

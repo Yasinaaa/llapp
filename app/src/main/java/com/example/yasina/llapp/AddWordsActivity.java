@@ -59,6 +59,8 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
     private int currentMenuPosition = -1;
     private SlidingMenu menu;
     private Dictionary dic;
+    private String tableName = null;
+    private String themeName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,11 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
         tvSecondL = (TextView) findViewById(R.id.tvSecondLangAddWord);
 
         initViews();
+        try {
+            tableName = getIntent().getExtras().getString("table name");
+        }catch (RuntimeException e){
+
+        }
 
         try {
 
@@ -126,6 +133,12 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
             tvFirstL.setText(word.getFirstLang());
             tvSecondL.setText(word.getSecondLang());
             mTxtExplanation.setText(word.getExplanation());
+            try{
+                themeName = getIntent().getExtras().getString("themeName");
+                w.deleteWordFromTheme(tableName,word);
+            }catch (RuntimeException e){
+
+            }
         }catch (RuntimeException e){
 
         }
@@ -197,6 +210,11 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
                     Words createdWordsPair = wordsDAO.createWordsPair(
                             mTxtFirstLang.getText().toString(), mTxtSecondLang.getText().toString(), img, mTxtExplanation.getText().toString());
 
+                    if(tableName != null){
+                       wordsDAO.addWordToTheme(tableName, createdWordsPair);
+                    }
+
+
                     Log.d("ADD WORD", "added word pair : " + createdWordsPair.getmId());
 
                     Toast.makeText(this, "word pair_created_successfully", Toast.LENGTH_LONG).show();
@@ -225,6 +243,7 @@ public class AddWordsActivity extends SherlockFragmentActivity  implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         Bitmap d = GlobalBitmap.img;
+
         // Log.d("hi",d.getWidth() + " - " + d.getHeight());
         // Log.d("hi","im here");
 

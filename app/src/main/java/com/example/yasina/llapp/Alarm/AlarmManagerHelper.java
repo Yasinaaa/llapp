@@ -64,14 +64,22 @@ public class AlarmManagerHelper extends BroadcastReceiver{
                 int am_pm;
                 if(alarm.getFromAM_PM().equals("am")) am_pm = 0;
                 else am_pm = 1;
-                calendarFROM.set(Calendar.AM_PM,am_pm);
+                calendarFROM.set(Calendar.AM_PM, am_pm);
                 Log.d("time", calendarFROM.get(Calendar.AM_PM) + " am-pm");
 
+                long time = calendarFROM.getTimeInMillis();
                 alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendarFROM.getTimeInMillis(), pIntent);
+                Calendar c = Calendar.getInstance();
+                if(c.getTimeInMillis() > time){
+                    Log.d("time", "problems with time");
+                    while (c.getTimeInMillis() > time){
+                        time = time + 60*1000*alarm.getRepeat();
+                    }
+                    Log.d("time", "new time with repeat " + time + " in millis");
+                }
+                alarmManager.set(AlarmManager.RTC_WAKEUP, time, pIntent);
                 dbHelper.close();
-                Log.d("time", calendarFROM.getTimeInMillis() + " in millis");
+                Log.d("time", "calendarFROM.getTimeInMillis()" + calendarFROM.getTimeInMillis() + " in millis");
                 Log.d("time", " " + System.currentTimeMillis());
 
             }

@@ -7,11 +7,11 @@
         android:icon="@drawable/train_words_pair"
         android:showAsAction="always"
         android:title="add" />
-    <item
+    <!--<item
         android:id="@+id/btn_save_words_list_to_theme"
         android:orderInCategory="100"
         android:icon="@drawable/save_words_pair"
         android:showAsAction="always"
-        android:title="add" />
+        android:title="add" />-->
 
 </menu>

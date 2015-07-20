@@ -59,20 +59,7 @@ public class AlarmScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_alarm_screen);
-       /* try{
-            cancel = getIntent().getExtras().getBoolean("cancel");
-            am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
-            Intent values = getIntent();
-            PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                    12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
 
-            // init();
-            am.cancel(pendingIntent);
-            pendingIntent.cancel();
-            finish();
-        }catch(RuntimeException e){
-
-        }*/
         model = new AlarmModel();
         sleep = getIntent().getExtras().getBoolean("sleep");
         model.setToDay(getIntent().getExtras().getInt("toDay"));
@@ -123,6 +110,7 @@ public class AlarmScreen extends Activity {
         Log.d("TimeInmmm", "cur=" + cur);
         tone = model.alarmTone;
         name = getIntent().getExtras().getString("alarmTheme");
+        model.setThemeName(name);
         Log.d("TimeInmmm", "alarmTheme=" + name);
         repeat = model.getRepeat();
 
@@ -130,8 +118,7 @@ public class AlarmScreen extends Activity {
         words = new ArrayList<Words>();
         words = themeWordsDAO.getAllDictionaries();
         Log.d("Train", words.size() + "");
-        alarmWord = words.get(cur);
-        size = words.size();
+
        // init();
 
         am = (AlarmManager) getSystemService(Activity.ALARM_SERVICE);
@@ -139,6 +126,9 @@ public class AlarmScreen extends Activity {
             cur = 0;
             Log.d("TimeInmmm", "cur=" + cur);
         }
+        alarmWord = words.get(cur);
+        size = words.size();
+
         Calendar c = Calendar.getInstance();
         Log.d("TimeInmmm", calendarTO.getTimeInMillis() + " calendarTO.getTimeInMillis()");
         Log.d("TimeInmmm", c.getTimeInMillis() + " c.getTimeInMillis()");
@@ -148,7 +138,6 @@ public class AlarmScreen extends Activity {
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     12345, values, PendingIntent.FLAG_CANCEL_CURRENT);
 
-           // init();
             am.cancel(pendingIntent);
             pendingIntent.cancel();
             themeWordsDAO.close();
@@ -162,8 +151,9 @@ public class AlarmScreen extends Activity {
           //  PendingIntent pendingIntent =  PendingIntent.getService(getBaseContext(),(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //cu = cu + 1;
-        Log.d("TimeInmmm", "cur=" + cur);
+
         values.putExtra("cur", cur + 1);
+            Log.d("TimeInmmm", "next cur=" + cur);
         values.putExtra("alarmTheme", model.getThemeName());
         values.putExtra("toDay", model.getToDay());
         values.putExtra("toMonth", model.getToMonth());
@@ -194,6 +184,7 @@ public class AlarmScreen extends Activity {
                     + calendarSleepTO.get(Calendar.MINUTE) + " " +
                     calendarSleepTO.get(Calendar.AM_PM));
         } else {
+
             values.putExtra("sleep", false);
             init();
             am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
@@ -202,9 +193,7 @@ public class AlarmScreen extends Activity {
         }
 
      }
-
-        Log.d("alala", "hi i'm in model screen");
-
+     Log.d("alala", "hi i'm in model screen");
     }
 
     @SuppressWarnings("deprecation")

@@ -253,6 +253,7 @@ public class ListWordsPairActivity
             public void onClick(DialogInterface dialog, int arg1) {
                 WordsDAO wordDAO = new WordsDAO(getApplicationContext());
                 wordDAO.deleteDictionary(clickedWordsPair, name2);
+                wordDAO.deleteFromThemes(clickedWordsPair);
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
             }
         });
@@ -325,7 +326,7 @@ public class ListWordsPairActivity
             case android.R.id.home:
                 menuToggle();
                 return true;
-            case R.id.btn_save_words_list_to_theme:
+          /*  case R.id.btn_save_words_list_to_theme:
 
                 final EditText input = new EditText(this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListWordsPairActivity.this);
@@ -344,8 +345,8 @@ public class ListWordsPairActivity
                 AlertDialog alert = builder.create();
                 alert.show();
 
-                break;
-            case R.id.btn_train_words_list_to_theme:
+                break;*/
+           case R.id.btn_train_words_list_to_theme:
 
                 final EditText input2 = new EditText(this);
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(ListWordsPairActivity.this);
