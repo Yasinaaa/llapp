@@ -53,7 +53,8 @@
             android:label="@string/title_activity_notification_view" >
         </activity>
 
-        <activity android:name=".Alarm.AlarmDetailsActivity" >
+        <activity android:name=".Alarm.AlarmDetailsActivity"
+            android:noHistory="true">
         </activity>
         <activity android:name=".Alarm.AlarmScreen" >
         </activity>

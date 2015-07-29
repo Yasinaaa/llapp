@@ -31,6 +31,7 @@ import com.example.yasina.llapp.DAO.DBHelper;
 import com.example.yasina.llapp.DAO.DictionaryDAO;
 import com.example.yasina.llapp.Model.Dictionary;
 import com.example.yasina.llapp.Train.MenuTrainActivity;
+import com.example.yasina.llapp.Train.MenuTrain_Fragment;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
@@ -147,11 +148,10 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
             }
 
-            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Add WordsFragment","All Words Fragment"//,"Notification","Alarm"
-                    /*, getString(R.string.add_languages_fragmnet),
-                    getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
-                    getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
-                    };
+            String[] items = {"Main",
+                    /*"All Words",getString(R.string.add_words_fragment),"Train Words Theme",*/
+                    "Add WordsFragment","All Words Fragment","Menu Train Fragment"
+                      };
 
             ((ListView) findViewById(R.id.sidemenu)).setAdapter(
                     new ArrayAdapter<Object>(
@@ -185,7 +185,7 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
             case 0:
                 startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
                 break;
-            case 1:
+           /* case 1:
                 startActivity(new Intent(getApplicationContext(),ListWordsPairActivity.class));
                 break;
             case 2:
@@ -194,13 +194,15 @@ public class MainMenuActivity extends SherlockFragmentActivity implements Adapte
                 break;
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
-                break;
-            case 4:
+                break;*/
+            case 1:
                 showFragment(new AddWordsView());
                 break;
-            case 5:
+            case 2:
                 showFragment(new AllWords_Fragment());
                 break;
+            case 3:
+                showFragment(new MenuTrain_Fragment());
         }
     }
 
