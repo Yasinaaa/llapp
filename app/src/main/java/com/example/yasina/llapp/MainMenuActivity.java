@@ -1,13 +1,8 @@
 package com.example.yasina.llapp;
 
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +20,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.yasina.llapp.Activities.AddDictionaryActivity;
+import com.example.yasina.llapp.Activities.AllWords_Fragment;
 import com.example.yasina.llapp.Activities.ListWordsPairActivity;
 import com.example.yasina.llapp.Adapter.DictionariesSpinner;
 import com.example.yasina.llapp.Alarm.AlarmDAO;
@@ -41,7 +35,14 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
 
-public class MainMenuActivity extends Activity implements AdapterView.OnItemSelectedListener {
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuInflater;
+
+
+public class MainMenuActivity extends SherlockFragmentActivity implements AdapterView.OnItemSelectedListener {
 
     private static int currentMenuPosition = -1;
     private int position;
@@ -64,8 +65,10 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
+        //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(255, 255, 255)));
         getActionBar().setTitle("Main");
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(237, 211, 140)));
+
         init();
 
        /* DBHelper b = new DBHelper(this);
@@ -140,11 +143,11 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
                 }
             });
 
-         /*   if (currentMenuPosition != -1) {
+          if (currentMenuPosition != -1) {
                 ((ListView) findViewById(R.id.sidemenu)).setItemChecked(currentMenuPosition, true);
-            }*/
+            }
 
-            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme"//,"Notification","Alarm"
+            String[] items = {"Main","All Words",getString(R.string.add_words_fragment),"Train Words Theme","Add WordsFragment","All Words Fragment"//,"Notification","Alarm"
                     /*, getString(R.string.add_languages_fragmnet),
                     getString(R.string.new_words_theme_fragment), getString(R.string.create_new_lang_connection_fragment), getString(R.string.add_teacher_fragment),
                     getString(R.string.all_words_fragment), getString(R.string.create_test_fragment), getString(R.string.settings_fragment)*/
@@ -192,24 +195,29 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
             case 3:
                 startActivity(new Intent(getApplicationContext(), MenuTrainActivity.class));
                 break;
-
+            case 4:
+                showFragment(new AddWordsView());
+                break;
+            case 5:
+                showFragment(new AllWords_Fragment());
+                break;
         }
     }
 
-    /*private void showFragment(Fragment currentFragment) {
+   private void showFragment(Fragment currentFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()//.show(currentFragment)
                .replace(R.id.container, currentFragment)
-
                 .commit();
-    }*/
+    }
+
 
     public SlidingMenu getMenu() {
         return menu;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 menuToggle();
@@ -234,6 +242,10 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
         }
         return super.onOptionsItemSelected(item);
     }
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+    }*/
 
     public void menuToggle(){
         if(menu.isMenuShowing())
@@ -368,11 +380,18 @@ public class MainMenuActivity extends Activity implements AdapterView.OnItemSele
         alarmUpd = (Button) findViewById(R.id.alarmUpdate);
     }
 
-    @Override
+ /*  @Override
     public boolean onCreateOptionsMenu(Menu menu2) {
-        getMenuInflater().inflate(R.menu.main_menu, menu2);
+        getMenuInflater().inflate(R.menu.main_menu,menu2);
         return true;
 
-    }
+    }*/
+ @Override
+ public boolean onCreateOptionsMenu(Menu menu) {
+     MenuInflater inflater = getSupportMenuInflater();
+     inflater.inflate(R.menu.main_menu, menu);
+     return true;
+ }
+
 }
 

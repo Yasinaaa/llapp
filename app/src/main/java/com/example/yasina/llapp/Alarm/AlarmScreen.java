@@ -150,10 +150,6 @@ public class AlarmScreen extends Activity {
         Log.d("TimeInmmm", " i'm hereeeeee");
         Intent values = getIntent();
 
-
-          //  PendingIntent pendingIntent =  PendingIntent.getService(getBaseContext(),(int) model.getId(), values, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //cu = cu + 1
             cur++;
         values.putExtra("cur", cur);
             Log.d("TimeInmmm", "next cur=" + cur);
@@ -187,7 +183,6 @@ public class AlarmScreen extends Activity {
                     + calendarSleepTO.get(Calendar.MINUTE) + " " +
                     calendarSleepTO.get(Calendar.AM_PM));
         } else {
-
             values.putExtra("sleep", false);
             init();
             am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +

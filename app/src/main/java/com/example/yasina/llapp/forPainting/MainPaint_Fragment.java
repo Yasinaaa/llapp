@@ -1,32 +1,29 @@
+package com.example.yasina.llapp.forPainting;
 
-        package com.example.yasina.llapp.forPainting;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
-        import android.app.Activity;
-        import android.app.AlertDialog;
-        import android.app.Dialog;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.graphics.Bitmap;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ImageButton;
-        import android.widget.LinearLayout;
-        import android.widget.ListView;
-        import android.widget.ScrollView;
-        import android.widget.Toast;
-        import com.example.yasina.llapp.AddWordsActivity;
-        import com.example.yasina.llapp.R;
-        import java.io.ByteArrayOutputStream;
-        import java.util.ArrayList;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.MenuInflater;
+import com.example.yasina.llapp.AddWordsActivity;
+import com.example.yasina.llapp.R;
 
-        /**
- * Created by yasina on 25.03.15.
- */
-public class MainPaint extends Activity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+
+public class MainPaint_Fragment extends SherlockFragment implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
 
 
     private DrawingView drawView;
@@ -36,9 +33,11 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
     private ArrayList<MyColor> colors;
     private ColorAdapter colorAdapter;
     private ListView colorsListView;
-            private boolean clicked = false;
+    private boolean clicked = false;
 
-    @Override
+    private View view;
+
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.paint, menu);
         getActionBar().setTitle("Paint");
@@ -50,14 +49,27 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         saveBtn = (ImageButton)findViewById(R.id.save_btn);
 
         return true;
+    }*/
+
+    @Override
+    public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu, MenuInflater inflater) {
+        getSherlockActivity().getSupportMenuInflater().inflate(R.menu.paint, menu);
+        getSherlockActivity().getActionBar().setTitle("Paint");
+
+        drawBtn = (ImageButton) view.findViewById(R.id.draw_btn);
+        drawView.setBrushSize(smallBrush);
+        eraseBtn = (ImageButton) view.findViewById(R.id.erase_btn);
+        newBtn = (ImageButton) view.findViewById(R.id.new_btn);
+        saveBtn = (ImageButton) view.findViewById(R.id.save_btn);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 
         if(item.getItemId() == R.id.draw_btn){
             clicked = true;
-            final Dialog brushDialog = new Dialog(this);
+            final Dialog brushDialog = new Dialog(getSherlockActivity().getApplicationContext());
             brushDialog.setTitle("Brush size:");
             brushDialog.setContentView(R.layout.brush_chooser);
             ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
@@ -94,7 +106,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         }
         else if(item.getItemId()==R.id.erase_btn){
 
-            final Dialog brushDialog = new Dialog(this);
+            final Dialog brushDialog = new Dialog(getSherlockActivity().getApplicationContext());
             brushDialog.setTitle("Eraser size:");
             brushDialog.setContentView(R.layout.brush_chooser);
             ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
@@ -128,7 +140,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         }
         else if(item.getItemId()==R.id.new_btn){
 
-            AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+            AlertDialog.Builder newDialog = new AlertDialog.Builder(getSherlockActivity().getApplicationContext());
             newDialog.setTitle("New drawing");
             newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
             newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -153,12 +165,12 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
                 if(clicked) {
 
                     GlobalBitmap.img = bm;
-                    MainPaint.this.finish();
+                   // MainPaint.this.finish();
                     Log.d("intent send", "senddddd");
-                    Intent intent = new Intent(MainPaint.this, AddWordsActivity.class);
-                    setResult(RESULT_OK, intent);
+                    Intent intent = new Intent(getSherlockActivity().getBaseContext(), AddWordsActivity.class);
+                    //intent.setResult(RESULT_OK, intent);
                 }else {
-                    AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+                    AlertDialog.Builder warningDialog = new AlertDialog.Builder(getSherlockActivity().getApplicationContext());
                     warningDialog.setTitle("Warning!");
                     warningDialog.setMessage("You are not painting picture! Need to create something.");
                     warningDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -176,13 +188,12 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.for_paint);
-        setContentView(R.layout.for_paint2);
-        colorDAO = new ColorDAO(this);
-        currPaint = new ImageButton(this);
-        colorsListView = (ListView)findViewById(R.id.paint_colors);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.for_paint2, container, false);
+        setHasOptionsMenu(true);
+        colorDAO = new ColorDAO(getSherlockActivity().getApplicationContext());
+        currPaint = new ImageButton(getSherlockActivity().getApplicationContext());
+        colorsListView = (ListView) view.findViewById(R.id.paint_colors);
 
         try{
             colors = colorDAO.getAll();
@@ -199,7 +210,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         }*/
 
         if(colors.size() > 0){
-            colorAdapter =  new ColorAdapter(this, R.layout.colors, colors);
+            colorAdapter =  new ColorAdapter(getSherlockActivity().getApplicationContext(), R.layout.colors, colors);
             colorsListView.setAdapter(colorAdapter);
             colorsListView.setOnItemClickListener(this);
           /*  colorsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -209,18 +220,18 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
                 }
             });*/
         }
-        drawView = (DrawingView)findViewById(R.id.drawing);
+        drawView = (DrawingView) view.findViewById(R.id.drawing);
         smallBrush = getResources().getInteger(R.integer.small_size);
         mediumBrush = getResources().getInteger(R.integer.medium_size);
         largeBrush = getResources().getInteger(R.integer.large_size);
 
-
+        return view;
     }
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                currPaint = (ImageButton) adapterView.getItemAtPosition(i);
-                currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-            }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        currPaint = (ImageButton) adapterView.getItemAtPosition(i);
+        currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
+    }
 
     public void paintClicked(View view){
 
@@ -231,7 +242,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
             ImageButton imgView = (ImageButton)view;
             clicked = true;
             int color = Integer.parseInt(view.getTag().toString());
-           // Log.d("coloooor",color);
+            // Log.d("coloooor",color);
             drawView.setColor(color);
             imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
             currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint222));
@@ -267,7 +278,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
         }
         else{
-            Toast unsavedToast = Toast.makeText(getApplicationContext(),
+            Toast unsavedToast = Toast.makeText(getSherlockActivity().getApplicationContext(),
                     "Oops! Image could not be saved.", Toast.LENGTH_SHORT);
             unsavedToast.show();
         }
@@ -282,7 +293,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
 
         switch (view.getId()){
             case R.id.add_color_btn:
-                startActivityForResult(new Intent(this, ChooseColor.class), 1);
+                startActivityForResult(new Intent(getSherlockActivity().getApplicationContext(), ChooseColor.class), 1);
                 break;
 
         }
@@ -292,7 +303,7 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         int color = data.getExtras().getInt("color");
@@ -300,22 +311,23 @@ public class MainPaint extends Activity implements AdapterView.OnItemLongClickLi
         colorDAO.add(color);
 
         try{
-            colorDAO = new ColorDAO(this);
+            colorDAO = new ColorDAO(getSherlockActivity().getApplicationContext());
             colors = colorDAO.getAll();
         }catch (RuntimeException e){
             colors = new ArrayList<MyColor>();
         }
 
-        colorAdapter =  new ColorAdapter(this, R.layout.colors, colors);
+        colorAdapter =  new ColorAdapter(getSherlockActivity().getApplicationContext(), R.layout.colors, colors);
         colorsListView.setAdapter(colorAdapter);
         colorsListView.setOnItemClickListener(this);
-           //startActivity(new Intent(getApplicationContext(),MainPaint.class));
+        //startActivity(new Intent(getApplicationContext(),MainPaint.class));
     }
 
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                return false;
-            }
-        }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return false;
+    }
+}
+
 
 
